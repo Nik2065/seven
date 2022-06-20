@@ -14,7 +14,7 @@ function MainLayout(props) {
       &nbsp;
       </div>
 
-      <div style={{minHeight: "450px"}}>{props.children}</div>
+      <div style={{minHeight: "700px"}}>{props.children}</div>
       <div style={{height:"50px"}}>
       &nbsp;
       </div>
@@ -28,24 +28,5 @@ function MainLayout(props) {
     children: PropTypes.node.isRequired
   }
 
-  /*
 
-  class MainLayout extends Component {
-    static propTypes = {
-      children: PropTypes.any,
-      onClickOut: PropTypes.func,
-    };
-
-    render(){
-      return (
-        <>
-          <Menu/>
-          <main>{this.props.children}</main>
-          <BottomNavbar/>
-        </>
-      )
-    }
-  }
-*/
-
-  export default MainLayout;
+export default MainLayout;
