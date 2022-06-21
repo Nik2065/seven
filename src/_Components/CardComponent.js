@@ -1,20 +1,27 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import  PropTypes  from 'prop-types';
 
-function CardComponent() {
+function CardComponent(props) {
     return (
       <Card>
       <Card.Header>Featured</Card.Header>
       <Card.Body>
-        <Card.Title>Special title treatment</Card.Title>
+        <Card.Title>{props.product.name}</Card.Title>
         <Card.Text>
-          With supporting text below as a natural lead-in to additional content.
+        {props.product.description}
         </Card.Text>
-        <Button variant="primary">Go somewhere</Button>
+        <Button variant="primary">add to cart</Button>
       </Card.Body>
     </Card>
     );
   }
   
+
+  CardComponent.propTypes = {
+    product: PropTypes.object.isRequired,
+
+  }
+
   export default CardComponent;

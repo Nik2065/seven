@@ -5,7 +5,7 @@ import {Row, Col} from 'react-bootstrap';
 import CarouselComponent from './CarouselComponent';
 import CardComponent from './CardComponent';
 import MainLayout from './MainLayout';
-//import { fetchProductsListMainPage } from '../features/catalog/catalogAPI';
+import { fetchProductsListMainPage } from '../features/catalog/catalogAPI';
 
 import { Counter } from '../features/counter/Counter';
 
@@ -13,15 +13,19 @@ import { Counter } from '../features/counter/Counter';
 
 function MainContent() {
 
-    const [Users, fetchUsers] = useState([])
+    const [Products, 
+        fetchProducts] = useState([])
 
     const getData = () => {
-        fetch('https://jsonplaceholder.typicode.com/users')
-          .then((res) => res.json())
-          .then((res) => {
+        fetchProductsListMainPage()
+        //.then((res) => {
+            //console.log(res)
+            //res.json()})
+        .then((res) => {
             console.log(res)
-            fetchUsers(res)
+            fetchProducts(res)
           })
+        
       }
 
     useEffect(() => {
@@ -37,15 +41,15 @@ function MainContent() {
                 <br/>
                 <Row>
 
-                {Users.map((item, i) => {
-                return <li key={i}>{item.name}</li>
-                })}
+                {
+                Products.map((item, i) => {
+                    //return <li key={i}>{item.name}</li>
+                    return  <Col key={i}><CardComponent 
+                    key={i} 
+                    product={item}/></Col>
+                })
+                }
 
-                
-                    <Col><CardComponent/></Col>
-                    <Col><CardComponent/></Col>
-                    <Col><CardComponent/></Col>
-                    <Col><CardComponent/></Col>
                 </Row>
 
                 <Counter />
