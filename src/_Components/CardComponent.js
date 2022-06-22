@@ -1,7 +1,8 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
+//import Button from 'react-bootstrap/Button';
 import  PropTypes  from 'prop-types';
+import {AddToCartButton} from '../features/cart/AddCartButton';
 
 function CardComponent(props) {
     return (
@@ -12,7 +13,7 @@ function CardComponent(props) {
         <Card.Text>
         {props.product.description}
         </Card.Text>
-        <Button variant="primary">add to cart</Button>
+        <AddToCartButton  product={props.product}/>
       </Card.Body>
     </Card>
     );
