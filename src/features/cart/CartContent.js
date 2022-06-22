@@ -20,9 +20,9 @@ export function CartContent() {
       })
       }
       {
-      cartProducts.cart.map((item, i) => {
-        return <div key={i}>{item.product.name}</div>
-      })
+      //cartProducts.cart.map((item, i) => {
+      //  return <div key={i}>{item.product.name}</div>
+      //})
       }
     </div>
   );

@@ -11,26 +11,22 @@ import { Provider } from 'react-redux'
 //css
 import 'bootstrap/dist/css/bootstrap.css';
 
-import store from './store';
+import {store} from './store';
+//import {persistor} from './redux/store/store'
+import {persistor} from './store'
+import {PersistGate} from 'redux-persist/lib/integration/react';
 
-
-store.dispatch({
-  type: "SET_STATE",
-  state: {
-    phones: [ "Xiaomi Mi 10", "Samsung Galaxy Note20" ]
-  }
-});
-
-//<App />
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
     <BrowserRouter>
       <App/>
 
     </BrowserRouter>
+    </PersistGate>
     </Provider>
   </React.StrictMode>
 );
