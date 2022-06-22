@@ -7,8 +7,8 @@ import CardComponent from './CardComponent';
 import MainLayout from './MainLayout';
 import { fetchProductsListMainPage } from '../features/catalog/catalogAPI';
 
-import { Counter } from '../features/counter/Counter';
-
+//import { Counter } from '../features/counter/Counter';
+//import {CartContent} from '../features/cart/CartContent';
 
 
 function MainContent() {
@@ -51,8 +51,13 @@ function MainContent() {
                 }
 
                 </Row>
+{
+            //<CartContent />
+}
+    
 
-                <Counter />
+
+                
 
             </Container>
      

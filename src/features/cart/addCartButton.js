@@ -1,35 +1,31 @@
+import React from 'react';
 import { Button } from 'react-bootstrap';
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+//import React, { useState } from 'react';
 import {
-  decrement,
-  increment,
-  incrementAsync,
-  selectCount,
+  //addToCart,
+  //increment,
+  //incrementAsync,
+  //selectCount,
 } from './cartSlice';
-import styles from './Counter.module.css';
+
+//import styles from './Counter.module.css';
+import  PropTypes  from 'prop-types';
 
 
-export function Counter() {
-  const count = useSelector(selectCount);
-  const dispatch = useDispatch();
-  const [incrementAmount] = useState('2');
-
-  const incrementValue = Number(incrementAmount) || 0;
+export function AddToCartButton(product) {
+  //const dispatch = useDispatch();
 
   return (
     <div>
-      
-
-      <Button onClick={() => dispatch(decrement())} >Decrement value</Button>
-      <Button onClick={() => dispatch(increment())} >Increment value</Button>
-      <Button onClick={() => dispatch(incrementAsync(incrementValue))} > Add Async</Button>
-      <Button onClick={() => dispatch(increment())} >Increment value</Button>
-
-      <div className={styles.row}>
-        <span>{count}</span>
-      </div>
-
+      {
+        //<Button onClick={() => dispatch(addToCart(product))} >Add to cart</Button>
+      }
     </div>
   );
+}
+
+
+AddToCartButton.propTypes = {
+  product: PropTypes.object.isRequired,
+
 }

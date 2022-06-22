@@ -6,32 +6,19 @@ import {
   BrowserRouter,
 } from "react-router-dom";
 
-import { Provider } from 'react-redux'
 
 //css
 import 'bootstrap/dist/css/bootstrap.css';
 
-import store from './store';
 
-
-store.dispatch({
-  type: "SET_STATE",
-  state: {
-    phones: [ "Xiaomi Mi 10", "Samsung Galaxy Note20" ]
-  }
-});
-
-//<App />
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
     <BrowserRouter>
       <App/>
 
     </BrowserRouter>
-    </Provider>
   </React.StrictMode>
 );
 
