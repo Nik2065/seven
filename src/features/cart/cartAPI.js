@@ -1,7 +1,26 @@
-// A mock function to mimic making an async request for data
-export function fetchCount(amount = 1) {
-    return new Promise((resolve) =>
-      setTimeout(() => resolve({ data: amount }), 500)
-    );
-  }
-  
+
+
+export function fetchCart(sessionId){
+  return new Promise((resolve) =>
+  {
+    console.log(sessionId);
+    setTimeout(() => resolve( 
+      [
+        { id: 1,
+          name: "Product 1",
+          description: "very usefull product",
+          cost: 100
+        },
+        { id: 4,
+          name: "Product 4",
+          description: "very usefull product",
+          cost: 90.4
+        }
+      ] 
+  ), 500)
+}
+);
+}
+
+
+

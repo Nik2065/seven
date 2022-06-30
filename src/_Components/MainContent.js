@@ -25,7 +25,6 @@ function MainContent() {
             console.log(res)
             fetchProducts(res)
           })
-        
       }
 
     useEffect(() => {

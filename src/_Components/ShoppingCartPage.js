@@ -10,7 +10,7 @@ function ShoppingCartPage() {
         <MainLayout>
             <Container>
 <br/>
-            <h4>Корзина</h4>
+<h4>Корзина</h4>
 
 <Row>
 
