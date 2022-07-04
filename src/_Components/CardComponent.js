@@ -4,6 +4,9 @@ import Button from 'react-bootstrap/Button';
 import  PropTypes  from 'prop-types';
 
 function CardComponent(props) {
+
+
+
     return (
       <Card>
       <Card.Header>Featured</Card.Header>
@@ -21,7 +24,7 @@ function CardComponent(props) {
 
   CardComponent.propTypes = {
     product: PropTypes.object.isRequired,
-
+    //onClickButton: PropTypes.func
   }
 
   export default CardComponent;

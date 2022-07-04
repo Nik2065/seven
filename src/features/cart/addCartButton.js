@@ -12,13 +12,15 @@ import {
 import  PropTypes  from 'prop-types';
 
 
-export function AddToCartButton(product) {
+//export function AddToCartButton(product) {
+  export function AddToCartButton() {
   //const dispatch = useDispatch();
 
   return (
     <div>
       {
         //<Button onClick={() => dispatch(addToCart(product))} >Add to cart</Button>
+        <Button/>
       }
     </div>
   );

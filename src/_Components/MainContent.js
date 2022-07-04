@@ -3,8 +3,9 @@ import Container from 'react-bootstrap/Container';
 import {Row, Col} from 'react-bootstrap';
 
 import CarouselComponent from './CarouselComponent';
-import CardComponent from './CardComponent';
+//import CardComponent from './CardComponent';
 import MainLayout from './MainLayout';
+import SimpleCart from '../features/cart/SimpleCart';
 import { fetchProductsListMainPage } from '../features/catalog/catalogAPI';
 
 //import { Counter } from '../features/counter/Counter';
@@ -13,8 +14,24 @@ import { fetchProductsListMainPage } from '../features/catalog/catalogAPI';
 
 function MainContent() {
 
-    const [Products, 
-        fetchProducts] = useState([])
+    const [products, setProducts] = useState(
+        []
+        //()=> {
+        //let storageProducts = localStorage.getItem('products');
+        //if(storageProducts == undefined && storageProducts == null){
+        //    products = new [];
+        //}
+    //}
+    );
+
+
+    //setProducts = product => {
+    //    products.push(product);
+    //}
+
+
+    const [productsOnPage, 
+        fetchProductsOnPage] = useState([])
 
     const getData = () => {
         fetchProductsListMainPage()
@@ -23,7 +40,7 @@ function MainContent() {
             //res.json()})
         .then((res) => {
             console.log(res)
-            fetchProducts(res)
+            fetchProductsOnPage(res)
           })
       }
 
@@ -31,6 +48,10 @@ function MainContent() {
         getData()
       }, [])
     
+
+    //let myClick = () => {
+    //}
+
     return (
         <>
         <MainLayout>
@@ -41,18 +62,26 @@ function MainContent() {
                 <Row>
 
                 {
-                Products.map((item, i) => {
-                    //return <li key={i}>{item.name}</li>
-                    return  <Col key={i}><CardComponent 
-                    key={i} 
-                    product={item}/></Col>
-                })
+                //Products.map((item, i) => {
+                //    return  <Col key={i}><CardComponent 
+                //    key={i} 
+                //    product={item} 
+                //    /></Col>
+                //})
                 }
-
+                {
+                    
+                    productsOnPage.map((item, i) => {
+                    //return <li key={i}>{item.name}</li>
+                    return  <Col key={i}>
+                        <div  >{item.name}-{item.cost}<button onClick={() => setProducts(item)} >add to cart</button></div>
+                    </Col>
+                    })
+                }
                 </Row>
-{
-            //<CartContent />
-}
+
+            <SimpleCart products={products}/>
+
     
 
 
