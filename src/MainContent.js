@@ -51,10 +51,10 @@ export default function MainContent() {
         }, [] );
     })
 
-    let initialCart = [
+    /*let initialCart = [
         {qty:3, product:{id:1, name:"Product 1", cost:10}},
         {qty:1, product:{id:3, name:"Product 3", cost:86.2}}
-    ];
+    ];*/
 
     //получаем содержимое корзины
     useEffect(()=>{
@@ -65,18 +65,23 @@ export default function MainContent() {
         fetch(url)
         .then(resp => resp.json())
         .then(result => {
-            console.log(result);
+            //console.log(result);
+            //initialCart = result.CartItems;
+            setProductsInCart(result.CartItems);
         })
     }, []);
 
 
-    const [productsInCart, setProductsInCart] = useState(initialCart);
+    const [productsInCart, setProductsInCart] = useState([]);
 
     const [cartSum, setCartSum] = useState(CoutSum(productsInCart));
 
     function CoutSum(items){
+
         let s = 0;
-        items.forEach(item =>{s+=(item.product.cost * item.qty)})
+        if(items != null && items !== undefined && items.length >0)
+            items.forEach(item =>{s+=(item.product.cost * item.qty)});
+
         return s;
     }
 
@@ -156,8 +161,8 @@ export default function MainContent() {
         <Table bordered hover striped responsive >
             <tbody>
             {
-                
-                productsInCart.map((item, i) =>{
+                (productsInCart !== undefined && productsInCart.length>0) ?
+                    productsInCart.map((item, i) =>{
                     //sum +=item.product.cost;
                     return <tr key={i}>
                         <td>{item.qty}</td>
@@ -165,7 +170,7 @@ export default function MainContent() {
                         <td>{item.product.cost}</td>
 
                     </tr>
-                })
+                }) : ""
             }
             
 
