@@ -12,7 +12,26 @@ import { BsCartFill } from "react-icons/bs";
 export default function MainContent() {
 
 
+    //сохраняем номер сессии в localstorage
+    useEffect(() => {
+        const sessionId = localStorage.getItem('sessionId');
+        //console.log(sid);
+        if(sessionId == null) {
+            const g = createGuid();
+            localStorage.setItem('sessionId', g);
+        }
+    });
 
+
+
+    function createGuid()  
+    {  
+       /*return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {  
+          var r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);  
+          return v.toString(16);  
+       });*/
+       return '167438a6-4e75-4c15-bd5b-0a6610f92212';  
+    }
 
     const [productsInCatalog, setProductsInCatalog] = useState([
         {id:1, name:"Product 1", cost:10},
@@ -20,16 +39,16 @@ export default function MainContent() {
         {id:3, name:"Product 3", cost:86.2}
     ]);
 
+    //получаем каталог товаров
     useEffect(() => {
-        //получаем каталог товаров
+        
         const url = 'http://localhost:49153/Catalog/GetAllCatalogItems';
         fetch(url)
         .then( resp => resp.json())
         .then( result => {
             //console.log(items)
             setProductsInCatalog(result.items);
-        } );
-
+        }, [] );
     })
 
     let initialCart = [
@@ -37,9 +56,23 @@ export default function MainContent() {
         {qty:1, product:{id:3, name:"Product 3", cost:86.2}}
     ];
 
+    //получаем содержимое корзины
+    useEffect(()=>{
+
+        const sId = localStorage.getItem('sessionId');
+        //загружаем корзину
+        const url = 'http://localhost:49153/Cart/GetCartBySessionId?sessionId=' + sId;
+        fetch(url)
+        .then(resp => resp.json())
+        .then(result => {
+            console.log(result);
+        })
+    }, []);
+
+
     const [productsInCart, setProductsInCart] = useState(initialCart);
 
-    const [cartSum, setCartSum] = useState(CoutSum(initialCart));
+    const [cartSum, setCartSum] = useState(CoutSum(productsInCart));
 
     function CoutSum(items){
         let s = 0;
