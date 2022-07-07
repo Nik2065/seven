@@ -24,7 +24,7 @@ export default function MainContent() {
 
 
 
-    function createGuid()  
+    function createGuid()
     {  
        /*return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {  
           var r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);  
@@ -65,8 +65,19 @@ export default function MainContent() {
         fetch(url)
         .then(resp => resp.json())
         .then(result => {
-            //console.log(result);
+            console.log(result);
             //initialCart = result.CartItems;
+            let cartItems = [];
+            if(result.CartItems != null && result.CartItems.length>0){
+                result.CartItems.forEach((item, i) => {
+                cartItems.push({
+                    qty: item.Qty,
+                    product: item.Product
+                })
+                }
+            )
+            }
+            
             setProductsInCart(result.CartItems);
         })
     }, []);
