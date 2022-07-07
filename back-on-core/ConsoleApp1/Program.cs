@@ -9,7 +9,7 @@ namespace ConsoleApp1
         {
             //Console.WriteLine("Hello World!");
             var da = new DataAccess.PsDataContext();
-            var list = da.CartSessions.ToList();
+            var list = da.SessionCarts.ToList();
 
         }
     }

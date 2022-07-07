@@ -23,7 +23,7 @@ namespace DataAccess
                 );
         }
 
-        public DbSet<SessionCartDb> CartSessions { get; set; }
+        public DbSet<SessionCartDb> SessionCarts { get; set; }
 
         public DbSet<SessionDb> Sessions { get; set; }
 

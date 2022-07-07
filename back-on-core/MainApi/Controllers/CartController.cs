@@ -47,7 +47,7 @@ namespace MainApi.Controllers
                 }
                 else
                 {
-                    var arr = _db.CartSessions.Where(x => x.SessionId == sessionId.ToString());
+                    var arr = _db.SessionCarts.Where(x => x.SessionId == sessionId.ToString());
                     foreach(var i in arr)
                     {
                         var d = new CartItemDto {
@@ -86,41 +86,78 @@ namespace MainApi.Controllers
 
 
 
+        //[HttpPost]
+        //[Route("[action]")]
+        //public async Task<ActionResult> AddProductToCart(Guid sessionId, int productId, int quantity)
+        //{
+        //    var result = new BaseResponse();
+
+        //    try
+        //    {
+
+        //    }
+        //    catch(Exception ex)
+        //    {
+
+        //    }
+
+        //    return Ok(result);
+        //}
+
+
         [HttpPost]
         [Route("[action]")]
-        public async Task<ActionResult> AddProductToCart(Guid sessionId, int productId, int quantity)
+        public async Task<ActionResult> ChangeProductInCart(Guid sessionId, int productId, int newQuantity)
         {
-            var result = new BaseResponse();
+            var result = new BaseResponse { Message = "Продукт добавлен", Success = true };
 
             try
             {
+                var s = _db.Sessions.FirstOrDefault(x => x.SessionId == sessionId.ToString());
+                if (s == null)
+                {
+                    _db.Sessions.Add(new SessionDb { Created = DateTime.Now, SessionId = sessionId.ToString() });
+                    _db.SaveChanges();
+                }
+                //TODO: проверка что такой продукт вообще есть в каталоге
 
-            }
-            catch(Exception ex)
-            {
 
-            }
+                var p = _db.SessionCarts.FirstOrDefault(x => x.ProductId == productId && x.SessionId == sessionId.ToString());
 
-            return Ok(result);
-        }
+                if(newQuantity == 0)//удаляем из корзины
+                {
+                    if (p != null)
+                    {
+                        _db.SessionCarts.Remove(p);
+                    }
+                }
 
-        [HttpPost]
-        [Route("[action]")]
-        public async Task<ActionResult> DecrementProductInCart(Guid sessionId, int productId, int quantity)
-        {
-            var result = new BaseResponse();
+                if(p == null)
+                {
+                    var sc = new SessionCartDb();
+                    sc.SessionId = sessionId.ToString();
+                    sc.ProductQuantity = newQuantity;
+                    sc.ProductId = productId;
 
-            try
-            {
+                    _db.SessionCarts.Add(sc);
+                }
+                else
+                {
+                    p.ProductQuantity = newQuantity;
+                }
 
+                _db.SaveChanges();
             }
             catch (Exception ex)
             {
-
+                result.Success = false;
+                result.Message = ex.Message;
             }
 
             return Ok(result);
         }
+
+        
 
     }
 }
