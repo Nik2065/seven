@@ -1,6 +1,7 @@
 ﻿using Common;
 using Common.DTO;
 using DataAccess;
+using DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace MainApi.Controllers
         [Route("[action]")]
         public async Task<ActionResult> GetCartBySessionId(Guid sessionId)
         {
-            var result = new GetCartResponse();
+            var result = new GetCartResponse { Success = true, Message = ""};
 
             try
             {
@@ -34,19 +35,33 @@ namespace MainApi.Controllers
                 //если находим - возвращаем результат
                 //если не находим, то создаем новую сессию с таким id и пустой корзиной
 
-                var dbItem = _db.CartSessions.FirstOrDefault(x=>x.SessionId == sessionId.ToString());
+                var s = _db.Sessions.FirstOrDefault(x=>x.SessionId == sessionId.ToString());
 
-                if(dbItem == null)
+                if(s == null)
                 {
+                    //добавляем сессию
+                    var ns = new SessionDb { Created = DateTime.Now, SessionId = sessionId.ToString() };
 
+                    _db.Sessions.Add(ns);
+                    _db.SaveChanges();
+                }
+                else
+                {
+                    var arr = _db.CartSessions.Where(x => x.SessionId == sessionId.ToString());
+                    foreach(var i in arr)
+                    {
+                        var d = new CartItemDto {
+                            Product = _db.Products.FirstOrDefault(x => x.Id == i.ProductId),
+                            Qty = i.ProductQuantity
+                        };
+
+                        result.CartItems.Add(d);
+                    }
+                    //result.CartItems
                 }
 
 
-
-
-
-
-                if (sessionId == new Guid("167438a6-4e75-4c15-bd5b-0a6610f92212"))
+                /*if (sessionId == new Guid("167438a6-4e75-4c15-bd5b-0a6610f92212"))
                 {
 
                     //result.Created = DateTime.Now.AddMinutes(-30);
@@ -57,15 +72,13 @@ namespace MainApi.Controllers
                     result.CartItems.Add(new CartItemDto { Product = item1, Qty = 3});
                     result.CartItems.Add(new CartItemDto { Product = item2, Qty = 1});
 
-                }
+                }*/
 
-                result.Message = "";
-                result.Success = true;
             }
             catch(Exception ex)
             {
                 result.Success = false;
-                result.Message = "";
+                result.Message = ex.Message;
             }
 
             return Ok(result);

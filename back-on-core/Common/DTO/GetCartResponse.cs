@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataAccess.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -21,6 +22,7 @@ namespace Common.DTO
     public class CartItemDto
     {
         public int Qty { get; set; }
-        public CatalogItemDto Product { get; set; }
+        //public CatalogItemDto Product { get; set; }
+        public ProductDb Product { get; set; }
     }
 }

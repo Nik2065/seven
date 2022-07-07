@@ -1,27 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using DataAccess.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
 
 namespace DataAccess
 {
     public class PsDataContext : DbContext
     {
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-            //var connectionString = "server=localhost;user=root;password=Fgh12345;database=projectseven;";
-            //var ver = new MySqlServerVersion(ServerVersion.AutoDetect(connectionString));
-            //var t = new ServerVersion();
-            //var ver = ServerVersion.AutoDetect(connectionString);
-            //var serverVersion = new MySqlServerVersion(new Version(8, 0, 27));
-
-
-            //optionsBuilder.UseMySql(connectionString);
-            
-            //optionsBuilder.UseMySql("server=localhost;user=root;password=Fgh12345;database=projectseven;", b => b.ServerVersion(new ServerVersion()));
-        //}
-
-
 
         public PsDataContext()
         {
@@ -39,26 +23,10 @@ namespace DataAccess
                 );
         }
 
-        public DbSet<CartSession> CartSessions { get; set; }
+        public DbSet<SessionCartDb> CartSessions { get; set; }
 
+        public DbSet<SessionDb> Sessions { get; set; }
 
-    }
-
-    [Table("cartsessions")]
-    public class CartSession
-    {
-        public int Id { get; set; }
-        public string SessionId { get; set; }
-        public DateTime Created { get; set; } 
-        public int ProductId { get; set; }
-        public int ProductQuantity { get; set; }
-    }
-
-    [Table("sessions")]
-    public class Session
-    {
-        public int Id { get; set; }
-        public string SessionId { get; set; }
-        public DateTime Created { get; set; }
+        public DbSet<ProductDb> Products { get; set; }
     }
 }
