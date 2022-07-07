@@ -1,0 +1,12 @@
+back-on-core/.vs/
+back-on-core/BusinessLogic/bin/
+back-on-core/BusinessLogic/obj/
+back-on-core/Common/obj/
+back-on-core/ConsoleApp1/bin/
+back-on-core/ConsoleApp1/obj/
+back-on-core/DataAccess/obj/
+back-on-core/DataAccess/bin/
+back-on-core/MainApi/bin/
+back-on-core/MainApi/obj/
+back-on-core/Common/bin/
+back-on-core/MainApi/Properties/PublishProfiles/registry.hub.docker.com_nik500.pubxml.user
