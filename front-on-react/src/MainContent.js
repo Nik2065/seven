@@ -13,14 +13,28 @@ export default function MainContent() {
 
 
     //сохраняем номер сессии в localstorage
-    useEffect(() => {
+    const [localSessionId, setLocalSessionId] = useState(getLocalSessionId());
+
+    function getLocalSessionId(){
         const sessionId = localStorage.getItem('sessionId');
         //console.log(sid);
         if(sessionId == null) {
             const g = createGuid();
             localStorage.setItem('sessionId', g);
         }
-    });
+
+        return sessionId;
+    }
+
+    
+    /*useEffect(() => {
+        const sessionId = localStorage.getItem('sessionId');
+        //console.log(sid);
+        if(sessionId == null) {
+            const g = createGuid();
+            localStorage.setItem('sessionId', g);
+        }
+    }, []);*/
 
 
 
@@ -55,35 +69,67 @@ export default function MainContent() {
         {qty:3, product:{id:1, name:"Product 1", cost:10}},
         {qty:1, product:{id:3, name:"Product 3", cost:86.2}}
     ];*/
+    
+    
+    const [productsInCart, setProductsInCart] = useState([]);
 
     //получаем содержимое корзины
     useEffect(()=>{
-
         const sId = localStorage.getItem('sessionId');
+
         //загружаем корзину
         const url = 'http://localhost:49153/Cart/GetCartBySessionId?sessionId=' + sId;
         fetch(url)
         .then(resp => resp.json())
         .then(result => {
-            console.log(result);
+            console.log({result});
             //initialCart = result.CartItems;
             let cartItems = [];
-            if(result.CartItems != null && result.CartItems.length>0){
-                result.CartItems.forEach((item, i) => {
+            if(result.cartItems != null && result.cartItems.length>0){
+                result.cartItems.forEach((item, i) => {
                 cartItems.push({
-                    qty: item.Qty,
-                    product: item.Product
+                    qty: item.qty,
+                    product: item.product
                 })
                 }
             )
             }
             
-            setProductsInCart(result.CartItems);
+            console.log({cartItems});
+
+            setProductsInCart(cartItems);
         })
+
+
     }, []);
 
 
-    const [productsInCart, setProductsInCart] = useState([]);
+    /*async function GetCartItems(){
+        const sId = localStorage.getItem('sessionId');
+
+        //загружаем корзину
+        const url = 'http://localhost:49153/Cart/GetCartBySessionId?sessionId=' + sId;
+        const resp = await fetch(url);
+        const result = await resp.json();
+        console.log(result);
+        //initialCart = result.CartItems;
+        let cartItems = [];
+    
+        if(result.CartItems != null && result.CartItems.length>0){
+                result.CartItems.forEach((item, i) => {
+                cartItems.push({
+                    qty: item.Qty,
+                    product: item.Product
+                })
+            })
+        }
+        
+        return cartItems;
+        
+    }*/
+
+
+    
 
     const [cartSum, setCartSum] = useState(CoutSum(productsInCart));
 
@@ -96,31 +142,85 @@ export default function MainContent() {
         return s;
     }
 
+    async function setProductsInCartOnServer(productQuantityPair){
+        const url = 'http://localhost:49153/Cart/ChangeProductInCart';
+
+        console.log({productQuantityPair});
+
+        let request = {
+            SessionId: localSessionId,
+            ProductId: productQuantityPair.product.id,
+            NewQuantity: productQuantityPair.qty
+        };
+        
+        
+        console.log({request});
+
+        const response = await fetch(url, {
+            method:"POST", 
+            body: JSON.stringify(request),
+            //body: request,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+        });
+
+        const result = await response.json();
+        console.log(result);
+
+        if(result.success){
+            //все хорошо
+            return true;
+        }
+        else {
+            //все плохо
+            return false;
+        }
+
+    }
+
+    
+
+    //increment
     function AddToCart(product) {
         
-        console.log(product);
-        console.log(productsInCart);
+        //console.log(product);
+        //console.log(productsInCart);
 
         let newCartProducts = [];
         let inCart = false;
-        productsInCart.forEach(item => {
-            //если продукт уже добавлен
-            if(item.product.id === product.id){
-                item.qty +=1;
-                newCartProducts.push(item);
-                inCart = true;
-            }
-            else 
-                newCartProducts.push(item);
-        })
+        let productQuantityPair;
 
-        if(!inCart)
-            newCartProducts.push({qty:1, product:product});
+        if(productsInCart!= null && productsInCart.length>0){
+            productsInCart.forEach(item => {
+                //если продукт уже добавлен
+                if(item.product.id === product.id){
+                    item.qty +=1;
+                    newCartProducts.push(item);
+                    productQuantityPair = item;
+                    inCart = true;
+                }
+                else {
+                    productQuantityPair = item;
+                    newCartProducts.push(item);
+                }
+            })
+        }
 
-        setProductsInCart(newCartProducts);
-        setCartSum(CoutSum(newCartProducts));
+        if(!inCart){
+            productQuantityPair = {qty:1, product:product};
+            newCartProducts.push(productQuantityPair);
+        }
+
+        //отправляем данные на сервер
+        if(setProductsInCartOnServer(productQuantityPair)){
+            setProductsInCart(newCartProducts);
+            setCartSum(CoutSum(newCartProducts));
+        }
     }
 
+    //decrement 
     function DeleteFromCart(product){
         //let newState = productsInCart.slice();
         let newCartProducts = [];

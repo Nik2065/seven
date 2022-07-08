@@ -34,9 +34,12 @@ namespace MainApi
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                     policy =>
                     {
-                        policy.WithOrigins("http://localhost:3000",
-                                            "http://localhost:3000");
+                        //policy.WithOrigins("http://localhost:3000",
+                        //                    "http://localhost:3000");
                         //policy.AllowAnyHeader();
+                        policy.AllowAnyMethod();
+                        policy.AllowAnyHeader();
+                        policy.AllowAnyOrigin();
                     });
             });
 
@@ -53,10 +56,9 @@ namespace MainApi
 
             app.UseRouting();
 
-            app.UseCors(MyAllowSpecificOrigins);
-
-
+            
             app.UseAuthorization();
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseEndpoints(endpoints =>
             {
