@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from "react";
 import Layout from "./Layout";
 
-import {Container, Table} 
+import {Button, Container, Table} 
     from 'react-bootstrap';
-
+import {LinkContainer} from 'react-router-bootstrap'
 
 
 export default function CartPage() {
@@ -56,6 +56,7 @@ export default function CartPage() {
 
 return(<Layout>
         <Container>
+            <br/>
         <h4>Корзина</h4>
         <Table bordered hover striped responsive >
             <tbody>
@@ -84,6 +85,11 @@ return(<Layout>
             }
             </tbody>
         </Table>
+        <div style={{textAlign:"right"}}>
+            <LinkContainer to="/order">
+                <Button type="button" variant="primary">Оформить заказ ></Button>
+            </LinkContainer>
+        </div>
         </Container>
 
     </Layout>);

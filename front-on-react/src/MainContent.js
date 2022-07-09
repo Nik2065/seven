@@ -258,7 +258,7 @@ export default function MainContent() {
     }
 
     return (
-        <Layout>
+        <Layout cnt={5}>
 
 
       

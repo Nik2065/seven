@@ -6,7 +6,7 @@ import CartPage from "./CartPage";
 
 
 import MainContent from './MainContent';
-
+import CartToOrderPage from './CartToOrderPage';
 
 
 function App() {
@@ -14,6 +14,7 @@ function App() {
     <Routes>
         <Route exact path="/" element={<MainContent/>} />
         <Route exact path="/shopping-cart" element={<CartPage/>} />
+        <Route exact path="/order" element={<CartToOrderPage/>} />
     </Routes>
   );
 }

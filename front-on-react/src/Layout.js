@@ -1,8 +1,8 @@
 import React from 'react';
 import {Link } from "react-router-dom";
 import {LinkContainer} from 'react-router-bootstrap'
-import {Container, Card, Nav, 
-    Navbar, Button, Row, Col, Table} 
+import {Container, Nav, 
+    Navbar} 
     from 'react-bootstrap';
 
 import { BsCartFill } from "react-icons/bs";
@@ -24,7 +24,7 @@ export default function Layout ({children}) {
         </Nav>
     
           <Navbar.Collapse className="justify-content-end">
-            <Link title="Перейти к корзине" className="nav-link" to="/shopping-cart">   <BsCartFill style={{fontSize:"1.9rem", color:"white"}} />          </Link>
+            <Link title="Перейти к корзине" className="nav-link" to="/shopping-cart">   <BsCartFill style={{fontSize:"1.9rem", color:"white"}} />   {5}</Link>
         </Navbar.Collapse>
         </Container>
         </Navbar>
