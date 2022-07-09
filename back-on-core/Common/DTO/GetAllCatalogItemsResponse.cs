@@ -8,9 +8,9 @@ namespace Common.DTO
     {
         public GetAllCatalogItemsResponse()
         {
-            Items = new List<CatalogItemDto>();
+            PaginationResult = new GetPageResult<CatalogItemDto>();
         }
 
-        public List<CatalogItemDto> Items { get; set; }
+        public GetPageResult<CatalogItemDto> PaginationResult { get; set; }
     }
 }

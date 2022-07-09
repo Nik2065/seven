@@ -95,23 +95,26 @@ namespace MainApi.Controllers
         //public async Task<ActionResult> AddProductToCart(Guid sessionId, int productId, int quantity)
         //{
         //    var result = new BaseResponse();
-
         //    try
         //    {
-
         //    }
         //    catch(Exception ex)
         //    {
-
         //    }
-
         //    return Ok(result);
         //}
 
 
+
+        /// <summary>
+        /// Изменить количество конкретного продукта в корзине
+        /// Если "0", то продукт удаляется из корзины
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("[action]")]
-        public async Task<ActionResult> ChangeProductInCart(ChangeProductInCartRequest request)
+        public async Task<ActionResult> ChangeCartProductQuantity(ChangeProductInCartRequest request)
         {
             var result = new BaseResponse { Message = "Продукт добавлен", Success = true };
 

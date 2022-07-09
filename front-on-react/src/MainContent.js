@@ -48,9 +48,9 @@ export default function MainContent() {
     }
 
     const [productsInCatalog, setProductsInCatalog] = useState([
-        {id:1, name:"Product 1", cost:10},
-        {id:2, name:"Product 2", cost:16.7},
-        {id:3, name:"Product 3", cost:86.2}
+        //{id:1, name:"Product 1", cost:10},
+        //{id:2, name:"Product 2", cost:16.7},
+        //{id:3, name:"Product 3", cost:86.2}
     ]);
 
     //получаем каталог товаров
@@ -60,10 +60,11 @@ export default function MainContent() {
         fetch(url)
         .then( resp => resp.json())
         .then( result => {
-            //console.log(items)
-            setProductsInCatalog(result.items);
-        }, [] );
-    })
+            //console.log({result})
+            setProductsInCatalog(result.paginationResult.resultList);
+
+        });
+    },[])
 
     /*let initialCart = [
         {qty:3, product:{id:1, name:"Product 1", cost:10}},
@@ -82,7 +83,7 @@ export default function MainContent() {
         fetch(url)
         .then(resp => resp.json())
         .then(result => {
-            console.log({result});
+            //console.log({result});
             //initialCart = result.CartItems;
             let cartItems = [];
             if(result.cartItems != null && result.cartItems.length>0){
@@ -143,7 +144,7 @@ export default function MainContent() {
     }
 
     async function setProductsInCartOnServer(productQuantityPair){
-        const url = 'http://localhost:49153/Cart/ChangeProductInCart';
+        const url = 'http://localhost:49153/Cart/ChangeCartProductQuantity';
 
         console.log({productQuantityPair});
 
@@ -224,6 +225,7 @@ export default function MainContent() {
     function DeleteFromCart(product){
         //let newState = productsInCart.slice();
         let newCartProducts = [];
+        let productQuantityPair;
 
         productsInCart.forEach(item => {
             if(item.product.id === product.id){
@@ -235,17 +237,22 @@ export default function MainContent() {
                 else{
                     //добавляем с уменьшиным кол-вом элементов
                     item.qty -=1;
+                    productQuantityPair = item;
                     newCartProducts.push(item);
                 }
             }
             else{
                 //newState.push({qty:1, product: product})
                 newCartProducts.push(item);
+                productQuantityPair = item;
             }
         })
 
-        setProductsInCart(newCartProducts);
-        setCartSum(CoutSum(newCartProducts));
+                //отправляем данные на сервер
+        if(setProductsInCartOnServer(productQuantityPair)){
+            setProductsInCart(newCartProducts);
+            setCartSum(CoutSum(newCartProducts));
+        }
     }
 
     return (
