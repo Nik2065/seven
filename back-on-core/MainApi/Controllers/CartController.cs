@@ -116,7 +116,7 @@ namespace MainApi.Controllers
         [Route("[action]")]
         public async Task<ActionResult> ChangeCartProductQuantity(ChangeProductInCartRequest request)
         {
-            var result = new BaseResponse { Message = "Продукт добавлен", Success = true };
+            var result = new BaseResponse { Message = "Продукт изменен", Success = true };
 
             try
             {

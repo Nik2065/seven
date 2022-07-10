@@ -247,6 +247,8 @@ export default function MainContent() {
                     //собираемся удалить единственный продует
                     //просто не добавляем его в массив
                     //игнор
+                    item.qty=0;
+                    productQuantityPair = item;
                 }
                 else{
                     //добавляем с уменьшиным кол-вом элементов
@@ -262,7 +264,9 @@ export default function MainContent() {
             }
         })
 
-                //отправляем данные на сервер
+        console.log(productQuantityPair);
+
+        //отправляем данные на сервер
         if(setProductsInCartOnServer(productQuantityPair)){
             setProductsInCart(newCartProducts);
             setCartSum(CoutSum(newCartProducts));
@@ -271,7 +275,7 @@ export default function MainContent() {
     }
 
     return (
-        <Layout cnt={5}>
+        <Layout>
 
 
       
