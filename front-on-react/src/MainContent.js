@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from "react";
-import {Link } from "react-router-dom";
-import {LinkContainer} from 'react-router-bootstrap'
+import React, {useEffect, useState, useContext} from "react";
 
-import {Container, Card, Nav, 
-    Navbar, Button, Row, Col, Table} 
+import {Container, Card,
+    Button, Row, Col, Table} 
     from 'react-bootstrap';
 
 import Layout from "./Layout.js";
 
-import { BsCartFill } from "react-icons/bs";
+import {CartContext} from './CartContext'
 
 
 export default function MainContent() {
 
+
+    const [cartContext, setCartContext] = useContext(CartContext);
 
     //сохраняем номер сессии в localstorage
     const [localSessionId, setLocalSessionId] = useState(getLocalSessionId());
@@ -82,6 +82,7 @@ export default function MainContent() {
 
         //загружаем корзину
         const url = 'http://localhost:49153/Cart/GetCartBySessionId?sessionId=' + sId;
+
         fetch(url)
         .then(resp => resp.json())
         .then(result => {
@@ -93,7 +94,7 @@ export default function MainContent() {
                 cartItems.push({
                     qty: item.qty,
                     product: item.product
-                })
+                });
                 }
             )
             }
@@ -101,6 +102,8 @@ export default function MainContent() {
             console.log({cartItems});
 
             setProductsInCart(cartItems);
+            setCartSum(CoutSum(cartItems));
+            setCartContext(CountItems(cartItems) + ' | ' + CoutSum(cartItems) + ' ₽')
         })
 
 
@@ -135,6 +138,14 @@ export default function MainContent() {
     
 
     const [cartSum, setCartSum] = useState(CoutSum(productsInCart));
+
+    function CountItems(items){
+        let s = 0;
+        if(items != null && items !== undefined && items.length >0)
+            items.forEach(item =>{s+= item.qty});
+
+        return s;
+    }
 
     function CoutSum(items){
 
@@ -220,6 +231,7 @@ export default function MainContent() {
         if(setProductsInCartOnServer(productQuantityPair)){
             setProductsInCart(newCartProducts);
             setCartSum(CoutSum(newCartProducts));
+            setCartContext(CountItems(newCartProducts) + ' | ' + CoutSum(newCartProducts) + ' ₽')
         }
     }
 
@@ -254,6 +266,7 @@ export default function MainContent() {
         if(setProductsInCartOnServer(productQuantityPair)){
             setProductsInCart(newCartProducts);
             setCartSum(CoutSum(newCartProducts));
+            setCartContext(CountItems(newCartProducts) + ' | ' + CoutSum(newCartProducts) + ' ₽');
         }
     }
 
