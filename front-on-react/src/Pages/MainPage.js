@@ -8,7 +8,7 @@ import Layout from "../Layout.js";
 
 import {CartContext} from '../CartContext'
 import {getLocalSessionId, coutCartSum} from '../commonFunctions'
-import {GetCartBySessionId} from '../Api/serverFunctions'
+import {getCartBySessionId, getAllCatalogItems} from '../Api/serverFunctions'
 
 export default function MainPage() {
 
@@ -35,9 +35,7 @@ export default function MainPage() {
     //получаем каталог товаров
     useEffect(() => {
         
-        const url = 'http://localhost:49153/Catalog/GetAllCatalogItems';
-        fetch(url)
-        .then( resp => resp.json())
+        getAllCatalogItems()
         .then( result => {
             //console.log({result})
             setProductsInCatalog(result.paginationResult.resultList);
@@ -55,7 +53,7 @@ export default function MainPage() {
         const sId = getLocalSessionId();
         //загружаем корзину
 
-        GetCartBySessionId(sId)
+        getCartBySessionId(sId)
         .then(result => {
             //console.log({result});
             //initialCart = result.CartItems;

@@ -5,7 +5,7 @@ import {Button, Container, Table}
     from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap'
 import { getLocalSessionId, coutCartSum } from "../commonFunctions";
-import { GetCartBySessionId } from "../Api/serverFunctions";
+import { getCartBySessionId } from "../Api/serverFunctions";
 
 
 export default function CartPage() {
@@ -19,7 +19,7 @@ export default function CartPage() {
         const sId = getLocalSessionId();
 
         //загружаем корзину
-        GetCartBySessionId(sId)
+        getCartBySessionId(sId)
         .then(result => {
             //console.log({result});
             //initialCart = result.CartItems;
@@ -80,7 +80,7 @@ return(<Layout>
         </Table>
         <div style={{textAlign:"right"}}>
             <LinkContainer to="/order">
-                <Button type="button" variant="primary">Оформить заказ ></Button>
+                <Button type="button" variant="primary">{'Оформить заказ >'}</Button>
             </LinkContainer>
         </div>
         </Container>
