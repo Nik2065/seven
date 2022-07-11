@@ -38,5 +38,6 @@ namespace DataAccess
         public DbSet<SessionDb> Sessions { get; set; }
 
         public DbSet<ProductDb> Products { get; set; }
+        public DbSet<OrderDb> Orders { get; set; }
     }
 }
