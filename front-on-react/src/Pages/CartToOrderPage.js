@@ -1,9 +1,9 @@
-
+import { useState } from 'react';
 
 
 import {Container,  Form, Button} 
     from 'react-bootstrap';
-import Layout from './Layout';
+import Layout from '../Layout';
 
 
 
@@ -13,14 +13,25 @@ import Layout from './Layout';
 
 export default function CartToOrderPage(){
     
+    const [orderCreated, setOrderCreated] = useState(false);
+
+    async function CreateOrder(){
+
+
+
+    }
     
     async function CreateOrderFromCartOnServerSide(){
+        let orderCreated = false;
+
         const url='';
         const resp = await fetch(url);
         const result = await resp.json();
         
         
 
+
+        return orderCreated;
     }
         
     
@@ -54,7 +65,7 @@ export default function CartToOrderPage(){
             </Form.Text>
         </Form.Group>
         <div style={{textAlign:"right"}}>
-        <Button  variant="primary" type="button">
+        <Button onClick={()=> CreateOrder()}  variant="primary" type="button">
             Отправить
         </Button>
         </div>

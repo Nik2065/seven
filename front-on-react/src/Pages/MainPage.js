@@ -4,12 +4,13 @@ import {Container, Card,
     Button, Row, Col, Table} 
     from 'react-bootstrap';
 
-import Layout from "./Layout.js";
+import Layout from "../Layout.js";
 
-import {CartContext} from './CartContext'
+import {CartContext} from '../CartContext'
+import {getLocalSessionId, coutCartSum} from '../commonFunctions'
+import {GetCartBySessionId} from '../Api/serverFunctions'
 
-
-export default function MainContent() {
+export default function MainPage() {
 
 
     const [cartContext, setCartContext] = useContext(CartContext);
@@ -17,18 +18,7 @@ export default function MainContent() {
     //сохраняем номер сессии в localstorage
     const [localSessionId, setLocalSessionId] = useState(getLocalSessionId());
 
-    function getLocalSessionId(){
-        const sessionId = localStorage.getItem('sessionId');
-        //console.log(sid);
-        if(sessionId == null) {
-            const g = createGuid();
-            localStorage.setItem('sessionId', g);
-        }
-
-        return sessionId;
-    }
-
-    
+   
     /*useEffect(() => {
         const sessionId = localStorage.getItem('sessionId');
         //console.log(sid);
@@ -40,20 +30,7 @@ export default function MainContent() {
 
 
 
-    function createGuid()
-    {  
-       /*return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {  
-          var r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);  
-          return v.toString(16);  
-       });*/
-       return '167438a6-4e75-4c15-bd5b-0a6610f92212';  
-    }
-
-    const [productsInCatalog, setProductsInCatalog] = useState([
-        //{id:1, name:"Product 1", cost:10},
-        //{id:2, name:"Product 2", cost:16.7},
-        //{id:3, name:"Product 3", cost:86.2}
-    ]);
+    const [productsInCatalog, setProductsInCatalog] = useState([]);
 
     //получаем каталог товаров
     useEffect(() => {
@@ -68,23 +45,17 @@ export default function MainContent() {
         });
     },[])
 
-    /*let initialCart = [
-        {qty:3, product:{id:1, name:"Product 1", cost:10}},
-        {qty:1, product:{id:3, name:"Product 3", cost:86.2}}
-    ];*/
-    
+   
     
     const [productsInCart, setProductsInCart] = useState([]);
 
     //получаем содержимое корзины
     useEffect(()=>{
-        const sId = localStorage.getItem('sessionId');
 
+        const sId = getLocalSessionId();
         //загружаем корзину
-        const url = 'http://localhost:49153/Cart/GetCartBySessionId?sessionId=' + sId;
 
-        fetch(url)
-        .then(resp => resp.json())
+        GetCartBySessionId(sId)
         .then(result => {
             //console.log({result});
             //initialCart = result.CartItems;
@@ -102,10 +73,9 @@ export default function MainContent() {
             console.log({cartItems});
 
             setProductsInCart(cartItems);
-            setCartSum(CoutSum(cartItems));
-            setCartContext(CountItems(cartItems) + ' | ' + CoutSum(cartItems) + ' ₽')
+            setCartSum(coutCartSum(cartItems));
+            setCartContext(CountItems(cartItems) + ' | ' + coutCartSum(cartItems) + ' ₽')
         })
-
 
     }, []);
 
@@ -137,7 +107,7 @@ export default function MainContent() {
 
     
 
-    const [cartSum, setCartSum] = useState(CoutSum(productsInCart));
+    const [cartSum, setCartSum] = useState(coutCartSum(productsInCart));
 
     function CountItems(items){
         let s = 0;
@@ -147,14 +117,6 @@ export default function MainContent() {
         return s;
     }
 
-    function CoutSum(items){
-
-        let s = 0;
-        if(items != null && items !== undefined && items.length >0)
-            items.forEach(item =>{s+=(item.product.cost * item.qty)});
-
-        return s;
-    }
 
     async function setProductsInCartOnServer(productQuantityPair){
         const url = 'http://localhost:49153/Cart/ChangeCartProductQuantity';
@@ -230,8 +192,8 @@ export default function MainContent() {
         //отправляем данные на сервер
         if(setProductsInCartOnServer(productQuantityPair)){
             setProductsInCart(newCartProducts);
-            setCartSum(CoutSum(newCartProducts));
-            setCartContext(CountItems(newCartProducts) + ' | ' + CoutSum(newCartProducts) + ' ₽')
+            setCartSum(coutCartSum(newCartProducts));
+            setCartContext(CountItems(newCartProducts) + ' | ' + coutCartSum(newCartProducts) + ' ₽')
         }
     }
 
@@ -269,8 +231,8 @@ export default function MainContent() {
         //отправляем данные на сервер
         if(setProductsInCartOnServer(productQuantityPair)){
             setProductsInCart(newCartProducts);
-            setCartSum(CoutSum(newCartProducts));
-            setCartContext(CountItems(newCartProducts) + ' | ' + CoutSum(newCartProducts) + ' ₽');
+            setCartSum(coutCartSum(newCartProducts));
+            setCartContext(CountItems(newCartProducts) + ' | ' + coutCartSum(newCartProducts) + ' ₽');
         }
     }
 

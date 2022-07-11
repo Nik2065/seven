@@ -18,7 +18,7 @@ export default function Layout ({children}) {
         <>
         <Navbar bg="dark" variant="dark">
         <Container>
-        <Link className="navbar-brand" to="/">Brand</Link>
+        <Link className="navbar-brand" to="/">ProjectSeven ReactShop</Link>
     
         <Nav className="me-auto">
         <LinkContainer to="/login">

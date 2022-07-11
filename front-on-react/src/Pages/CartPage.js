@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from "react";
-import Layout from "./Layout";
+import Layout from "../Layout";
 
 import {Button, Container, Table} 
     from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap'
+import { getLocalSessionId, coutCartSum } from "../commonFunctions";
+import { GetCartBySessionId } from "../Api/serverFunctions";
 
 
 export default function CartPage() {
@@ -14,12 +16,10 @@ export default function CartPage() {
 
     //получаем содержимое корзины
     useEffect(()=>{
-        const sId = localStorage.getItem('sessionId');
+        const sId = getLocalSessionId();
 
         //загружаем корзину
-        const url = 'http://localhost:49153/Cart/GetCartBySessionId?sessionId=' + sId;
-        fetch(url)
-        .then(resp => resp.json())
+        GetCartBySessionId(sId)
         .then(result => {
             //console.log({result});
             //initialCart = result.CartItems;
@@ -37,22 +37,15 @@ export default function CartPage() {
             console.log({cartItems});
 
             setProductsInCart(cartItems);
-            setCartSum(CoutSum(cartItems));
+            setCartSum(coutCartSum(cartItems));
         })
 
 
     }, []);
 
-    const [cartSum, setCartSum] = useState(CoutSum(productsInCart));
+    const [cartSum, setCartSum] = useState(coutCartSum(productsInCart));
 
-    function CoutSum(items){
 
-        let s = 0;
-        if(items != null && items !== undefined && items.length >0)
-            items.forEach(item =>{s+=(item.product.cost * item.qty)});
-
-        return s;
-    }
 
 return(<Layout>
         <Container>

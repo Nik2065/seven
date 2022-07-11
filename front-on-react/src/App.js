@@ -2,11 +2,12 @@ import React, {useState} from "react";
 
 import { Routes, Route
 } from "react-router-dom";
-import CartPage from "./CartPage";
 
+//pages
+import CartPage from "./Pages/CartPage";
+import MainPage from './Pages/MainPage';
+import CartToOrderPage from './Pages/CartToOrderPage';
 
-import MainContent from './MainContent';
-import CartToOrderPage from './CartToOrderPage';
 
 import {CartContext} from './CartContext';
 
@@ -19,7 +20,7 @@ function App() {
   return (
     <CartContext.Provider value={[context, setContext]}>
     <Routes>
-        <Route exact path="/" element={<MainContent/>} />
+        <Route exact path="/" element={<MainPage/>} />
         <Route exact path="/shopping-cart" element={<CartPage/>} />
         <Route exact path="/order" element={<CartToOrderPage/>} />
     </Routes>
