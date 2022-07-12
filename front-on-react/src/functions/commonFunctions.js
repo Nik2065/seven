@@ -31,3 +31,15 @@ export function coutCartSum(items){
 
    return s;
 }
+
+export function createCartTitle(cout, sum){
+   return  cout + ' | ' + sum + ' ₽'
+}
+
+export function countItems(items){
+   let s = 0;
+   if(items != null && items !== undefined && items.length >0)
+       items.forEach(item =>{s+= item.qty});
+
+   return s;
+}

@@ -40,11 +40,12 @@ namespace MainApi.Controllers
             return Ok(result);
         }
 
+
         [HttpPost]
         [Route("[action]")]
-        public async Task<ActionResult> CreateOrder(CreateOrdertRequestDto request)
+        public async Task<ActionResult> CreateOrder(CreateOrderRequestDto request)
         {
-            var result = new BaseResponse { Message = "", Success = true };
+            var result = new CreateOrderResponse { Message = "", Success = true };
 
             try
             {
@@ -55,13 +56,16 @@ namespace MainApi.Controllers
                     CustomerName = request.CustomerName,
                     CustomerAddress = request.CustomerAddress,
                     CustomerEmail = request.CustomerEmail,
-                    Created = request.Created
+                    Created = DateTime.Now,
                 };
 
+
+                throw new Exception("Some error message");
 
                 _db.Orders.Add(o);
                 _db.SaveChanges();
 
+                result.OrderId = o.Id;
             }
             catch(Exception ex)
             {

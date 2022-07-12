@@ -8,6 +8,7 @@ namespace DataAccess.Entities
     public class OrderDb
     {
         [Key]
+        public int Id { get; set; }
         public string SessionId { get; set; }
         public string CustomerName { get; set; }
         public string CustomerAddress { get; set; }

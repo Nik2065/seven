@@ -1,14 +1,14 @@
 import React, {useEffect, useState, useContext} from "react";
 
 import {Container, Card,
-    Button, Row, Col, Table} 
+    Button, Row, Col} 
     from 'react-bootstrap';
 
 import Layout from "../Layout.js";
 
 import {CartContext} from '../CartContext'
-import {getLocalSessionId, coutCartSum} from '../commonFunctions'
-import {getCartBySessionId, getAllCatalogItems} from '../Api/serverFunctions'
+import {getLocalSessionId, coutCartSum, createCartTitle, countItems} from '../functions/commonFunctions'
+import {getCartBySessionId, getAllCatalogItems, setProductsInCartOnServer} from '../functions/serverFunctions'
 
 export default function MainPage() {
 
@@ -16,7 +16,7 @@ export default function MainPage() {
     const [cartContext, setCartContext] = useContext(CartContext);
 
     //сохраняем номер сессии в localstorage
-    const [localSessionId, setLocalSessionId] = useState(getLocalSessionId());
+    //const [localSessionId, setLocalSessionId] = useState(getLocalSessionId());
 
    
     /*useEffect(() => {
@@ -72,89 +72,17 @@ export default function MainPage() {
 
             setProductsInCart(cartItems);
             setCartSum(coutCartSum(cartItems));
-            setCartContext(CountItems(cartItems) + ' | ' + coutCartSum(cartItems) + ' ₽')
+            setCartContext(createCartTitle(countItems(cartItems), coutCartSum(cartItems)));
         })
 
     }, []);
 
 
-    /*async function GetCartItems(){
-        const sId = localStorage.getItem('sessionId');
-
-        //загружаем корзину
-        const url = 'http://localhost:49153/Cart/GetCartBySessionId?sessionId=' + sId;
-        const resp = await fetch(url);
-        const result = await resp.json();
-        console.log(result);
-        //initialCart = result.CartItems;
-        let cartItems = [];
-    
-        if(result.CartItems != null && result.CartItems.length>0){
-                result.CartItems.forEach((item, i) => {
-                cartItems.push({
-                    qty: item.Qty,
-                    product: item.Product
-                })
-            })
-        }
-        
-        return cartItems;
-        
-    }*/
+   
+    const [, setCartSum] = useState(coutCartSum(productsInCart));
 
 
-    
 
-    const [cartSum, setCartSum] = useState(coutCartSum(productsInCart));
-
-    function CountItems(items){
-        let s = 0;
-        if(items != null && items !== undefined && items.length >0)
-            items.forEach(item =>{s+= item.qty});
-
-        return s;
-    }
-
-
-    async function setProductsInCartOnServer(productQuantityPair){
-        const url = 'http://localhost:49153/Cart/ChangeCartProductQuantity';
-
-        console.log({productQuantityPair});
-
-        let request = {
-            SessionId: localSessionId,
-            ProductId: productQuantityPair.product.id,
-            NewQuantity: productQuantityPair.qty
-        };
-        
-        
-        console.log({request});
-
-        const response = await fetch(url, {
-            method:"POST", 
-            body: JSON.stringify(request),
-            //body: request,
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-        });
-
-        const result = await response.json();
-        console.log(result);
-
-        if(result.success){
-            //все хорошо
-            return true;
-        }
-        else {
-            //все плохо
-            return false;
-        }
-
-    }
-
-    
 
     //increment
     function AddToCart(product) {
@@ -188,10 +116,10 @@ export default function MainPage() {
         }
 
         //отправляем данные на сервер
-        if(setProductsInCartOnServer(productQuantityPair)){
+        if(setProductsInCartOnServer(productQuantityPair, getLocalSessionId())){
             setProductsInCart(newCartProducts);
             setCartSum(coutCartSum(newCartProducts));
-            setCartContext(CountItems(newCartProducts) + ' | ' + coutCartSum(newCartProducts) + ' ₽')
+            setCartContext(createCartTitle(countItems(newCartProducts), coutCartSum(newCartProducts)))
         }
     }
 
@@ -227,10 +155,10 @@ export default function MainPage() {
         console.log(productQuantityPair);
 
         //отправляем данные на сервер
-        if(setProductsInCartOnServer(productQuantityPair)){
+        if(setProductsInCartOnServer(productQuantityPair, getLocalSessionId())){
             setProductsInCart(newCartProducts);
             setCartSum(coutCartSum(newCartProducts));
-            setCartContext(CountItems(newCartProducts) + ' | ' + coutCartSum(newCartProducts) + ' ₽');
+            setCartContext(countItems(newCartProducts) + ' | ' + coutCartSum(newCartProducts) + ' ₽');
         }
     }
 
@@ -238,7 +166,7 @@ export default function MainPage() {
         <Layout>
 
 
-      
+      {/*
         <Container>
         <h4>Корзина</h4>
         <Table bordered hover striped responsive >
@@ -255,9 +183,6 @@ export default function MainPage() {
                     </tr>
                 }) : ""
             }
-            
-
-            
             {
                 <tr>
                     <td></td>
@@ -269,6 +194,7 @@ export default function MainPage() {
             </tbody>
         </Table>
         </Container>
+        */}
         
 
         <Container>

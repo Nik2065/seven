@@ -14,7 +14,7 @@ import {CartContext} from './CartContext';
 function App() {
   
   //в данном контексте храним кол-во покупок в корзине и сумму товаров
-  const [context, setContext] = useState("2|567 руб.");
+  const [context, setContext] = useState("");
 
 
   return (

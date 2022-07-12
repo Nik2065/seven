@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Link } from "react-router-dom";
 import {LinkContainer} from 'react-router-bootstrap'
 import {Container, Nav, 
@@ -8,11 +8,42 @@ import {Container, Nav,
 import { BsCartFill } from "react-icons/bs";
 
 import {CartContext} from './CartContext'
-
+import { getLocalSessionId, createCartTitle, countItems, coutCartSum} from './functions/commonFunctions'
+import { getCartBySessionId } from './functions/serverFunctions'
 
 export default function Layout ({children}) {
 
   const [cartContext, setCartContext] = useContext(CartContext);
+
+    //получаем содержимое корзины
+    useEffect(()=>{
+
+        const sId = getLocalSessionId();
+        //загружаем корзину
+
+        getCartBySessionId(sId)
+        .then(result => {
+            //console.log({result});
+            //initialCart = result.CartItems;
+            let cartItems = [];
+            if(result.cartItems != null && result.cartItems.length>0){
+                result.cartItems.forEach((item, i) => {
+                cartItems.push({
+                    qty: item.qty,
+                    product: item.product
+                });
+                }
+            )
+            }
+            
+            console.log({cartItems});
+
+            //setProductsInCart(cartItems);
+            //setCartSum(coutCartSum(cartItems));
+            setCartContext(createCartTitle(countItems(cartItems), coutCartSum(cartItems)));
+        })
+
+    }, []);
 
     return ( 
         <>
