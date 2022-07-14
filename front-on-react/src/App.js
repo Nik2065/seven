@@ -14,6 +14,7 @@ import { Example } from "./Pages/Example";
 import ContactsPage from "./Pages/ContactsPage";
 import AdminPage from "./Pages/AdminPage";
 import LogoutAdmin from "./Pages/LogoutAdmin";
+import AdminLoginPage from "./Pages/AdminLoginPage";
 
 function App() {
   
@@ -34,6 +35,8 @@ function App() {
         <Route path='/ex/:id/:slug' element={<Example/>} />
         <Route exact path='/contacts' element={<ContactsPage/>} />
 
+
+        <Route exact path='/admin-login' element={<AdminLoginPage/>} />
         <Route exact path='/admin' element={<AdminPage/>} />
         <Route exact path='/logout-admin' element={<LogoutAdmin/>} />
         
