@@ -11,6 +11,9 @@ import ProductPage from './Pages/ProductPage'
 
 import {CartContext} from './CartContext';
 import { Example } from "./Pages/Example";
+import ContactsPage from "./Pages/ContactsPage";
+import AdminPage from "./Pages/AdminPage";
+import LogoutAdmin from "./Pages/LogoutAdmin";
 
 function App() {
   
@@ -29,6 +32,10 @@ function App() {
         }
         <Route path='/catalog/:productid' element={<ProductPage/>} />
         <Route path='/ex/:id/:slug' element={<Example/>} />
+        <Route exact path='/contacts' element={<ContactsPage/>} />
+
+        <Route exact path='/admin' element={<AdminPage/>} />
+        <Route exact path='/logout-admin' element={<LogoutAdmin/>} />
         
     </Routes>
     </CartContext.Provider>

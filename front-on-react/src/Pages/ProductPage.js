@@ -44,7 +44,9 @@ export default function ProductPage(){
             <Col  sm={9}>
             <h3>{product.name}</h3>
             art: iuweryt<br/>
-            {product.description}
+            {product.description}<br/>
+            <br/>
+            <strong>{product.cost} ₽</strong>
             </Col>
         </Row>
 

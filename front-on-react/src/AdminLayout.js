@@ -11,7 +11,7 @@ import {CartContext} from './CartContext'
 import { getLocalSessionId, createCartTitle, countItems, coutCartSum} from './functions/commonFunctions'
 import { getCartBySessionId } from './functions/serverFunctions'
 
-export default function Layout ({children}) {
+export default function AdminLayout ({children}) {
 
   const [cartContext, setCartContext] = useContext(CartContext);
 
@@ -53,15 +53,14 @@ export default function Layout ({children}) {
     
         <Nav className="me-auto">
         <LinkContainer to="/contacts">
-          <Nav.Link>Контакты</Nav.Link>
+          <Nav.Link>Инструкция по добавлению товаров</Nav.Link>
         </LinkContainer>
         </Nav>
     
-          <Navbar.Collapse className="justify-content-end">
-            <Link title="Перейти к корзине" className="nav-link" to="/shopping-cart">   <BsCartFill style={{fontSize:"1.9rem", color:"white"}} />   </Link>
-            <span style={{color:"white"}}>{cartContext}</span>
-            
-        </Navbar.Collapse>
+        <LinkContainer to="/logout-admin">
+          <Nav.Link>{'exit >'}</Nav.Link>
+        </LinkContainer>
+
         </Container>
         </Navbar>
         
@@ -69,19 +68,11 @@ export default function Layout ({children}) {
         {children}
         </Container>
 
-        <Navbar bg="dark" variant="dark" style={{height:"100px"}}>
+        <Navbar variant="dark" style={{height:"100px", backgroundColor:"#ccc"}}>
             <Container>
                 <Navbar.Collapse id="responsive-navbar-nav">
-                <Nav className="me-auto">
-                    <Nav.Link href="#features">Features</Nav.Link>
-                    <Nav.Link href="#pricing">Pricing</Nav.Link>
-                </Nav>
-                <Nav>
-                    <Nav.Link href="#deets">More deets</Nav.Link>
-                    <Nav.Link eventKey={2} href="#memes">
-                    Dank memes
-                    </Nav.Link>
-                </Nav>
+
+
                 </Navbar.Collapse>
             </Container>
 
