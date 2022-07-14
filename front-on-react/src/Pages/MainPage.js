@@ -1,5 +1,7 @@
 import React, {useEffect, useState, useContext} from "react";
 
+import {Link} from 'react-router-dom';
+
 import {Container, Card,
     Button, Row, Col} 
     from 'react-bootstrap';
@@ -37,7 +39,7 @@ export default function MainPage() {
         
         getAllCatalogItems()
         .then( result => {
-            //console.log({result})
+            console.log({result})
             setProductsInCatalog(result.paginationResult.resultList);
 
         });
@@ -79,7 +81,7 @@ export default function MainPage() {
 
 
    
-    const [, setCartSum] = useState(coutCartSum(productsInCart));
+    const [cartSum, setCartSum] = useState(coutCartSum(productsInCart));
 
 
 
@@ -206,7 +208,10 @@ export default function MainPage() {
             return <Col key={i}>
             <Card>
             <Card.Body>
-                <Card.Title>{item.name}</Card.Title>
+                <Card.Title>
+                    <Link to={'/catalog/' + item.id}>{item.name}</Link>
+                    
+                </Card.Title>
                 <Card.Text>
                 {item.cost}
                 </Card.Text>

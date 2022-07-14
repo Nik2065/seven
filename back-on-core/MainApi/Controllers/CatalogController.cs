@@ -66,6 +66,32 @@ namespace MainApi.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Описание продукта из каталога товаров
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<ActionResult> GetProduct(int productId)
+        {
+            var result = new GetProductResponse { Success = true, Message = ""};
+
+            try
+            {
+                result.Product = _db.Products.FirstOrDefault(x => x.Id == productId);
+
+            }
+            catch(Exception ex)
+            {
+                _logger.Error(ex);
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+
+
+            return Ok(result);
+        }
+
 
         private List<CatalogItemDto> GetCatalogItemDtoList(IQueryable<ProductDb> items)
         {

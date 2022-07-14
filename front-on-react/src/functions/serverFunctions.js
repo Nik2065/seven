@@ -81,3 +81,14 @@ export async function createOrderFromCartOnServerSide(obj){
 
     return result;
 }
+
+
+export async function getProduct(productId) {
+
+    const url= baseUrl + '/Catalog/GetProduct?productId=' + productId;
+    const resp = await fetch(url);
+    const obj = await resp.json();
+    const p = await obj.product;
+    //console.log()
+    return p;
+}
