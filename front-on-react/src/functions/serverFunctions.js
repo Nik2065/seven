@@ -92,3 +92,44 @@ export async function getProduct(productId) {
     //console.log()
     return p;
 }
+
+
+
+//
+// для администрирования
+//
+
+/*export async function getAdminProductsList(){
+    const url = baseUrl + '/Catalog/GetAllCatalogItems';
+
+    const resp = await fetch(url);
+    const res = await resp.json();
+    return res;
+}*/
+
+export async function SaveProduct(product) {
+    const url= baseUrl + '/Catalog/SaveProduct';
+
+
+    const obj = {
+        id: product.id,
+        name: product.name,
+        description: product.description,
+        cost: product.cost
+    };
+
+    const resp = await fetch(url, {
+        method:'POST',
+        body: JSON.stringify(obj),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+    });
+    const resp2 = await resp.json();
+    console.log(resp2);
+
+    //const p = await resp2;
+    //console.log()
+    return resp2;
+}

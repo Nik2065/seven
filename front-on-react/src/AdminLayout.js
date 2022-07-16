@@ -1,7 +1,7 @@
 import React, {useContext, useEffect} from 'react';
 import {Link } from "react-router-dom";
 import {LinkContainer} from 'react-router-bootstrap'
-import {Container, Nav, 
+import {Col, Container, Nav, Row,
     Navbar} 
     from 'react-bootstrap';
 
@@ -10,6 +10,10 @@ import { BsCartFill } from "react-icons/bs";
 import {CartContext} from './CartContext'
 import { getLocalSessionId, createCartTitle, countItems, coutCartSum} from './functions/commonFunctions'
 import { getCartBySessionId } from './functions/serverFunctions'
+
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 export default function AdminLayout ({children}) {
 
@@ -68,14 +72,19 @@ export default function AdminLayout ({children}) {
         {children}
         </Container>
 
-        <Navbar variant="dark" style={{height:"100px", backgroundColor:"#ccc"}}>
+        <Navbar fixed='bottom' style={{ backgroundColor:"#ccc", height: "150px"}}>
             <Container>
-                <Navbar.Collapse id="responsive-navbar-nav">
-
-
-                </Navbar.Collapse>
+                <Row>
+                    <div  style={{width:"45%"}}>
+                        Техническая поддержка: 8(499)001-22-33<br/>
+                        info@sevenProjectSiteBuilder.ru
+                    </div>
+                    <div style={{width:"45%", textAlign:"right"}}>
+                        &copy; 2022 Разработано "ООО СамДиджиталСолюшенс"
+                    </div>
+                </Row>
+ 
             </Container>
-
             </Navbar>
         </>
     );

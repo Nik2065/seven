@@ -93,6 +93,47 @@ namespace MainApi.Controllers
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<ActionResult> SaveProduct(SaveProductRequest request)
+        {
+            var result = new SaveProductResponse { Success = true, Message = "Данные о продукте сохранены" };
+
+
+            try
+            {
+                var p = _db.Products.FirstOrDefault(item => item.Id == request.Id);
+
+                if (p == null)
+                    throw new Exception($"Продукт с id{request.Id} не найден в базе. Изменение невозможно");
+
+                p.Name = request.Name;
+                p.Cost = request.Cost;
+                p.Description = request.Description;
+
+                await _db.SaveChangesAsync();
+                //TODO: писать какой-то лог изменений?
+
+            }
+            catch(Exception ex)
+            {
+                _logger.Error(ex);
+                result.Success = false;
+                result.Message = ex.Message;
+
+            }
+
+
+            return Ok(result);
+
+        }
+
+
+
         private List<CatalogItemDto> GetCatalogItemDtoList(IQueryable<ProductDb> items)
         {
             var result = new List<CatalogItemDto>();

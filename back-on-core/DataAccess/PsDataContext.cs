@@ -39,5 +39,7 @@ namespace DataAccess
 
         public DbSet<ProductDb> Products { get; set; }
         public DbSet<OrderDb> Orders { get; set; }
+        public DbSet<ProjectDb> Projects { get; set; }
+        public DbSet<AccountDb> Accounts { get; set; }
     }
 }
