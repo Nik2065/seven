@@ -15,7 +15,7 @@ namespace DataAccess
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //var connectionString = "server=localhost;user=root;password=Fgh12345;database=projectseven;";
-            var connectionString = "server=192.168.0.105;user=newuser;password=123456;database=projectseven;";
+            var connectionString = "server=192.168.114.164;user=newuser;password=123456;database=projectseven;";
             //var ver = new ServerVersion()
 
             optionsBuilder.UseMySql(

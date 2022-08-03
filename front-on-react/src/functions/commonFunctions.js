@@ -1,8 +1,4 @@
 
-
-
-
-
 export function getLocalSessionId() { 
         const sessionId = localStorage.getItem('sessionId');
         //console.log(sid);
@@ -22,6 +18,20 @@ function createGuid()
    });*/
    return '167438a6-4e75-4c15-bd5b-0a6610f92212';  
 }
+
+export function getLocalAuthData(){
+   localStorage.getItem('authData');
+}
+
+export function getLocalAuthToken(){
+   const d = localStorage.getItem('authData');
+   return d.access_token;
+}
+
+export function setLocalAuthToken(authData){
+   localStorage.getItem('authData', authData);
+}
+
 
 export function coutCartSum(items){
 

@@ -55,7 +55,8 @@ namespace MainApi.Controllers
             var response = new
             {
                 access_token = encodedJwt,
-                username = identity.Name
+                username = identity.Name,
+                expires = DateTime.Now.AddMinutes(AuthOptions.LIFETIME).ToString("s")
             };
 
             return Ok(response);
@@ -72,12 +73,16 @@ namespace MainApi.Controllers
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimsIdentity.DefaultNameClaimType, account.Email)
+                    new Claim(ClaimsIdentity.DefaultNameClaimType, account.Email),
+                    new Claim("accountId", account.Id.ToString())
+
                     //,new Claim(ClaimsIdentity.DefaultRoleClaimType, person.Role)
                 };
                 ClaimsIdentity claimsIdentity =
-                new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
-                    ClaimsIdentity.DefaultRoleClaimType);
+                //new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
+                //    ClaimsIdentity.DefaultRoleClaimType, ClaimTypes.Expired);
+
+                new ClaimsIdentity(claims, "Token");
                 return claimsIdentity;
             }
 

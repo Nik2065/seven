@@ -1,14 +1,36 @@
+import {useState} from 'react';
 
-import { Container, Form, Button,Row, Col, Table, Navbar } from "react-bootstrap";
+import { Container, Form, Button, Row, Col, Alert, Navbar } from "react-bootstrap";
 
 
 
-
+import {Auth } from '../../functions/serverFunctions';
 
 export default function AdminLoginPage () {
 
+  const [authErr, setAuthErr] = useState({});
 
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
 
+const auth = () => {
+
+    Auth(login, password)
+    .then((authResult) => {
+      console.log({authResult});
+
+      
+    })
+
+    //if(authResult.)
+    
+
+    //если успешно авторизовались
+    //сохраняем результат в localstorage
+    //if()
+    
+    //localStorage
+}
 
 
 return(
@@ -20,12 +42,19 @@ return(
   <Col sm={2} lg={3}></Col>
   <Col xs={12} sm={8} lg={6}>
 
+<Alert  key="warning" variant="warning">
+<Alert.Heading>Ошибка авторизации</Alert.Heading>
+<p>
+
+</p>
+</Alert>
+
 <div style={{backgroundColor:"#ccc", padding:"10px"}}>
 <div className="h4" style={{textAlign:"center"}}>Администрирование</div>
-<Form >
+<Form>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" />
+        <Form.Control value={login} onChange={(e)=> setLogin(e.target.value)} type="email" placeholder="Enter email" />
         <Form.Text className="text-muted">
           
         </Form.Text>
@@ -33,13 +62,13 @@ return(
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" />
+        <Form.Control value={password} onChange={(e)=> setPassword(e.target.value)} type="password" placeholder="Password" />
          <Form.Text className="text-muted">
           
          </Form.Text>
       </Form.Group>
       <div style={{textAlign:"right"}}>
-      <Button  variant="primary" type="button">
+      <Button onClick={() => auth()}  variant="primary" type="button">
         Войти
       </Button>
       </div>

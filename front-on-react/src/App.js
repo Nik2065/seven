@@ -13,8 +13,8 @@ import {CartContext} from './CartContext';
 import { Example } from "./Pages/Example";
 import ContactsPage from "./Pages/ContactsPage";
 import AdminPage from "./Pages/Admin/AdminPage";
-import AdminProductsListPage from './Pages/Admin/AdminProductsListPage'
-import LogoutAdmin from "./Pages/LogoutAdmin";
+//import AdminProductsListPage from './Pages/Admin/AdminProductsListPage'
+import AdminLogout from "./Pages/Admin/AdminLogout";
 import AdminLoginPage from "./Pages/Admin/AdminLoginPage";
 
 function App() {
@@ -37,9 +37,8 @@ function App() {
         <Route exact path='/contacts' element={<ContactsPage/>} />
 
         <Route exact path='/admin' element={<AdminPage/>} />
-
         <Route exact path='/adminlogin' element={<AdminLoginPage/>} />
-        <Route exact path='/admin-logout' element={<LogoutAdmin/>} />
+        <Route exact path='/adminlogout' element={<AdminLogout/>} />
         
     </Routes>
     </CartContext.Provider>
