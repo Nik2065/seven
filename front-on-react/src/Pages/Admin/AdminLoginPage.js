@@ -1,5 +1,5 @@
 import {useState} from 'react';
-
+import { Navigate } from "react-router-dom";
 import { Container, Form, Button, Row, Col, Alert, Navbar } from "react-bootstrap";
 
 
@@ -8,28 +8,83 @@ import {Auth } from '../../functions/serverFunctions';
 
 export default function AdminLoginPage () {
 
-  const [authErr, setAuthErr] = useState({});
+  const [authErr, setAuthErr] = useState(
+    {Success: true,
+    Message:""});
 
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 
+
+const validateEmail = (email) => {
+    return email.match(
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+};
+
 const auth = () => {
 
-    Auth(login, password)
-    .then((authResult) => {
-      console.log({authResult});
+    //валидируем
+    //логин - это email
+    if(!validateEmail(login)){
+      setAuthErr({
+        Success:false,
+        Message:"Ошибка в email"
+      });
+      return;
+    }
 
+    //длина пароля не меньше 6 символов
+    if(password.length < 6){
+      setAuthErr({
+        Success:false,
+        Message:"Пароль не может быть короче 6ти символов"
+      });
+      return;
+    }
+
+    var authResult = Auth(login, password);
+    //console.log({authResult});
+      //если успешно авторизовались
+      //сохраняем результат в localstorage
+      //if()
       
-    })
+    //})
 
-    //if(authResult.)
-    
 
-    //если успешно авторизовались
-    //сохраняем результат в localstorage
-    //if()
+
+    authResult.then((res) => {
+
+      console.log({res});
+
+      const aData = {
+        access_token:res.access_token,
+        expires: res.expires,
+        username: res.username
+      };
+
+      if(res.success){
+        console.log("success");
+        localStorage.setItem('authData', JSON.stringify(aData));
+        //TODO: вот тут переход на предыдущую страницу на которой были
+        //пока просто переходим к проектам
+        //history.push("/home");
+        
+        //TODO: сделать нормально
+        //window.location.replace('admin')
+
+
+      }
+      else {
+        setAuthErr({
+          Success: res.success,
+          Message: res.message
+        });
+      }
+
+
+    });
     
-    //localStorage
 }
 
 
@@ -42,10 +97,10 @@ return(
   <Col sm={2} lg={3}></Col>
   <Col xs={12} sm={8} lg={6}>
 
-<Alert  key="warning" variant="warning">
+<Alert  key="warning" variant="warning" show={!authErr.Success}>
 <Alert.Heading>Ошибка авторизации</Alert.Heading>
 <p>
-
+{authErr.Message}
 </p>
 </Alert>
 

@@ -3,6 +3,7 @@ import { Container, Card, Button} from "react-bootstrap";
 
 import AdminLayout from "../../AdminLayout";
 
+import {getProjects} from '../../functions/serverFunctions'
 
 
 export default function AdminPage () {
@@ -12,14 +13,27 @@ export default function AdminPage () {
 
   useEffect(()=> {
     //идем на сервер, скачиваем для учетки список проектов
+    const getProjectsResp = getProjects();
+
+    //console.log({getProjectsResp});
+
+    getProjectsResp.then(resp => {
+      console.log({resp});
+      if(resp.success){
+        setProjects(resp.projects);
+      }
+    });
+
 
   },[])
 
+  
 return(
 <AdminLayout>
 <br/>
 <Container>
 
+{/*
 <Card style={{ width: '18rem' }}>
       <Card.Img variant="top" />
       <Card.Body>
@@ -30,6 +44,22 @@ return(
         <Button variant="primary">Перейти к настройкам</Button>
       </Card.Body>
     </Card>
+*/}
+
+{
+  projects.map((project, i)=>{ 
+    return <Card key={i} style={{ width: '18rem' }}>
+      <Card.Img variant="top" />
+      <Card.Body>
+        <Card.Title>{project.projectName}</Card.Title>
+        <Card.Text>
+          {project.description}
+        </Card.Text>
+        <Button variant="primary">Перейти к настройкам</Button>
+      </Card.Body>
+  </Card>
+    })
+}
 
 </Container>
 

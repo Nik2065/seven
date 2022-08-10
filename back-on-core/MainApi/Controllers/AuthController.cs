@@ -38,7 +38,11 @@ namespace MainApi.Controllers
             var identity = GetIdentity(request.Username, request.Password);
             if (identity == null)
             {
-                return BadRequest(new { errorText = "Invalid username or password." });
+                return Unauthorized(new 
+                { 
+                    Success = false,
+                    Message = "Invalid username or password." }
+                );
             }
 
             var now = DateTime.UtcNow;
@@ -54,6 +58,8 @@ namespace MainApi.Controllers
 
             var response = new
             {
+                Success = true,
+                Message = "Auth success",
                 access_token = encodedJwt,
                 username = identity.Name,
                 expires = DateTime.Now.AddMinutes(AuthOptions.LIFETIME).ToString("s")
@@ -96,7 +102,7 @@ namespace MainApi.Controllers
         [Route("[action]")]
         public async Task<ActionResult> CreateNewAccount(CreateNewAccountRequest request)
         {
-            var result = new BaseResponse { Success=true, Message="Акксунт успешно создан" };
+            var result = new BaseResponse { Success=true, Message="Аккаунт успешно создан" };
 
             try
             {

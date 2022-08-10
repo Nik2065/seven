@@ -1,9 +1,11 @@
 //
 import { useHistory } from "react-router-dom";
 
-const baseUrl = 'http://localhost:49153';
+//const baseUrl = 'http://localhost:49153';
+const baseUrl = 'http://localhost:5000';
+const frontBaseUrl = 'http://localhost:3000';
 
-const loginPage = baseUrl + '/adminlogin'
+const loginPage = frontBaseUrl + '/adminlogin'
 
 
 
@@ -121,8 +123,15 @@ export async function getProduct(productId) {
  function getAuthHeader(){
     const d = localStorage.getItem('authData');
 
+    if(d == null) {
+        redirectToLoginPage();
+    }
+    //console.log({d});
+    const data = JSON.parse(d);
+
+    //console.log({data});
     return {
-        'Authorization': 'Bearer ' + d.access_token,
+        'Authorization': 'Bearer ' + data.access_token,
     }
  }
 
@@ -135,11 +144,11 @@ export async function getProjects() {
         method:'GET',
         headers: getAuthHeader(),
     });
-    
+
     const obj = await resp.json();
-    const p = await obj.product;
+    //const p = await obj.product;
     //console.log()
-    return p;
+    return obj;
 }
 
 
@@ -199,21 +208,42 @@ export async function Auth(login, password) {
 
     //try {
 
-        fetch(url, {
+        let body = {};
+        const res = await fetch(url, {
             method:'POST',
             body: JSON.stringify(obj),
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-        })
-        .then((res) => {
-            console.log({res});
+        });
+
+        //пока убираем ограничение по коду
+        //if(res.status === 200){
+
+            body = await res.json();
+            return body;
+        //}
+
+
+
+
+        /*.then((res) => {
+            //console.log({res});
+            //console.log("res.status " + res.status);
+
+            //const j = res.json();
+            //console.log({j});
 
 
             if(res.status === 200) {
                 authResult.success = true;
 
+                res.json().than(body => {
+                    
+                    return body;
+
+                });
             }
             else if(res.status === 403){
                 authResult.success = false;
@@ -227,8 +257,9 @@ export async function Auth(login, password) {
 
             return authResult;
 
-        })
-        .catch(error => {
+        })*/
+        //TODO: обработка отсутствия сети
+        /*.catch(error => {
             //console.log(error);
             if(error.name == 'NetworkError')
                 console.log("some network error");
@@ -236,7 +267,7 @@ export async function Auth(login, password) {
             authResult.success = false;
             authResult.message = "Ошибка сети";
             return authResult;
-        });
+        });*/
         
     //}
     //catch(catchErr){

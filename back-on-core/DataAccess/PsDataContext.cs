@@ -15,7 +15,7 @@ namespace DataAccess
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //var connectionString = "server=localhost;user=root;password=Fgh12345;database=projectseven;";
-            var connectionString = "server=192.168.114.164;user=newuser;password=123456;database=projectseven;";
+            var connectionString = "server=192.168.2.102;user=newuser;password=123456;database=projectseven;";
             //var ver = new ServerVersion()
 
             optionsBuilder.UseMySql(
@@ -25,8 +25,8 @@ namespace DataAccess
                     options.ServerVersion("8.0.29");
 
                     options.EnableRetryOnFailure(
-                        maxRetryCount: 5,
-                        maxRetryDelay: System.TimeSpan.FromSeconds(30),
+                        maxRetryCount: 1,
+                        maxRetryDelay: System.TimeSpan.FromSeconds(10),
                         errorNumbersToAdd: null);
                 }
                 );
