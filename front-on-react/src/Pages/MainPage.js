@@ -204,7 +204,7 @@ export default function MainPage() {
         <Row>
         {
         
-        productsInCatalog.map((item, i) => {
+        (productsInCatalog != null) ? productsInCatalog.map((item, i) => {
             return <Col key={i}>
             <Card>
             <Card.Body>
@@ -221,7 +221,9 @@ export default function MainPage() {
             </Card>
             </Col>
         })
-        }
+        : ""
+        
+        } 
         </Row>
 <Row>
             <Col>

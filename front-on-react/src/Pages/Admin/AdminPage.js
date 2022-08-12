@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import { Container, Card, Button} from "react-bootstrap";
-
+import {LinkContainer} from 'react-router-bootstrap'
 import AdminLayout from "../../AdminLayout";
 
 import {getProjects} from '../../functions/serverFunctions'
@@ -55,7 +55,9 @@ return(
         <Card.Text>
           {project.description}
         </Card.Text>
-        <Button variant="primary">Перейти к настройкам</Button>
+        <LinkContainer to={"/project/" + project.id} >
+        <Button variant="primary">Настройки</Button>
+        </LinkContainer>
       </Card.Body>
   </Card>
     })

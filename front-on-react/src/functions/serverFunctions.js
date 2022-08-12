@@ -29,7 +29,7 @@ export async function getAllCatalogItems(){
 
 
 export async function setProductsInCartOnServer(productQuantityPair, localSessionId){
-    const url = 'http://localhost:49153/Cart/ChangeCartProductQuantity';
+    const url = baseUrl + '/Cart/ChangeCartProductQuantity';
 
     console.log({productQuantityPair});
 
@@ -45,7 +45,6 @@ export async function setProductsInCartOnServer(productQuantityPair, localSessio
     const response = await fetch(url, {
         method:"POST", 
         body: JSON.stringify(request),
-        //body: request,
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'

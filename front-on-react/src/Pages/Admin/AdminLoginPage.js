@@ -71,7 +71,7 @@ const auth = () => {
         //history.push("/home");
         
         //TODO: сделать нормально
-        //window.location.replace('admin')
+        window.location.replace('admin')
 
 
       }
@@ -136,7 +136,7 @@ return(
 
 </Container>
 
-<Navbar bg="dark" variant="light"  fixed="bottom" style={{height:"150px"}}>
+<Navbar bg="dark" variant="light"  fixed="bottom" style={{height:"10%"}}>
 <Container style={{color:"white"}}>
         <div style={{textAlign:"right", width:"100%"}} >
         Администрирование для ProjectSeven Site Builder

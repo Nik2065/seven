@@ -17,6 +17,9 @@ import AdminPage from "./Pages/Admin/AdminPage";
 import AdminLogout from "./Pages/Admin/AdminLogout";
 import AdminLoginPage from "./Pages/Admin/AdminLoginPage";
 
+import ProjectSettings from "./Pages/Admin/ProjectSettings"
+
+
 function App() {
   
   //в данном контексте храним кол-во покупок в корзине и сумму товаров
@@ -40,6 +43,8 @@ function App() {
         <Route exact path='/adminlogin' element={<AdminLoginPage/>} />
         <Route exact path='/adminlogout' element={<AdminLogout/>} />
         
+        <Route exact path='/project/:pid' element={<ProjectSettings/>} />
+
     </Routes>
     </CartContext.Provider>
   );
