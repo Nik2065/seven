@@ -125,10 +125,21 @@ export async function getProduct(productId) {
     if(d == null) {
         redirectToLoginPage();
     }
-    //console.log({d});
     const data = JSON.parse(d);
 
-    //console.log({data});
+
+
+    
+    const end = Date.parse(data.expires);
+    const current = new Date();
+    //console.log(data.expires);
+    //console.log({end});
+
+    //если ключ просрочен, то тоже идем на страницу логина
+    if(end<current){
+        redirectToLoginPage();
+    }
+
     return {
         'Authorization': 'Bearer ' + data.access_token,
     }

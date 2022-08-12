@@ -8,7 +8,7 @@ import {Col, Container, Nav, Row,
 import { BsCartFill } from "react-icons/bs";
 
 import {CartContext} from './CartContext'
-import { getLocalSessionId, createCartTitle, countItems, coutCartSum} from './functions/commonFunctions'
+import { getLocalSessionId, createCartTitle, countItems, countCartSum} from './functions/commonFunctions'
 import { getCartBySessionId } from './functions/serverFunctions'
 
 
@@ -44,10 +44,18 @@ export default function AdminLayout ({children}) {
 
             //setProductsInCart(cartItems);
             //setCartSum(coutCartSum(cartItems));
-            setCartContext(createCartTitle(countItems(cartItems), coutCartSum(cartItems)));
+            setCartContext(createCartTitle(countItems(cartItems), countCartSum(cartItems)));
         })
 
     }, []);
+
+
+    const logout=()=>{
+        localStorage.removeItem('authData');
+        //TODO: сделать нормально
+        window.location.replace('/adminlogin')
+    }
+
 
     return ( 
         <>
@@ -56,14 +64,16 @@ export default function AdminLayout ({children}) {
         <Link className="navbar-brand" to="/">ProjectSeven ReactShop</Link>
     
         <Nav className="me-auto">
-        <LinkContainer to="/contacts">
-          <Nav.Link>Инструкция по добавлению товаров</Nav.Link>
+        <LinkContainer to="/admin">
+          <Nav.Link>Проекты</Nav.Link>
         </LinkContainer>
         </Nav>
     
-        <LinkContainer to="/logout-admin">
-          <Nav.Link>{'exit >'}</Nav.Link>
-        </LinkContainer>
+        <Nav className="justify-content-end" activeKey="/home">
+            
+            <Nav.Link onClick={() => logout()} >Выход</Nav.Link>
+            
+        </Nav>
 
         </Container>
         </Navbar>
@@ -72,14 +82,14 @@ export default function AdminLayout ({children}) {
         {children}
         </Container>
 
-        <Navbar fixed='bottom' style={{ backgroundColor:"#ccc", height: "150px"}}>
+        <Navbar fixed='bottom' style={{ backgroundColor:"#ccc", maxHeight:"12%", height:"100px"}}>
             <Container>
                 <Row>
-                    <div  style={{width:"45%"}}>
+                    <div  style={{width:"45%", fontSize:"0.8em"}}>
                         Техническая поддержка: 8(499)001-22-33<br/>
                         info@sevenProjectSiteBuilder.ru
                     </div>
-                    <div style={{width:"45%", textAlign:"right"}}>
+                    <div style={{width:"45%", textAlign:"right", fontSize:"0.8rem"}}>
                         &copy; 2022 Разработано "ООО СамДиджиталСолюшенс"
                     </div>
                 </Row>

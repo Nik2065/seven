@@ -33,7 +33,7 @@ export function setLocalAuthToken(authData){
 }
 
 
-export function coutCartSum(items){
+export function countCartSum(items){
 
    let s = 0;
    if(items != null && items !== undefined && items.length >0)

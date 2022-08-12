@@ -9,7 +9,7 @@ import {Container, Card,
 import Layout from "../Layout.js";
 
 import {CartContext} from '../CartContext'
-import {getLocalSessionId, coutCartSum, createCartTitle, countItems} from '../functions/commonFunctions'
+import {getLocalSessionId, countCartSum, createCartTitle, countItems} from '../functions/commonFunctions'
 import {getCartBySessionId, getAllCatalogItems, setProductsInCartOnServer} from '../functions/serverFunctions'
 
 export default function MainPage() {
@@ -73,15 +73,15 @@ export default function MainPage() {
             console.log({cartItems});
 
             setProductsInCart(cartItems);
-            setCartSum(coutCartSum(cartItems));
-            setCartContext(createCartTitle(countItems(cartItems), coutCartSum(cartItems)));
+            setCartSum(countCartSum(cartItems));
+            setCartContext(createCartTitle(countItems(cartItems), countCartSum(cartItems)));
         })
 
     }, []);
 
 
    
-    const [cartSum, setCartSum] = useState(coutCartSum(productsInCart));
+    const [cartSum, setCartSum] = useState(countCartSum(productsInCart));
 
 
 
@@ -120,8 +120,8 @@ export default function MainPage() {
         //отправляем данные на сервер
         if(setProductsInCartOnServer(productQuantityPair, getLocalSessionId())){
             setProductsInCart(newCartProducts);
-            setCartSum(coutCartSum(newCartProducts));
-            setCartContext(createCartTitle(countItems(newCartProducts), coutCartSum(newCartProducts)))
+            setCartSum(countCartSum(newCartProducts));
+            setCartContext(createCartTitle(countItems(newCartProducts), countCartSum(newCartProducts)))
         }
     }
 
@@ -159,8 +159,8 @@ export default function MainPage() {
         //отправляем данные на сервер
         if(setProductsInCartOnServer(productQuantityPair, getLocalSessionId())){
             setProductsInCart(newCartProducts);
-            setCartSum(coutCartSum(newCartProducts));
-            setCartContext(countItems(newCartProducts) + ' | ' + coutCartSum(newCartProducts) + ' ₽');
+            setCartSum(countCartSum(newCartProducts));
+            setCartContext(countItems(newCartProducts) + ' | ' + countCartSum(newCartProducts) + ' ₽');
         }
     }
 
@@ -222,7 +222,7 @@ export default function MainPage() {
             </Col>
         })
         : ""
-        
+
         } 
         </Row>
 <Row>

@@ -87,6 +87,12 @@ const auth = () => {
     
 }
 
+const something = (event)=>{
+  if (event.keyCode === 13) {
+    //console.log('enter')
+    auth();
+}
+}
 
 return(
 <>
@@ -106,7 +112,7 @@ return(
 
 <div style={{backgroundColor:"#ccc", padding:"10px"}}>
 <div className="h4" style={{textAlign:"center"}}>Администрирование</div>
-<Form>
+<Form onKeyDown={(e) => something(e) }>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
         <Form.Control value={login} onChange={(e)=> setLogin(e.target.value)} type="email" placeholder="Enter email" />

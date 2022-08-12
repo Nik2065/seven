@@ -4,7 +4,7 @@ import Layout from "../Layout";
 import {Button, Container, Table} 
     from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap'
-import { getLocalSessionId, coutCartSum } from "../functions/commonFunctions";
+import { getLocalSessionId, countCartSum } from "../functions/commonFunctions";
 import { getCartBySessionId } from "../functions/serverFunctions";
 
 
@@ -35,13 +35,13 @@ export default function CartPage() {
             console.log({cartItems});
 
             setProductsInCart(cartItems);
-            setCartSum(coutCartSum(cartItems));
+            setCartSum(countCartSum(cartItems));
         })
 
 
     }, []);
 
-    const [cartSum, setCartSum] = useState(coutCartSum(productsInCart));
+    const [cartSum, setCartSum] = useState(countCartSum(productsInCart));
 
 
 

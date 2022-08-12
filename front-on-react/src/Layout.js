@@ -8,7 +8,7 @@ import {Container, Nav,
 import { BsCartFill } from "react-icons/bs";
 
 import {CartContext} from './CartContext'
-import { getLocalSessionId, createCartTitle, countItems, coutCartSum} from './functions/commonFunctions'
+import { getLocalSessionId, createCartTitle, countItems, countCartSum} from './functions/commonFunctions'
 import { getCartBySessionId } from './functions/serverFunctions'
 
 export default function Layout ({children}) {
@@ -40,7 +40,7 @@ export default function Layout ({children}) {
 
             //setProductsInCart(cartItems);
             //setCartSum(coutCartSum(cartItems));
-            setCartContext(createCartTitle(countItems(cartItems), coutCartSum(cartItems)));
+            setCartContext(createCartTitle(countItems(cartItems), countCartSum(cartItems)));
         })
 
     }, []);
@@ -69,7 +69,7 @@ export default function Layout ({children}) {
         {children}
         </Container>
 
-        <Navbar bg="dark" variant="dark" style={{height:"100px"}}>
+        <Navbar bg="dark" variant="dark" style={{maxHeight:"7%", height:"40px"}}>
             <Container>
                 <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">
