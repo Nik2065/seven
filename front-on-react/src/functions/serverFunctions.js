@@ -152,7 +152,9 @@ export async function getProjects() {
 
     const resp = await fetch(url, {
         method:'GET',
-        headers: getAuthHeader(),
+        headers: 
+        getAuthHeader(),
+
     });
 
     const obj = await resp.json();
@@ -348,4 +350,60 @@ export async function CreateAuthPostRequest(url, requestBody, addHeaders){
     
     const res2 = await res.json();
     return res2;
-} 
+}
+
+
+export async function getProject(projectId){
+
+    
+    const url= baseUrl + '/Projects/GetProject/' + projectId;
+
+    const resp = await fetch(url, {
+        method:'GET',
+        headers: getAuthHeader(),
+    });
+
+    const obj = await resp.json();
+    return obj;
+}
+
+
+
+export async function saveProject(projectId, projectName, projectDescription){
+
+    
+    const url= baseUrl + '/Projects/SaveProjectMainData';
+
+    const h1 = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        
+    };
+
+    //h1.push(...getAuthHeader());
+    //Object.assign(h1, getAuthHeader());
+
+    //console.log(getAuthHeader());
+    //console.log(h1);
+
+    const h = Object.assign(h1, getAuthHeader());
+
+    const req = {
+        id: parseInt(projectId),
+        projectName: projectName,
+        description: projectDescription
+    }
+    
+    console.log(req);
+
+    const resp = await fetch(url, {
+        method:'POST',
+        headers: h,
+        body: JSON.stringify(req)
+    });
+
+    const obj = await resp.json();
+    return obj;
+
+    //return {};
+}

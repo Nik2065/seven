@@ -41,5 +41,9 @@ namespace DataAccess
         public DbSet<OrderDb> Orders { get; set; }
         public DbSet<ProjectDb> Projects { get; set; }
         public DbSet<AccountDb> Accounts { get; set; }
+
+        public DbSet<PartForHeaderDb> PartForHeader { get; set; }
+
     }
 }
+

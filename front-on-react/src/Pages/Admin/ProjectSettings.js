@@ -1,9 +1,10 @@
-import {useState} from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { Container, Form, Button, Tabs, Tab, Sonnet } from "react-bootstrap";
 import AdminLayout from "../../AdminLayout";
 
+import  { getProject, saveProject } from '../../functions/serverFunctions'
 
 
 
@@ -12,12 +13,12 @@ export default function ProjectSettings () {
 
     //идентификатор проекта
     let { pid } = useParams();
-  
-
-    //получаем данные о проекте
-
     const [key, setKey] = useState('mainSettings');
-    console.log({pid});
+    
+
+   
+  
+    //console.log({pid});
 
 
     return (
@@ -66,25 +67,57 @@ export default function ProjectSettings () {
 
 function ProjectSettingsForm(pid){
 
+  //const [project, setProject] = useState({projectName:"", description:""});
+ const [projectName, setProjectName] = useState("");
+ const [projectDescription, setProjectDesc] = useState("");
+
+ //получаем данные о проекте
+ useEffect(()=> {
+      
+  const getProjectResp =  getProject(pid);
+
+  //console.log({getProjectsResp});
+
+  getProjectResp.then(resp => {
+    //console.log({resp});
+
+    if(resp.success){
+      //setProject(resp.project);
+      setProjectName(resp.project.projectName);
+      setProjectDesc(resp.project.description);
+    }
+  });
+
+  },[])
+
+
+  const SaveProject = () => {
+    const resp = saveProject(pid, projectName, projectDescription);
+    //console.log({resp});
+
+    resp.then(result => {
+      console.log({result});
+    })
+  }
+
+
+
   return (
-<Form>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" />
+<Form className={'col-lg-6'}>
+      <Form.Group className="mb-3">
+        <Form.Label>Имя проекта</Form.Label>
+        <Form.Control type="text" value={projectName} onChange={(e) => setProjectName(e.target.value)} />
         <Form.Text className="text-muted">
-          We'll never share your email with anyone else.
+          
         </Form.Text>
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" />
+      <Form.Group className="mb-3">
+        <Form.Label>Краткое описание проекта</Form.Label>
+        <Form.Control type="text" value={projectDescription} onChange={(e) => setProjectDesc(e.target.value)} />
       </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicCheckbox">
-        <Form.Check type="checkbox" label="Check me out" />
-      </Form.Group>
-      <Button variant="primary" type="submit">
-        Submit
+      <Button onClick={() => SaveProject("","", "")} variant="primary" type="button">
+        Сохранить
       </Button>
     </Form>
 

@@ -14,7 +14,6 @@ import { Example } from "./Pages/Example";
 import ContactsPage from "./Pages/ContactsPage";
 import AdminPage from "./Pages/Admin/AdminPage";
 //import AdminProductsListPage from './Pages/Admin/AdminProductsListPage'
-import AdminLogout from "./Pages/Admin/AdminLogout";
 import AdminLoginPage from "./Pages/Admin/AdminLoginPage";
 
 import ProjectSettings from "./Pages/Admin/ProjectSettings"
@@ -41,7 +40,6 @@ function App() {
 
         <Route exact path='/admin' element={<AdminPage/>} />
         <Route exact path='/adminlogin' element={<AdminLoginPage/>} />
-        <Route exact path='/adminlogout' element={<AdminLogout/>} />
         
         <Route exact path='/project/:pid' element={<ProjectSettings/>} />
 
