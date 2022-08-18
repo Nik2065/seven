@@ -2,6 +2,7 @@
 using Common.DTO;
 using DataAccess;
 using DataAccess.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -132,7 +133,49 @@ namespace MainApi.Controllers
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("[action]")]
+        [Authorize]
+        public async Task<ActionResult> CreateProduct(CreateProductRequest request)
+        {
+            var result = new SaveProductResponse { Success = true, Message = "Данные о продукте сохранены" };
 
+
+            try
+            {
+                //валидация:
+                if(request.Name == null || request.Name.Length < 3)
+                    throw new Exception($"Ошибка сохранения. Имя продукта должно быть длиннее 3х символов. ");
+
+                var p = _db.Products.FirstOrDefault(item => item.Name.Trim() == request.Name.Trim());
+
+                if (p == null)
+                    throw new Exception($"Продукт с именем:{request.Name.Trim()} найден в базе. Невозможно создать продукт с таким же именем");
+
+                p = new ProductDb();
+
+                p.Name = request.Name;
+                p.Cost = request.Cost;
+                p.Description = request.Description;
+
+                await _db.SaveChangesAsync();
+                //TODO: писать какой-то лог изменений?
+
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+
+
+            return Ok(result);
+        }
 
         private List<CatalogItemDto> GetCatalogItemDtoList(IQueryable<ProductDb> items)
         {
