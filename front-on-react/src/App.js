@@ -17,6 +17,9 @@ import AdminProductsListPage from './Pages/Admin/AdminProductsListPage'
 import AdminLoginPage from "./Pages/Admin/AdminLoginPage";
 import AdminProductPage from "./Pages/Admin/AdminProductPage"
 
+import AdminCharListPage from "./Pages/Admin/AdminCharListPage"
+import AdminCategoriesListPage from "./Pages/Admin/AdminCategoriesListPage"
+
 import ProjectSettings from "./Pages/Admin/ProjectSettings"
 
 
@@ -49,6 +52,8 @@ function App() {
         <Route exact path='/admin/product/:productid' element={<AdminProductPage/>} />
         <Route exact path='/admin/addproduct/' element={<AdminProductPage/>} />
 
+        <Route exact path='/admin/categories/' element={<AdminCategoriesListPage/>} />
+        <Route exact path='/admin/characteristics/' element={<AdminCharListPage/>} />
     </Routes>
     </CartContext.Provider>
   );

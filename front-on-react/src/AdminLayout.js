@@ -5,7 +5,9 @@ import {Col, Container, Nav, Row,
     Navbar} 
     from 'react-bootstrap';
 
-import { BsCartFill } from "react-icons/bs";
+import { BsDoorOpen } from "react-icons/bs";
+
+
 
 import {CartContext} from './CartContext'
 import { getLocalSessionId, createCartTitle, countItems, countCartSum} from './functions/commonFunctions'
@@ -70,11 +72,17 @@ export default function AdminLayout ({children}) {
         <LinkContainer to="/admin/products">
           <Nav.Link>Каталог</Nav.Link>
         </LinkContainer>
+        <LinkContainer to="/admin/categories">
+          <Nav.Link>Категории</Nav.Link>
+        </LinkContainer>
+        <LinkContainer to="/admin/characteristics">
+          <Nav.Link>Характеристики</Nav.Link>
+        </LinkContainer>
         </Nav>
     
         <Nav className="justify-content-end" activeKey="/home">
             
-            <Nav.Link onClick={() => logout()} >Выход</Nav.Link>
+            <Nav.Link onClick={() => logout()} >Выход <BsDoorOpen/></Nav.Link>
             
         </Nav>
 

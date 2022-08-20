@@ -407,3 +407,22 @@ export async function saveProject(projectId, projectName, projectDescription){
 
     //return {};
 }
+
+
+//с авторизацией
+export async function getCharacteristics() {
+
+    const url= baseUrl + '/Characteristics/GetAccountCharacteristics';
+
+    const resp = await fetch(url, {
+        method:'GET',
+        headers: 
+        getAuthHeader(),
+
+    });
+
+    const obj = await resp.json();
+    //const p = await obj.product;
+    //console.log()
+    return obj;
+}

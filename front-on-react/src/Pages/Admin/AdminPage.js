@@ -47,6 +47,7 @@ return(
 */}
 
 {
+  (projects !== undefined && projects.length>0) ? 
   projects.map((project, i)=>{ 
     return <Card key={i} style={{ width: '18rem' }}>
       <Card.Img variant="top" />
@@ -60,7 +61,7 @@ return(
         </LinkContainer>
       </Card.Body>
   </Card>
-    })
+    }) : ""
 }
 
 </Container>

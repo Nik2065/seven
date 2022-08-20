@@ -44,6 +44,10 @@ namespace DataAccess
 
         public DbSet<PartForHeaderDb> PartForHeader { get; set; }
 
+        public DbSet<TextCharacteristicDb> TextCharacteristics { get; set; }
+
+
+
     }
 }
 
