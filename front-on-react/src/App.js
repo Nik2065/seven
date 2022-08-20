@@ -13,10 +13,13 @@ import {CartContext} from './CartContext';
 import { Example } from "./Pages/Example";
 import ContactsPage from "./Pages/ContactsPage";
 import AdminPage from "./Pages/Admin/AdminPage";
-//import AdminProductsListPage from './Pages/Admin/AdminProductsListPage'
+import AdminProductsListPage from './Pages/Admin/AdminProductsListPage'
 import AdminLoginPage from "./Pages/Admin/AdminLoginPage";
+import AdminProductPage from "./Pages/Admin/AdminProductPage"
 
 import ProjectSettings from "./Pages/Admin/ProjectSettings"
+
+
 
 
 function App() {
@@ -41,7 +44,10 @@ function App() {
         <Route exact path='/admin' element={<AdminPage/>} />
         <Route exact path='/adminlogin' element={<AdminLoginPage/>} />
         
-        <Route exact path='/project/:pid' element={<ProjectSettings/>} />
+        <Route exact path='/admin/project/:pid' element={<ProjectSettings/>} />
+        <Route exact path='/admin/products' element={<AdminProductsListPage/>} />
+        <Route exact path='/admin/product/:productid' element={<AdminProductPage/>} />
+        <Route exact path='/admin/addproduct/' element={<AdminProductPage/>} />
 
     </Routes>
     </CartContext.Provider>

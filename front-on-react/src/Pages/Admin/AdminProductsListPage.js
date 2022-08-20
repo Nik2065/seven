@@ -6,6 +6,7 @@ import AdminLayout from "../../AdminLayout";
 //import {getAdminProductsList} from '../functions/serverFunctions'
 import {getAllCatalogItems, SaveProduct} from '../../functions/serverFunctions'
 import { AiOutlineEdit, AiOutlineSave } from "react-icons/ai";
+import { LinkContainer } from "react-router-bootstrap";
 
 
 export default function AdminProductsListPage(){
@@ -106,6 +107,7 @@ export default function AdminProductsListPage(){
                             
                         }}/>
                     </td>
+                    <td></td>
                     </tr>
 
                     else 
@@ -125,6 +127,11 @@ export default function AdminProductsListPage(){
                     <td>
                         <AiOutlineSave/>
                     </td>
+                    <td>
+                        <LinkContainer to={"/admin/product/" + item.id}>
+                        <Button title="Редактировать все поля продукта" variant="link">{'>>'}</Button>
+                        </LinkContainer>
+                    </td>
                     </tr>
                 })
             }
@@ -133,6 +140,10 @@ export default function AdminProductsListPage(){
         </Table>
             {'редактируем строку:' + editProductId}
             <div style={{textAlign:"right"}}>
+                <LinkContainer to="/admin/addproduct">
+                <Button variant="secondary">Добавить товар</Button>
+                </LinkContainer>
+                &nbsp;
                 <Button onClick={()=> setEditProductId(undefined) } variant="secondary">Сбросить редактирование</Button>
             </div>
         </Container>

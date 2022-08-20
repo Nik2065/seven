@@ -55,7 +55,7 @@ return(
         <Card.Text>
           {project.description}
         </Card.Text>
-        <LinkContainer to={"/project/" + project.id} >
+        <LinkContainer to={"/admin/project/" + project.id} >
         <Button variant="primary">Настройки</Button>
         </LinkContainer>
       </Card.Body>

@@ -67,6 +67,9 @@ export default function AdminLayout ({children}) {
         <LinkContainer to="/admin">
           <Nav.Link>Проекты</Nav.Link>
         </LinkContainer>
+        <LinkContainer to="/admin/products">
+          <Nav.Link>Каталог</Nav.Link>
+        </LinkContainer>
         </Nav>
     
         <Nav className="justify-content-end" activeKey="/home">

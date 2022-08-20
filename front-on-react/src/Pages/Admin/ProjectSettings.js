@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Container, Form, Button, Tabs, Tab, Sonnet } from "react-bootstrap";
+import { Container, Form, Button, Tabs, Tab, InputGroup, Alert,Col,Row } from "react-bootstrap";
 import AdminLayout from "../../AdminLayout";
+
+
 
 import  { getProject, saveProject } from '../../functions/serverFunctions'
 
@@ -42,9 +44,39 @@ export default function ProjectSettings () {
             Варианты заголовка страницы:
             
           </Tab>
-          <Tab eventKey="products" title="Каталог товаров">
-          Some text 2
+
+          <Tab eventKey="productsPageSettings" title="Настройки каталога товаров">
+          
+
+
+            <Form>
+            <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
+              <Form.Label column sm="8">
+              Отображать каталог продуктов
+              </Form.Label>
+              <Col sm="4">
+              <Form.Check type="checkbox" id="checkbox" label="" />
+              </Col>
+            </Form.Group>
+
+            <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+              <Form.Label column sm="8">
+                Порядок отображения секции на сайте
+              </Form.Label>
+              <Col sm="4">
+                  <Form.Select>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  </Form.Select>
+              </Col>
+            </Form.Group>
+          </Form>
+
+
+
           </Tab>
+          
           <Tab eventKey="article" title="Описание">
           Some text 3
           </Tab>
@@ -70,6 +102,10 @@ function ProjectSettingsForm(pid){
   //const [project, setProject] = useState({projectName:"", description:""});
  const [projectName, setProjectName] = useState("");
  const [projectDescription, setProjectDesc] = useState("");
+ const [alertShow, setAlertShow] = useState(false);
+ const [alertData, setAlertData] = useState({text:"", variant:""});
+
+
 
  //получаем данные о проекте
  useEffect(()=> {
@@ -94,9 +130,20 @@ function ProjectSettingsForm(pid){
   const SaveProject = () => {
     const resp = saveProject(pid, projectName, projectDescription);
     //console.log({resp});
+    
 
     resp.then(result => {
       console.log({result});
+      setAlertShow(true);
+      
+
+      if(result.success){
+        setAlertData({text:result.message, variant:"success"})
+      }
+      else {
+        setAlertData({text:result.message, variant:"danger"})
+      }
+      
     })
   }
 
@@ -116,9 +163,15 @@ function ProjectSettingsForm(pid){
         <Form.Label>Краткое описание проекта</Form.Label>
         <Form.Control type="text" value={projectDescription} onChange={(e) => setProjectDesc(e.target.value)} />
       </Form.Group>
+      
       <Button onClick={() => SaveProject("","", "")} variant="primary" type="button">
         Сохранить
       </Button>
+      
+      <Form.Group className="" style={{paddingTop:"10px"}}  >
+        <Alert key={1} variant={alertData.variant} dismissible onClose={() => setAlertShow(false)} show={alertShow} >{alertData.text}</Alert>
+      </Form.Group>
+
     </Form>
 
   )
