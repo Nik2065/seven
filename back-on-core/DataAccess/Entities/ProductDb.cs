@@ -12,6 +12,6 @@ namespace DataAccess.Entities
         public string Description { get; set; }
         public decimal Cost { get; set; }
 
-        public int MainCategoryId { get; set; }
+        public int? MainCategoryId { get; set; }
     }
 }

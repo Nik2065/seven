@@ -14,8 +14,16 @@ namespace DataAccess.Entities
     {
         [Key]
         public int Id { get; set; }
-        public string СName { get; set; }
         
+        [Required]
+        [MaxLength(100)]
+        public string СName { get; set; }
+
+        [Required]
+        [MaxLength(500)]
+        public string Description { get; set; }
+
+
         public Guid AccountId { get; set; }
 
         public DateTime Created { get; set; }

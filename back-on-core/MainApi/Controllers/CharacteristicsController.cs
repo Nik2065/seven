@@ -50,7 +50,72 @@ namespace MainApi.Controllers
 
         }
 
-        
+
+        /// <summary>
+        /// Создание новой характеристики для аккаунта 
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("[action]")]
+        [Authorize]
+        public async Task<ActionResult> CreateCharacteristic(CreateCharacteristicRequest request)
+        {
+            var result = new BaseResponse { Success = true, Message = "Характеристика создана" };
+
+            try
+            {
+                //TODO: проверки
+
+                var aid = GetAccountId();
+                var c = new TextCharacteristicDb();
+                c.СName = request.CName;
+                c.Description = request.Description;
+
+                _db.TextCharacteristics.Add(c);
+                _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+
+            return Ok(result);
+
+        }
+
+        /// <summary>
+        /// Удаление характеристики для аккаунта 
+        /// Проверяем что она еще не использовалась
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("[action]")]
+        [Authorize]
+        public async Task<ActionResult> DeleteCharacteristic(DeleteCharacteristicRequest request)
+        {
+            var result = new BaseResponse { Success = true, Message = "Характеристика создана" };
+
+            try
+            {
+                var aid = GetAccountId();
+                var one  = _db.TextCharacteristics.FirstOrDefault(item => item.Id == request.CharacteristicId && item.AccountId == aid);
+
+                if (one == null)
+                    throw new Exception("Характеристика с таким id не найдена");
+
+                _db.TextCharacteristics.Remove(one);
+                _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+
+            return Ok(result);
+        }
+
 
         private Guid GetAccountId()
         {

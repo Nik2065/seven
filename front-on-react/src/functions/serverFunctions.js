@@ -409,13 +409,48 @@ export async function saveProject(projectId, projectName, projectDescription){
 }
 
 
-//с авторизацией
+//Получение списка характеристик
 export async function getCharacteristics() {
 
     const url= baseUrl + '/Characteristics/GetAccountCharacteristics';
 
     const resp = await fetch(url, {
         method:'GET',
+        headers: 
+        getAuthHeader(),
+
+    });
+
+    const obj = await resp.json();
+    return obj;
+}
+
+//Создание новой характеристики
+export async function createCharacteristic(name, description) {
+
+    const url= baseUrl + '/Characteristics/CreateCharacteristic';
+
+
+    const resp = await fetch(url, {
+        method:'POST',
+        headers: 
+        getAuthHeader(),
+        body: JSON.stringify({cname: name, description: description})
+    });
+
+    const obj = await resp.json();
+    //const p = await obj.product;
+    //console.log()
+    return obj;
+}
+
+//Удаление  характеристики
+export async function deleteCharacteristic() {
+
+    const url= baseUrl + '/Characteristics/DeleteCharacteristic';
+
+    const resp = await fetch(url, {
+        method:'POST',
         headers: 
         getAuthHeader(),
 
