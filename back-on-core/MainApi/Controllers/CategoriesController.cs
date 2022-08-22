@@ -25,22 +25,21 @@ namespace MainApi.Controllers
 
 
         /// <summary>
-        /// Получить список проектов
+        /// Получить список категорий для аккаунта
         /// Аккаунт берем из авторизации
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         [Route("[action]")]
         [Authorize]
-        public async Task<ActionResult> GetAccountProjects()
+        public async Task<ActionResult> GetAccounCategories()
         {
-            var result = new GetAccountProjectsResponse { Success = true, Message = ""};
+            var result = new GetAccounCategoriesResponse { Success = true, Message = ""};
 
             try
             {
-                //var a = _db.Accounts.FirstOrDefault(x => x.Email == User.Identity.Name);
                 var aid = Helper.GetAccountId(User.Claims);
-                result.Projects = _db.Projects.Where(x => x.AccountId == aid).ToList();
+                result.Categories = _db.Categories.Where(x => x.AccountId == aid).ToList();
             }
             catch(Exception ex)
             {
@@ -52,16 +51,6 @@ namespace MainApi.Controllers
 
         }
 
-
-        //private Guid GetAccountId()
-        //{
-        //    var claims = User.Claims;
-        //    var aid = claims.FirstOrDefault(x => x.Type == "accountId")?.ToString();
-        //    aid = aid?.Replace("accountId:", "");
-        //    aid = aid?.Replace(" ", "");
-            
-        //    return Guid.Parse(aid);
-        //}
 
 
 

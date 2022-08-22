@@ -5,7 +5,7 @@ import {baseUrl, frontBaseUrl, loginPage, getAuthHeader, redirectToLoginPage } f
 //Получение списка характеристик
 export async function getCategories() {
 
-    const url= baseUrl + '/Characteristics/GetAccountCharacteristics';
+    const url= baseUrl + '/Categories/GetAccounCategories';
 
     const resp = await fetch(url, {
         method:'GET',

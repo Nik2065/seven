@@ -46,6 +46,8 @@ namespace DataAccess
 
         public DbSet<TextCharacteristicDb> TextCharacteristics { get; set; }
 
+        public DbSet<CategoryDb> Categories { get; set; }
+
 
 
     }
