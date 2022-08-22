@@ -3,6 +3,7 @@ using Common.DTO;
 using Common.Enums;
 using DataAccess;
 using DataAccess.Entities;
+using MainApi.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -94,8 +95,8 @@ namespace MainApi.Controllers
             try
             {
 
-                var accountId = GetAccountId();
-                var p = _db.Projects.FirstOrDefault(item => item.AccountId == accountId && item.Id == request.Id);
+                var aid = Helper.GetAccountId(User.Claims);
+                var p = _db.Projects.FirstOrDefault(item => item.AccountId == aid && item.Id == request.Id);
                 if (p == null)
                     throw new Exception("Проект с id:" + request.Id + " не найден");
 
@@ -149,7 +150,7 @@ namespace MainApi.Controllers
 
             try
             {
-                var aid = GetAccountId();
+                var aid = Helper.GetAccountId(User.Claims);
 
                 var t = _db.Database.BeginTransaction();
 
@@ -187,17 +188,6 @@ namespace MainApi.Controllers
 
             return Ok(result);
         }
-
-        private Guid GetAccountId()
-        {
-            var claims = User.Claims;
-            var aid = claims.FirstOrDefault(x => x.Type == "accountId")?.ToString();
-            aid = aid?.Replace("accountId:", "");
-            aid = aid?.Replace(" ", "");
-            
-            return Guid.Parse(aid);
-        }
-
 
 
     }

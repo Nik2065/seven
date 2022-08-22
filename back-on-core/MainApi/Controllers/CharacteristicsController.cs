@@ -3,6 +3,7 @@ using Common.DTO;
 using Common.Enums;
 using DataAccess;
 using DataAccess.Entities;
+using MainApi.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -37,7 +38,7 @@ namespace MainApi.Controllers
 
             try
             {
-                var aid = GetAccountId();
+                var aid = Helper.GetAccountId(User.Claims);
                 result.Characteristics = _db.TextCharacteristics.Where(x => x.AccountId == aid).ToList();
             }
             catch(Exception ex)
@@ -75,9 +76,9 @@ namespace MainApi.Controllers
                 if (tmp != null)
                     throw new Exception("Характеристика с таким именем уже была добавлена ранее");
 
-                
 
-                var aid = GetAccountId();
+
+                var aid = Helper.GetAccountId(User.Claims);
                 var c = new TextCharacteristicDb();
                 c.СName = request.CName.Trim();
                 c.Description = request.Description.Trim();
@@ -113,7 +114,7 @@ namespace MainApi.Controllers
 
             try
             {
-                var aid = GetAccountId();
+                var aid = Helper.GetAccountId(User.Claims);
                 var one  = _db.TextCharacteristics.FirstOrDefault(item => item.Id == request.CharacteristicId && item.AccountId == aid);
 
                 if (one == null)
@@ -132,15 +133,6 @@ namespace MainApi.Controllers
         }
 
 
-        private Guid GetAccountId()
-        {
-            var claims = User.Claims;
-            var aid = claims.FirstOrDefault(x => x.Type == "accountId")?.ToString();
-            aid = aid?.Replace("accountId:", "");
-            aid = aid?.Replace(" ", "");
-            
-            return Guid.Parse(aid);
-        }
 
 
 
