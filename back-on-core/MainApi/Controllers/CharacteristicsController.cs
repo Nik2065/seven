@@ -65,11 +65,25 @@ namespace MainApi.Controllers
             try
             {
                 //TODO: проверки
+                //не добавляем слишком короткие характеристики и уде добавленные
+
+                if(string.IsNullOrEmpty(request.CName) || request.CName.Length < 3)
+                    throw new Exception("Слишком короткое имя характеристики. Имя должно быть больше 2х символов");
+
+
+                var tmp = _db.TextCharacteristics.FirstOrDefault(x => x.СName == request.CName.Trim());
+                if (tmp != null)
+                    throw new Exception("Характеристика с таким именем уже была добавлена ранее");
+
+                
 
                 var aid = GetAccountId();
                 var c = new TextCharacteristicDb();
-                c.СName = request.CName;
-                c.Description = request.Description;
+                c.СName = request.CName.Trim();
+                c.Description = request.Description.Trim();
+                c.AccountId = aid;
+                c.Created = DateTime.Now;
+
 
                 _db.TextCharacteristics.Add(c);
                 _db.SaveChanges();
@@ -78,6 +92,7 @@ namespace MainApi.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
+                return BadRequest(result);
             }
 
             return Ok(result);
@@ -94,7 +109,7 @@ namespace MainApi.Controllers
         [Authorize]
         public async Task<ActionResult> DeleteCharacteristic(DeleteCharacteristicRequest request)
         {
-            var result = new BaseResponse { Success = true, Message = "Характеристика создана" };
+            var result = new BaseResponse { Success = true, Message = "Характеристика удалена" };
 
             try
             {

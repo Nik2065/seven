@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { Container, Table, Button, Form} from "react-bootstrap";
-import  { getCharacteristics, createCharacteristic } from "../../functions/serverFunctions"
+import { Container, Table, Button, Form, Alert} from "react-bootstrap";
+import  { getCharacteristics, createCharacteristic, deleteCharacteristic } from "../../functions/serverFunctions"
 
 
 import AdminLayout from "../../AdminLayout";
 import { IoMdAddCircleOutline } from "react-icons/io";
-
+import { MdDeleteOutline } from "react-icons/md";
 import Modal from 'react-bootstrap/Modal'
 
 
@@ -17,19 +17,42 @@ export default function AdminCharListPage(){
     //для модального окна
     const [showModal, setShowModal] = useState(false);
     const handleClose = () => setShowModal(false);
-    const handleSave = () => {
 
+    async function handleSave () {
+        const resp = await createCharacteristic(CName, CDescription);
+        if(resp.success){
+            setAlertData({variant:"success", text: resp.message});
+        }
+        else {
+            setAlertData({variant:"danger", text: resp.message});
+        }
+
+        setAlertShow(true);
+        updateCharacteristics();
+    }
+
+    async function handleDelete (id) {
+        const resp = await deleteCharacteristic(id);
+        if(resp.success){
+            //setAlertData({variant:"success", text: resp.message});
+        }
+        else {
+            //setAlertData({variant:"danger", text: resp.message});
+        }
+
+        //setAlertShow(true);
+        alert(resp.message);
+        updateCharacteristics();
     }
 
     const [CName, setCName] = useState("");
     const [CDescription, setCDescription] = useState("");
+
+    const [alertData, setAlertData] = useState({text: "", variant:""})
+    const [alertShow, setAlertShow] = useState(false);
     //
 
-
-
-
-    useEffect(() => {
-        
+    const updateCharacteristics = () =>{
         const getResp = getCharacteristics();
 
         getResp.then(resp => {
@@ -38,6 +61,11 @@ export default function AdminCharListPage(){
                 setCharacteristicsList(resp.characteristics);
             }
           });
+    }
+
+
+    useEffect(() => {
+        updateCharacteristics();
     } 
     ,[]);
     
@@ -54,7 +82,9 @@ export default function AdminCharListPage(){
                     <tr>
                         <th>№</th>
                         <th>Наименование характеристики</th>
+                        <th>Описание характеристики</th>
                         <th>Дата добавления</th>
+                        <th></th>
                     </tr>
                 </thead>
                 
@@ -68,7 +98,13 @@ export default function AdminCharListPage(){
             <tr key={i}>
                 <td>{ch.id}</td>
                 <td>{ch.сName}</td>
+                <td>{ch.description}</td>
                 <td>{ch.created}</td>
+                <td>
+                    <Button onClick={() => handleDelete(ch.id)}>
+                    <MdDeleteOutline/>
+                    </Button>
+                </td>
             </tr>
             
             )
@@ -97,14 +133,20 @@ export default function AdminCharListPage(){
 
             </Modal.Body>
             <Modal.Footer>
-
             <Button variant="primary" onClick={handleSave}>
                 Сохранить
             </Button>
             <Button variant="secondary" onClick={handleClose}>
                 Закрыть
             </Button>
+            <br/>
             </Modal.Footer>
+
+            <div>
+            <Alert key={1} variant={alertData.variant} dismissible onClose={() => setAlertShow(false)} show={alertShow} >
+                {alertData.text}
+            </Alert>
+            </div>
         </Modal>
 
         </AdminLayout>

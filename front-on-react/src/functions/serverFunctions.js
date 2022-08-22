@@ -430,34 +430,41 @@ export async function createCharacteristic(name, description) {
 
     const url= baseUrl + '/Characteristics/CreateCharacteristic';
 
+    const h1 = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+    };
 
+    const h = Object.assign(h1, getAuthHeader());
+
+	
     const resp = await fetch(url, {
         method:'POST',
-        headers: 
-        getAuthHeader(),
+        headers: h,
         body: JSON.stringify({cname: name, description: description})
     });
 
     const obj = await resp.json();
-    //const p = await obj.product;
-    //console.log()
     return obj;
 }
 
 //Удаление  характеристики
-export async function deleteCharacteristic() {
+export async function deleteCharacteristic(id) {
 
     const url= baseUrl + '/Characteristics/DeleteCharacteristic';
+    const h1 = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+    };
+
+    const h = Object.assign(h1, getAuthHeader());
 
     const resp = await fetch(url, {
         method:'POST',
-        headers: 
-        getAuthHeader(),
-
+        headers: h,
+        body: JSON.stringify({characteristicid: id})
     });
 
     const obj = await resp.json();
-    //const p = await obj.product;
-    //console.log()
     return obj;
 }
