@@ -38,8 +38,7 @@ namespace MainApi.Controllers
 
             try
             {
-                //var a = _db.Accounts.FirstOrDefault(x => x.Email == User.Identity.Name);
-                var aid = GetAccountId();
+                var aid = Helper.GetAccountId(User.Claims);
                 result.Projects = _db.Projects.Where(x => x.AccountId == aid).ToList();
             }
             catch(Exception ex)
@@ -66,8 +65,7 @@ namespace MainApi.Controllers
 
             try
             {
-                //var a = _db.Accounts.FirstOrDefault(x => x.Email == User.Identity.Name);
-                var aid = GetAccountId();
+                var aid = Helper.GetAccountId(User.Claims);
                 result.Project = _db.Projects.FirstOrDefault(x => x.AccountId == aid && x.Id == id);
             }
             catch (Exception ex)

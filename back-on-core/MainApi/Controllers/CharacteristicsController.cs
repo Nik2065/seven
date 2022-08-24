@@ -127,6 +127,7 @@ namespace MainApi.Controllers
             {
                 result.Success = false;
                 result.Message = ex.Message;
+                return BadRequest(result);
             }
 
             return Ok(result);

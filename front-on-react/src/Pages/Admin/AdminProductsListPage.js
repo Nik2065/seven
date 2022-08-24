@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Button, Container, Table, Form, Modal, Toast  } from "react-bootstrap";
+import { Button, Container, Table, Form, Modal  } from "react-bootstrap";
 import AdminLayout from "../../AdminLayout";
 
 //import {getAdminProductsList} from '../functions/serverFunctions'
