@@ -100,6 +100,7 @@ namespace MainApi.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("[action]")]
+        [Authorize]
         public async Task<ActionResult> SaveProduct(SaveProductRequest request)
         {
             var result = new SaveProductResponse { Success = true, Message = "Данные о продукте сохранены" };
