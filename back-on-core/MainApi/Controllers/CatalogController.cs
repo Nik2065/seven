@@ -135,7 +135,7 @@ namespace MainApi.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Добавление нового продукта
         /// </summary>
         /// <returns></returns>
         [HttpPost]
@@ -157,13 +157,38 @@ namespace MainApi.Controllers
                 if (p == null)
                     throw new Exception($"Продукт с именем:{request.Name.Trim()} найден в базе. Невозможно создать продукт с таким же именем");
 
+
+
                 p = new ProductDb();
 
                 p.Name = request.Name;
                 p.Cost = request.Cost;
                 p.Description = request.Description;
+                p.MainCategoryId = request.MainCategoryId;
+
+                _db.Products.Add(p);
+                await _db.SaveChangesAsync();
+
+                //запоминаем доп характеристики
+                //проверяем что такая характеристика в принципе существует
+                foreach (var c in request.CharacteristicsValues)
+                {
+                    var cr = _db.TextCharacteristics.FirstOrDefault(x=>x.Id == c.Key);
+                    if(cr == null) 
+                        throw new Exception("Не найдена характеристика с id:" + c.Key);
+
+                    var newC = new TextCharacteristicValueDb();
+                    newC.ProductId = p.Id;
+                    newC.Value = c.Value;
+                    newC.CharacteristicId = c.Key;
+
+                    _db.TextCharacteristicValues.Add(newC);
+
+                }
+
 
                 await _db.SaveChangesAsync();
+
                 //TODO: писать какой-то лог изменений?
 
             }

@@ -41,7 +41,10 @@ function App() {
          // <Route path="/catalog/:id" element={<ProductPage/>} />
         }
         <Route path='/catalog/:productid' element={<ProductPage/>} />
-        <Route path='/ex/:id/:slug' element={<Example/>} />
+        
+        <Route exact path='/ex' element={<Example/>} />
+
+
         <Route exact path='/contacts' element={<ContactsPage/>} />
 
         <Route exact path='/admin' element={<AdminPage/>} />
@@ -54,6 +57,8 @@ function App() {
 
         <Route exact path='/admin/categories/' element={<AdminCategoriesListPage/>} />
         <Route exact path='/admin/characteristics/' element={<AdminCharListPage/>} />
+
+
     </Routes>
     </CartContext.Provider>
   );

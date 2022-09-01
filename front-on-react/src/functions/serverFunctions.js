@@ -83,17 +83,6 @@ export async function createOrderFromCartOnServerSide(obj){
 }
 
 
-export async function getProduct(productId) {
-
-    const url= baseUrl + '/Catalog/GetProduct?productId=' + productId;
-    const resp = await fetch(url);
-    const obj = await resp.json();
-    const p = await obj.product;
-    //console.log()
-    return p;
-}
-
-
 
 
 
@@ -133,34 +122,6 @@ export async function getProjects() {
 }
 
 
-
-
-export async function SaveProduct(product) {
-    const url= baseUrl + '/Catalog/SaveProduct';
-
-
-    const obj = {
-        id: product.id,
-        name: product.name,
-        description: product.description,
-        cost: product.cost
-    };
-
-    const resp = await fetch(url, {
-        method:'POST',
-        body: JSON.stringify(obj),
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-    });
-    const resp2 = await resp.json();
-    console.log(resp2);
-
-    //const p = await resp2;
-    //console.log()
-    return resp2;
-}
 
 
 export async function Auth(login, password) {

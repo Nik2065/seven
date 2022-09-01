@@ -10,5 +10,15 @@ namespace Common.DTO
         public string Description { get; set; }
         public decimal Cost { get; set; }
         
+        public int MainCategoryId { get; set; }
+
+        //
+        // дополнительные характеристики
+        //
+
+        //словарь id характеристики /  значение характеристики
+        public Dictionary<int, string> CharacteristicsValues { get; set; }
+
+
     }
 }

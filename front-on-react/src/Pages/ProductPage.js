@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import Layout from "../Layout";
 
-import {getProduct} from '../functions/serverFunctions'
+import {getProduct} from '../functions/serverFunctionsForProducts'
 
 
 

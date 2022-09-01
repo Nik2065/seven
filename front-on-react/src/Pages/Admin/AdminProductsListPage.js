@@ -4,7 +4,8 @@ import { Button, Container, Table, Form, Modal  } from "react-bootstrap";
 import AdminLayout from "../../AdminLayout";
 
 //import {getAdminProductsList} from '../functions/serverFunctions'
-import {getAllCatalogItems, SaveProduct} from '../../functions/serverFunctions'
+import {getAllCatalogItems} from '../../functions/serverFunctions'
+import {saveProduct} from '../../functions/serverFunctionsForProducts'
 import { AiOutlineEdit, AiOutlineSave } from "react-icons/ai";
 import { LinkContainer } from "react-router-bootstrap";
 
@@ -86,7 +87,7 @@ export default function AdminProductsListPage(){
                                 description: item.description,
                                 cost: item.cost
                             }
-                            SaveProduct(p)
+                            saveProduct(p)
                             .then((saveResult) => {
                                 if(saveResult.success){
                                     setShowModal(true);

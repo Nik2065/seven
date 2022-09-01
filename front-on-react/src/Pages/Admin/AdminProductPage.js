@@ -5,9 +5,9 @@ import { Container, Table, Button, Form} from "react-bootstrap";
 
 import AdminLayout from "../../AdminLayout";
 import {getCategories} from "../../functions/serverFunctionsForCategories"
-import  { getCharacteristics } from "../../functions/serverFunctions"
+import  { getCharacteristics, saveProject } from "../../functions/serverFunctions"
 
-
+import { createProduct, saveProduct } from "../../functions/serverFunctionsForProducts"
 
 
 export default function AdminProductPage(){
@@ -16,6 +16,35 @@ export default function AdminProductPage(){
     const  [createMode, setCreateMode] = useState(false);
     const  [categories, setCategories] = useState();
     const [characteristicsList, setCharacteristicsList] = useState();
+
+    //даннные продукта
+    const  [PName, setPName] = useState("");
+    const  [PDescription, setPDescription] = useState("");
+    const  [PCost, setPCost] = useState(0);
+    const  [category, setCategory] = useState(-1);
+
+
+    /*function createInnerState() {
+        let arr = [];
+
+        additionalCharacteristic.forEach((item) => {
+            arr.push({id: item.id, val: ""});
+        });
+
+        return arr;
+    }*/
+
+    /*
+    function getVal(id) {
+        let v = "";
+        additionalCharacteristic.forEach((item) => {
+            if(item.id === id)
+            v = item.val
+        });
+    }*/
+
+
+    const  [additionalCharacteristic, setAdditionalCharacteristic] = useState({});
 
 
     useEffect(() => {
@@ -52,6 +81,24 @@ export default function AdminProductPage(){
 
     }
     ,[]);
+
+
+    async function HandleSaveProduct(){
+
+        //Если создаем продукт
+        if(createMode) {
+            const resp = await createProduct();
+
+        }
+        else {
+        //Если меняем
+        const resp = await saveProject();
+
+        }
+    }
+
+
+
 
 return(
     <AdminLayout>
@@ -113,14 +160,30 @@ return(
 
         return <Form.Group key={i} className="mb-3" controlId="">
         <Form.Label>{item.сName}</Form.Label>
-        <Form.Control type="text"  />
+        <Form.Control type="text"  onChange={(e) => {
+            if(additionalCharacteristic.length === 0)
+            {
+                additionalCharacteristic.push({
+                    id: item.id,
+                    val: e.target.value});
+            }
+            else {
+                additionalCharacteristic.forEach(element => {
+                    if(element.id === item.id)
+                    element.val = e.target.value
+                })
+            }
+
+            console.log({additionalCharacteristic});
+
+        }}  />
         </Form.Group>
 
 
       }) : "Дополнительных характеристик еще не задано"
      }
 
-      <Button variant="primary" >Сохранить</Button>
+      <Button onClick={()=> HandleSaveProduct()} variant="primary" >Сохранить</Button>
 
     </Form>
 
