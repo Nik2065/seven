@@ -11,6 +11,8 @@ import Layout from "../Layout.js";
 import {CartContext} from '../CartContext'
 import {getLocalSessionId, countCartSum, createCartTitle, countItems} from '../functions/commonFunctions'
 import {getCartBySessionId, getAllCatalogItems, setProductsInCartOnServer} from '../functions/serverFunctions'
+import {getAllProducts} from '../functions/serverFunctionsForProducts'
+
 
 export default function MainPage() {
 
@@ -36,8 +38,10 @@ export default function MainPage() {
 
     //получаем каталог товаров
     useEffect(() => {
-        
-        getAllCatalogItems()
+        //TODO: откуда-то брать идентификатор аккаунта
+        const aid = "d7066528-4027-4ef0-bc2a-cd8fa9a3f199";
+
+        getAllProducts(aid)
         .then( result => {
             console.log({result})
             setProductsInCatalog(result.paginationResult.resultList);
@@ -223,7 +227,7 @@ export default function MainPage() {
         })
         : ""
 
-        } 
+        }
         </Row>
 <Row>
             <Col>

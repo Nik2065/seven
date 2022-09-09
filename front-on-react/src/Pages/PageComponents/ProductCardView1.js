@@ -7,12 +7,10 @@ import { BsCartFill } from "react-icons/bs";
 
 
 
+export function ProductCardView1(product) {
 
 
-
-
-
-export function ProductCard1() {
+    //console.log({product});
 
 
     return (
@@ -29,9 +27,9 @@ export function ProductCard1() {
         
 
         <Card.Body>
-            <Card.Title>Смартфон HUAWEI P20</Card.Title>
+            <Card.Title>{product.name}</Card.Title>
             <Card.Text>
-            128 ГБ/	4 ГБ/3400 мА·ч/2 sim
+            {product.description}
             </Card.Text>
             <Button style={{display: "block", marginLeft: "auto", marginRight: "auto"}} variant="outline-success"><BsCartFill/></Button>
         </Card.Body>
@@ -41,3 +39,5 @@ export function ProductCard1() {
 
 
 }
+
+

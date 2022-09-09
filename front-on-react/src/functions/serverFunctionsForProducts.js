@@ -3,11 +3,49 @@ import {baseUrl, frontBaseUrl, loginPage, getAuthHeader, redirectToLoginPage } f
 
 
 
+//
+//TODO: добавить паджинацию
+//
+export async function getAllProducts(accountId){
+    const url = baseUrl + '/Products/GetAllProducts/';
+    
+    const h1 = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+    };
+
+    const obj = {
+        AccountId: accountId
+    }
+
+    const resp = await fetch(url, {
+        method:'POST',
+        body: JSON.stringify(obj),
+        headers: h1,
+    });
+
+    const res = await resp.json();
+    return res;
+}
+
+
+//
+//TODO: добавить паджинацию
+//
+export async function getProductsForCategory(accountId, catId) {
+    const url= baseUrl + '/Products/GetAllProducts/' + accountId + "/" + catId;
+    const resp = await fetch(url);
+    const obj = await resp.json();
+    const p = await obj.product;
+    //console.log()
+    return p;
+
+}
 
 
 export async function getProduct(productId) {
 
-    const url= baseUrl + '/Catalog/GetProduct?productId=' + productId;
+    const url= baseUrl + '/Products/GetProduct?productId=' + productId;
     const resp = await fetch(url);
     const obj = await resp.json();
     const p = await obj.product;
@@ -18,7 +56,7 @@ export async function getProduct(productId) {
 
 
 export async function saveProduct(product) {
-    const url= baseUrl + '/Catalog/SaveProduct';
+    const url= baseUrl + '/Products/SaveProduct';
 
 
     const obj = {
@@ -53,7 +91,7 @@ export async function saveProduct(product) {
 //Сорздание продукта
 //
 export async function createProduct(data) {
-    const url= baseUrl + '/Catalog/CreateProduct';
+    const url= baseUrl + '/Products/CreateProduct';
 
 
 

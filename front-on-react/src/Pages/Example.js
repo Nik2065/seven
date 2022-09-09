@@ -1,12 +1,15 @@
 
-import {useParams} from 'react-router-dom';
+//import {useParams} from 'react-router-dom';
 
 import { Card, Button, Container, CardGroup, Row, Col}  from 'react-bootstrap';
 
 import { CollapsibleNavbar } from "./PageComponents/CollapsibleNavbar"
+import {GorizontalMenu} from "./PageComponents/GorizontalMenu";
+
 import { ControlledCarousel } from "./PageComponents/ControlledCarousel"
 import { Cards } from "./PageComponents/Cards"
-import { ProductCard1 } from "./PageComponents/ProductCard1"
+
+import { ProductsOnMainPage } from './PageComponents/ProductsOnMainPage';
 
 import {NavbarFooter2} from "./PageComponents/NavbarFooter2"
 import {NavbarMainFooter} from "./PageComponents/NavbarMainFooter"
@@ -20,34 +23,18 @@ export function Example () {
     
     
     
-    
-    
     return (
       <>
       <Container>
       <CollapsibleNavbar/>
+
+      
+      <GorizontalMenu/>
       <ControlledCarousel/>
       <Cards />
       </Container>
 
-      <Container>
-      <Row>
-          <Col xs={12} sm={6} md={6} lg={3}>
-          <ProductCard1/>
-          </Col>
-          <Col xs={12} sm={6} md={6} lg={3}>
-          <ProductCard1/>
-          </Col>
-
-
-          <Col xs={12} sm={6} md={6} lg={3}>
-          <ProductCard1/>
-          </Col>
-          <Col xs={12} sm={6} md={6} lg={3}>
-          <ProductCard1/>
-          </Col>
-      </Row>
-      </Container>
+      <ProductsOnMainPage />
 
       <NavbarMainFooter/>
       <NavbarFooter2/>

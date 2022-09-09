@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccess.Entities
@@ -13,5 +14,7 @@ namespace DataAccess.Entities
         public decimal Cost { get; set; }
 
         public int? MainCategoryId { get; set; }
+
+        public Guid AccountId { get; set; }
     }
 }

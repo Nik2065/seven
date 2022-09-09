@@ -4,7 +4,7 @@ import {useParams} from "react-router-dom";
 import { Container, Table, Button, Form} from "react-bootstrap";
 
 import AdminLayout from "../../AdminLayout";
-import {getCategories} from "../../functions/serverFunctionsForCategories"
+import {getAdminCategories} from "../../functions/serverFunctionsForCategories"
 import  { getCharacteristics, saveProject } from "../../functions/serverFunctions"
 
 import { createProduct, saveProduct } from "../../functions/serverFunctionsForProducts"
@@ -59,7 +59,7 @@ export default function AdminProductPage(){
         }
 
         //
-        const getResp = getCategories();
+        const getResp = getAdminCategories();
 
         getResp.then(resp => {
             console.log(resp.categories);

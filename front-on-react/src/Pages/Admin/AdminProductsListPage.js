@@ -4,7 +4,8 @@ import { Button, Container, Table, Form, Modal  } from "react-bootstrap";
 import AdminLayout from "../../AdminLayout";
 
 //import {getAdminProductsList} from '../functions/serverFunctions'
-import {getAllCatalogItems} from '../../functions/serverFunctions'
+//import {getAllCatalogItems} from '../../functions/serverFunctions'
+import { getAllProducts } from "../../functions/serverFunctionsForProducts";
 import {saveProduct} from '../../functions/serverFunctionsForProducts'
 import { AiOutlineEdit, AiOutlineSave } from "react-icons/ai";
 import { LinkContainer } from "react-router-bootstrap";
@@ -25,7 +26,7 @@ export default function AdminProductsListPage(){
     useEffect(()=>{
     
         //TODO: возможно добавить постраничное разбиение
-        getAllCatalogItems()
+        getAllProducts("d7066528-4027-4ef0-bc2a-cd8fa9a3f199")
         .then(result => {
             const page = result.paginationResult.resultList;
             console.log({page});

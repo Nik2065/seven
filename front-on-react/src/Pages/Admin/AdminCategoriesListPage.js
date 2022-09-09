@@ -6,7 +6,7 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 import { MdDeleteOutline } from "react-icons/md";
 //inner components
 import AdminLayout from "../../AdminLayout";
-import {getCategories, createCategory, deleteCategory} from "../../functions/serverFunctionsForCategories"
+import {getAdminCategories, createCategory, deleteCategory} from "../../functions/serverFunctionsForCategories"
 
 
 
@@ -24,7 +24,7 @@ export default function AdminCategoriesListPage(){
 
 
     const updateCategories = () =>{
-        const getResp = getCategories();
+        const getResp = getAdminCategories();
 
         getResp.then(resp => {
             console.log({resp});

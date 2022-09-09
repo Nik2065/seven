@@ -14,9 +14,9 @@ namespace MainApi.Controllers
 
     [ApiController]
     [Route("[controller]")]
-    public class CatalogController : ControllerBase
+    public class AdminProductsController : ControllerBase
     {
-        public CatalogController()
+        public AdminProductsController()
         {
             _logger = NLog.LogManager.GetCurrentClassLogger();
             _db = new PsDataContext();
