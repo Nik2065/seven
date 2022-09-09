@@ -25,6 +25,7 @@ export function CategoryPage() {
     const params = useParams();
     const  [categoryData, setCategoryData] = useState(null);
     const  [products, setProducts] = useState(null);
+    const  [productsByRows, setProductsByRows] = useState(null);
 
     //console.log({params});
 
@@ -60,13 +61,18 @@ export function CategoryPage() {
             //console.log({resp3});
 
             resp3.then( result => {
-                console.log({result})
+                
                 setProducts(result.paginationResult.resultList);
-    
+                
+                const pbr = getArrayOfSubArray(result.paginationResult.resultList);
+                setProductsByRows(pbr);
+                //console.log({pbr})
             });
         },[])
 
-        
+
+    
+
 
 
     return(
@@ -113,9 +119,11 @@ export function CategoryPage() {
 
 
             {
-                (products != null) ?
-                createRow(products)
-
+                (productsByRows != null) ?
+                productsByRows.map((item) =>{
+                    return createRow(item);
+                })
+                
                 : ""
             }
 
@@ -130,32 +138,38 @@ export function CategoryPage() {
 }
 
 
-function createRow(array) {
-
-    console.log({array});
-
+function getArrayOfSubArray(array){
+    
     let size = ElementsInRow; //размер подмассива
+    let arrayOfSubArray = [];
     let subarray = []; //массив в который будет выведен результат.
+
     for (let i = 0; i <Math.ceil(array.length/size); i++){
         subarray[i] = array.slice((i*size), (i*size) + size);
-        return (
-        <Container style={{paddingTop:"10px"}}>
-        <Row>
-            <Col xs={12} sm={6} md={6} lg={3}>
-                <ProductCardView1 name={array[i].name} />
-            </Col>
-            <Col xs={12} sm={6} md={6} lg={3}>
-                <ProductCardView1/>
-            </Col>
-            <Col xs={12} sm={6} md={6} lg={3}>
-                <ProductCardView1/>
-            </Col>
-            <Col xs={12} sm={6} md={6} lg={3}>
-                <ProductCardView1/>
-            </Col>
-        </Row>
-        </Container>
-        );
+        arrayOfSubArray.push(subarray[i]);
     }
+    
 
+    /*arrayOfSubArray.forEach(element => {
+        console.log(element);
+    });*/
+
+    return arrayOfSubArray;
+}
+
+
+
+function createRow(rowArray) {
+
+    //console.log({rowArray});
+    return (
+    <Row >
+        {
+        rowArray.map((item) => {
+            return <Col style={{paddingTop:"10px"}} xs={12} sm={6} md={6} lg={3}>
+                <ProductCardView1 name={item.name} description={item.description} />
+            </Col>
+        })
+        }
+    </Row>)
 }
