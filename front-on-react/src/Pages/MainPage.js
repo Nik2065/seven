@@ -10,7 +10,7 @@ import Layout from "../Layout.js";
 
 import {CartContext} from '../CartContext'
 import {getLocalSessionId, countCartSum, createCartTitle, countItems} from '../functions/commonFunctions'
-import {getCartBySessionId, getAllCatalogItems, setProductsInCartOnServer} from '../functions/serverFunctions'
+import {getCartBySessionId, setProductsInCartOnServer} from '../functions/serverFunctions'
 import {getAllProducts} from '../functions/serverFunctionsForProducts'
 
 

@@ -1,5 +1,6 @@
 
-import {baseUrl, frontBaseUrl, loginPage, getAuthHeader, redirectToLoginPage } from './auth.js'
+import {baseUrl,  getAuthHeader } from './auth.js'
+//import {frontBaseUrl, loginPage, redirectToLoginPage } from './auth.js'
 
 
 //Получение списка категорий

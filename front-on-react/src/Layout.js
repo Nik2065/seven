@@ -11,6 +11,10 @@ import {CartContext} from './CartContext'
 import { getLocalSessionId, createCartTitle, countItems, countCartSum} from './functions/commonFunctions'
 import { getCartBySessionId } from './functions/serverFunctions'
 
+import mainStore from './MainStore';
+import CartIconView from './Pages/PageComponents/CartIconView';
+
+
 export default function Layout ({children}) {
 
   const [cartContext, setCartContext] = useContext(CartContext);
@@ -40,7 +44,12 @@ export default function Layout ({children}) {
 
             //setProductsInCart(cartItems);
             //setCartSum(coutCartSum(cartItems));
+
+            //теперь храним данные не в контексте а в mobx
+            //2022-09-11
             setCartContext(createCartTitle(countItems(cartItems), countCartSum(cartItems)));
+            
+
         })
 
     }, []);
@@ -61,6 +70,8 @@ export default function Layout ({children}) {
             <Link title="Перейти к корзине" className="nav-link" to="/shopping-cart">   <BsCartFill style={{fontSize:"1.9rem", color:"white"}} />   </Link>
             <span style={{color:"white"}}>{cartContext}</span>
             
+            <CartIconView mainState={mainStore} />
+
         </Navbar.Collapse>
         </Container>
         </Navbar>

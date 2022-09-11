@@ -2,7 +2,7 @@
 
 import { Container, Row, Col}  from 'react-bootstrap';
 
-import { ProductCard1 } from "./ProductCard1"
+import { ProductCardView1 } from "./ProductCardView1"
 
 
 //
@@ -17,16 +17,16 @@ export function ProductsOnMainPage() {
         <Container style={{paddingTop:"10px"}}>
         <Row>
             <Col xs={12} sm={6} md={6} lg={3}>
-                <ProductCard1/>
+                <ProductCardView1/>
             </Col>
             <Col xs={12} sm={6} md={6} lg={3}>
-                <ProductCard1/>
+                <ProductCardView1/>
             </Col>
             <Col xs={12} sm={6} md={6} lg={3}>
-                <ProductCard1/>
+                <ProductCardView1/>
             </Col>
             <Col xs={12} sm={6} md={6} lg={3}>
-                <ProductCard1/>
+                <ProductCardView1/>
             </Col>
         </Row>
         </Container>

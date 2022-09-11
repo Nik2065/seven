@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react'
 
+
 /*
 const TimerView = observer((props) => {
     const { timerState } = props
@@ -24,6 +25,8 @@ const CartButtonsView = observer((props) => {
             <button onClick={() => mainState.increase()}>Добавить + </button>
             <h3>Seconds: {mainState.cnt}</h3>
             <button  onClick={() => mainState.decrease()} >Убрать -</button>
+
+
         </>
     )
 })

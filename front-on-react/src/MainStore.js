@@ -1,7 +1,9 @@
 import { makeAutoObservable } from 'mobx'
 
 class MainStore {
-    cnt = 0
+    cnt = 0;
+    cartTitle = "";
+    
 
     constructor() {
         makeAutoObservable(this)
