@@ -49,7 +49,7 @@ export default function AdminProductPage(){
 
     useEffect(() => {
 
-        console.log(params.productid);
+        '/admin/product/:productid'
         console.log({createMode});
 
 

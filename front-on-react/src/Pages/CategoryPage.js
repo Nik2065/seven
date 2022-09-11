@@ -13,8 +13,6 @@ import  { getAllProducts  } from '../functions/serverFunctionsForProducts';
 
 
 
-
-
 //Количество элементов в строке
 const ElementsInRow = 4;
 

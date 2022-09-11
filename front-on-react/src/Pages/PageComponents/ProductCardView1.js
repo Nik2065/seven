@@ -5,6 +5,9 @@ import { Card, Button, Container, CardGroup}  from 'react-bootstrap';
 import { BsCartFill } from "react-icons/bs";
 
 
+import mainStore from '../../MainStore';
+import CartButtonsView from './CartButtonsView';
+
 
 
 export function ProductCardView1(product) {
@@ -32,6 +35,9 @@ export function ProductCardView1(product) {
             {product.description}
             </Card.Text>
             <Button style={{display: "block", marginLeft: "auto", marginRight: "auto"}} variant="outline-success"><BsCartFill/></Button>
+
+            <CartButtonsView mainState={mainStore} />
+
         </Card.Body>
         </Card>
 

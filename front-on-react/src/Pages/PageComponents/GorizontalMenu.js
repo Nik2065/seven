@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Navbar, Nav, Container, CardGroup, Button}  from 'react-bootstrap';
+import { Navbar, Nav, Container}  from 'react-bootstrap';
 import { LinkContainer } from "react-router-bootstrap";
 
 import { getPublicCategories } from "../../functions/serverFunctionsForCategories"
