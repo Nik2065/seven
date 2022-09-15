@@ -10,7 +10,7 @@ import { BsDoorOpen } from "react-icons/bs";
 
 
 import {CartContext} from './CartContext'
-import { getLocalSessionId, createCartTitle, countItems, countCartSum} from './functions/commonFunctions'
+import { getLocalSessionId /*, createCartTitle, countItems, countCartSum*/} from './functions/commonFunctions'
 import { getCartBySessionId } from './functions/serverFunctions'
 
 
@@ -46,7 +46,7 @@ export default function AdminLayout ({children}) {
 
             //setProductsInCart(cartItems);
             //setCartSum(coutCartSum(cartItems));
-            setCartContext(createCartTitle(countItems(cartItems), countCartSum(cartItems)));
+            //setCartContext(createCartTitle(countItems(cartItems), countCartSum(cartItems)));
         })
 
     }, []);

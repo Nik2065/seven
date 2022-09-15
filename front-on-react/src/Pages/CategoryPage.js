@@ -118,8 +118,8 @@ export function CategoryPage() {
 
             {
                 (productsByRows != null) ?
-                productsByRows.map((item) =>{
-                    return createRow(item);
+                productsByRows.map((item, i) =>{
+                    return createRow(item, i);
                 })
                 
                 : ""
@@ -157,15 +157,16 @@ function getArrayOfSubArray(array){
 
 
 
-function createRow(rowArray) {
+function createRow(rowArray, i) {
 
-    //console.log({rowArray});
+    //console.log({i});
+
     return (
-    <Row >
+    <Row key={i} >
         {
         rowArray.map((item) => {
-            return <Col style={{paddingTop:"10px"}} xs={12} sm={6} md={6} lg={3}>
-                <ProductCardView1 name={item.name} description={item.description} />
+            return <Col key={item.id} style={{paddingTop:"10px"}} xs={12} sm={6} md={6} lg={3}>
+                <ProductCardView1  id={item.id} name={item.name} description={item.description} cost={item.cost} />
             </Col>
         })
         }

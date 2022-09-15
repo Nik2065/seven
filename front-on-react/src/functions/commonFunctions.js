@@ -32,7 +32,7 @@ export function setLocalAuthToken(authData){
    localStorage.getItem('authData', authData);
 }
 
-
+/*
 export function countCartSum(items){
 
    let s = 0;
@@ -53,3 +53,6 @@ export function countItems(items){
 
    return s;
 }
+*/
+
+

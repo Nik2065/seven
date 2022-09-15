@@ -5,15 +5,14 @@ import { Card, Button, Container, CardGroup}  from 'react-bootstrap';
 import { BsCartFill } from "react-icons/bs";
 
 
-//import mainStore from '../../MainStore';
-import CartButtonsView from './CartButtonsView';
 
 
 
-export function ProductCardView1(product) {
 
 
-    //console.log({product});
+
+
+export function ProductCard1() {
 
 
     return (
@@ -30,14 +29,11 @@ export function ProductCardView1(product) {
         
 
         <Card.Body>
-            <Card.Title>{product.name}</Card.Title>
+            <Card.Title>Смартфон HUAWEI P20</Card.Title>
             <Card.Text>
-            {product.description}
+            128 ГБ/	4 ГБ/3400 мА·ч/2 sim
             </Card.Text>
             <Button style={{display: "block", marginLeft: "auto", marginRight: "auto"}} variant="outline-success"><BsCartFill/></Button>
-
-            <CartButtonsView currentProduct={product} />
-
         </Card.Body>
         </Card>
 
@@ -45,5 +41,3 @@ export function ProductCardView1(product) {
 
 
 }
-
-

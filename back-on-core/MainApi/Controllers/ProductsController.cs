@@ -75,7 +75,7 @@ namespace MainApi.Controllers
 
         [HttpGet]
         [Route("[action]/{accountId}/{catId}/{pageSize}/{pageNumber}")]
-        public async Task<ActionResult> GetAllProductsForCategory(string accountId, int catId, int? pageSize, int? pageNumber)
+        public async Task<ActionResult> GetAllProductsForCategory(GetAllProductsForCategoryRequest request)
         {
             var result = new GetAllCatalogItemsResponse { Success = true, Message = "" };
 
@@ -91,19 +91,19 @@ namespace MainApi.Controllers
                 result.Items.Add(item3);
                 result.Items.Add(item4);*/
 
-                var canParse = Guid.TryParse(accountId, out Guid aid);
+                var canParse = Guid.TryParse(request.AccountId, out Guid aid);
 
                 if (!canParse)
                     throw new Exception("Передан некорретный индентификатор аккаунта");
 
 
-                var products = _db.Products.Where(item => item.AccountId == aid && item.MainCategoryId == catId);
+                var products = _db.Products.Where(item => item.AccountId == aid && item.MainCategoryId == request.CategoryId);
 
 
-                if (pageSize != null && pageNumber != null)
+                if (request.PageSize != null && request.PageNumber != null)
                 {
                     //разбиваем на страницы
-                    var pageResult = ListToPages<ProductDb>.GetPage(products, (int)pageSize, (int)pageNumber);
+                    var pageResult = ListToPages<ProductDb>.GetPage(products, (int)request.PageSize, (int)request.PageNumber);
                     result.PaginationResult.ResultList = GetCatalogItemDtoList(pageResult.ResultList).AsQueryable();
                 }
                 else

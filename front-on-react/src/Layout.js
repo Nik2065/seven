@@ -7,7 +7,8 @@ import {Container, Nav,
 
 import { BsCartFill } from "react-icons/bs";
 
-import {CartContext} from './CartContext'
+//import {CartContext} from './CartContext'
+
 import { getLocalSessionId, createCartTitle, countItems, countCartSum} from './functions/commonFunctions'
 import { getCartBySessionId } from './functions/serverFunctions'
 
@@ -17,7 +18,7 @@ import CartIconView from './Pages/PageComponents/CartIconView';
 
 export default function Layout ({children}) {
 
-  const [cartContext, setCartContext] = useContext(CartContext);
+  //const [cartContext, setCartContext] = useContext(CartContext);
 
     //получаем содержимое корзины
     useEffect(()=>{
@@ -47,8 +48,9 @@ export default function Layout ({children}) {
 
             //теперь храним данные не в контексте а в mobx
             //2022-09-11
-            setCartContext(createCartTitle(countItems(cartItems), countCartSum(cartItems)));
+            //setCartContext(createCartTitle(countItems(cartItems), countCartSum(cartItems)));
             
+            mainStore.setCartItems(cartItems);
 
         })
 
@@ -67,9 +69,10 @@ export default function Layout ({children}) {
         </Nav>
     
           <Navbar.Collapse className="justify-content-end">
-            <Link title="Перейти к корзине" className="nav-link" to="/shopping-cart">   <BsCartFill style={{fontSize:"1.9rem", color:"white"}} />   </Link>
-            <span style={{color:"white"}}>{cartContext}</span>
-            
+            {
+            //<Link title="Перейти к корзине" className="nav-link" to="/shopping-cart">   <BsCartFill style={{fontSize:"1.9rem", color:"white"}} />   </Link>
+            //<span style={{color:"white"}}>{cartContext}</span>
+            }
             <CartIconView mainState={mainStore} />
 
         </Navbar.Collapse>

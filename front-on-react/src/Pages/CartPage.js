@@ -7,11 +7,12 @@ import {LinkContainer} from 'react-router-bootstrap'
 import { getLocalSessionId, countCartSum } from "../functions/commonFunctions";
 import { getCartBySessionId } from "../functions/serverFunctions";
 
+import mainStore from '../MainStore';
 
 export default function CartPage() {
 
 
-    const [productsInCart, setProductsInCart] = useState([]);
+    //const [productsInCart, setProductsInCart] = useState([]);
 
 
     //получаем содержимое корзины
@@ -34,14 +35,14 @@ export default function CartPage() {
             
             console.log({cartItems});
 
-            setProductsInCart(cartItems);
-            setCartSum(countCartSum(cartItems));
+            mainStore.setProductsInCart(cartItems);
+            //setCartSum(countCartSum(cartItems));
         })
 
 
     }, []);
 
-    const [cartSum, setCartSum] = useState(countCartSum(productsInCart));
+    //const [cartSum, setCartSum] = useState(countCartSum(productsInCart));
 
 
 
@@ -52,8 +53,8 @@ return(<Layout>
         <Table bordered hover striped responsive >
             <tbody>
             {
-                (productsInCart !== undefined && productsInCart.length>0) ?
-                    productsInCart.map((item, i) =>{
+                (mainStore.productsInCart !== undefined && mainStore.productsInCart.length>0) ?
+                mainStore.productsInCart.map((item, i) =>{
                     //sum +=item.product.cost;
                     return <tr key={i}>
                         <td>{item.qty}</td>
@@ -68,7 +69,7 @@ return(<Layout>
                 <tr>
                     <td></td>
                     <td>Итого:</td>
-                    <td>Сумма:{cartSum}</td>
+                    <td>Сумма:{mainStore.cartSum}</td>
                     
                 </tr>
             }
