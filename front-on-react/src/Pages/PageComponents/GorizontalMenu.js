@@ -11,20 +11,27 @@ import { getPublicCategories } from "../../functions/serverFunctionsForCategorie
 //
 // Меню для отображения категорий
 //
-export function GorizontalMenu() {
+export function GorizontalMenu(props) {
 
   const [categoriesList, setCategoriesList] = useState();
 
+  
+
+  const { pId } = props;
+
+  console.log({pId});
 
       const updateCategories = () =>{
-        const getResp = getPublicCategories('d7066528-4027-4ef0-bc2a-cd8fa9a3f199');
+        if(pId != null && pId !== ""){
+          const getResp = getPublicCategories(pId);
 
-        getResp.then(resp => {
-            console.log({resp});
-            if(resp.success){
-                setCategoriesList(resp.categories);
-            }
-          });
+          getResp.then(resp => {
+              console.log({resp});
+              if(resp.success){
+                  setCategoriesList(resp.categories);
+              }
+            });
+        }
     }
 
     //загружаем категории

@@ -14,6 +14,9 @@ namespace DataAccess.Entities
         public Guid AccountId { get; set; }
         
         public DateTime Created { get; set; }
-        
+
+        public int ProjectId { get; set; }
+
+
     }
 }

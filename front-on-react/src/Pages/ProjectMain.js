@@ -1,6 +1,5 @@
-
-//import {useParams} from 'react-router-dom';
-
+import {useParams} from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { Card, Button, Container, CardGroup, Row, Col}  from 'react-bootstrap';
 
 import { CollapsibleNavbar } from "./PageComponents/CollapsibleNavbar"
@@ -16,21 +15,57 @@ import {NavbarMainFooter} from "./PageComponents/NavbarMainFooter"
 
 
 export function ProjectMain () {
-    //const params = useParams();
     
+  const [projectId, setProjectId] = useState(null);
+
+  let { projectid } = useParams();
+  const pId = projectid.replace('project', '');
+
+  if(projectid == null || projectid === undefined)
+  {
+    //redirect
+    window.location.replace('/')
+  }
+
+
+    /*useEffect(() => {
+      if(projectid == null || projectid === undefined)
+      {
+        //redirect
+        window.location.replace('/')
+      }
+      else {
+        const p = projectid.replace('project', '');
+        //console.log({p});
+
+        setProjectId(p);
+      }
+    } 
+    ,[]);*/
+
+ 
+
+
+
     return (
       <>
       <Container>
-      <CollapsibleNavbar/>
 
+      <CollapsibleNavbar />
       
-      <GorizontalMenu/>
-      <ControlledCarousel/>
+        
+      
+      <GorizontalMenu pId={pId}/>
+      <ControlledCarousel pId={pId} />
       <Cards />
+      
+      
       </Container>
 
       <ProductsOnMainPage />
+        
 
+      
       <NavbarMainFooter/>
       <NavbarFooter2/>
 

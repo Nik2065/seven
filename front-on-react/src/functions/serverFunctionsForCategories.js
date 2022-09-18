@@ -4,9 +4,30 @@ import {baseUrl,  getAuthHeader } from './auth.js'
 
 
 //Получение списка категорий
-export async function getPublicCategories(accountId) {
+/*export async function getPublicCategories(accountId) {
 
     const url= baseUrl + '/Categories/GetAccounCategories/' + accountId;
+
+    const h1 = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+    };
+
+    const resp = await fetch(url, {
+        method:'GET',
+        headers: h1
+    });
+
+    const obj = await resp.json();
+    return obj;
+}*/
+
+//Получение списка категорий
+export async function getPublicCategories(projectId) {
+
+    console.log(projectId);
+
+    const url= baseUrl + '/Categories/GetProjectCategories/' + projectId;
 
     const h1 = {
         'Accept': 'application/json',

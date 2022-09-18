@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Carousel } from 'react-bootstrap';
 
-export function ControlledCarousel() {
+export function ControlledCarousel(props) {
   const [index, setIndex] = useState(0);
+  const { pId } = props;
 
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);

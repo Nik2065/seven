@@ -88,14 +88,11 @@ export default function AdminCategoriesListPage(){
                         <th></th>
                     </tr>
                 </thead>
-                
             <tbody>
-        {
+        {  
             (categoriesList !== undefined && categoriesList.length>0) ? 
-
             categoriesList.map((ch, i)=>{
             return(
-            
             <tr key={i}>
                 <td>{ch.id}</td>
                 <td>{ch.name}</td>
@@ -107,10 +104,8 @@ export default function AdminCategoriesListPage(){
                     </Button>
                 </td>
             </tr>
-            
             )
-        }) : ""
-
+        }) : <></>
         }
         </tbody>
         </Table>

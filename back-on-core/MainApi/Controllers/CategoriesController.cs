@@ -56,6 +56,36 @@ namespace MainApi.Controllers
 
         }
 
+        /// <summary>
+        /// Получить список категорий для проекта
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("[action]/{projectid}")]
+        public async Task<ActionResult> GetProjectCategories(int projectid)
+        {
+            var result = new GetAccounCategoriesResponse { Success = true, Message = "" };
+
+            try
+            {
+                
+
+                //var canParse = Guid.TryParse(accountId, out Guid aid);
+                //if (canParse)
+                result.Categories = _db.Categories.Where(x => x.ProjectId == projectid).ToList();
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+
+            return Ok(result);
+
+        }
+
 
         /// <summary>
         /// Получить данные категории по id
