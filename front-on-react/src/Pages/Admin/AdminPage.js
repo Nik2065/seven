@@ -1,15 +1,24 @@
 import {useEffect, useState} from 'react';
-import { Container, Card, Button} from "react-bootstrap";
-import {LinkContainer} from 'react-router-bootstrap'
+import { Container, Card, Row, Col} from "react-bootstrap";
+import { LinkContainer } from 'react-router-bootstrap'
 import AdminLayout from "../../AdminLayout";
 
-import {getProjects} from '../../functions/serverFunctions'
+import { getProjects } from '../../functions/serverFunctionsForProjects'
+import { getArrayOfSubArray } from '../../functions/commonFunctions'
 
+import { ProjectCardView1 } from '../PageComponents/ProjectCardView1'
+
+
+
+//Количество элементов в строке
+const ElementsInRow = 4;
 
 export default function AdminPage () {
 
 
   const [projects, setProjects] = useState([]);
+  const [projectsByRows, setProjectsByRows] = useState(null);
+
 
   useEffect(()=> {
     //идем на сервер, скачиваем для учетки список проектов
@@ -18,9 +27,12 @@ export default function AdminPage () {
     //console.log({getProjectsResp});
 
     getProjectsResp.then(resp => {
-      console.log({resp});
+      //console.log({resp});
+
       if(resp.success){
         setProjects(resp.projects);
+        const pbr = getArrayOfSubArray(resp.projects, ElementsInRow);
+        setProjectsByRows(pbr);
       }
     });
 
@@ -31,37 +43,30 @@ export default function AdminPage () {
 return(
 <AdminLayout>
 <br/>
-<Container>
+<Container style={{paddingTop:"10px"}}>
 
-{/*
-<Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" />
-      <Card.Body>
-        <Card.Title>The one project</Card.Title>
-        <Card.Text>
-          Some project description
-        </Card.Text>
-        <Button variant="primary">Перейти к настройкам</Button>
-      </Card.Body>
-    </Card>
-*/}
+<Card>
+  <Card.Body>
+  <Card.Title>Список проектов</Card.Title>
+  <Card.Text>
+                   
+  </Card.Text>
+  <LinkContainer to={"/admin/addproject/"} >
+  <Card.Link>Добавить проект</Card.Link>
+  </LinkContainer>
+  <Card.Link href="#">Another Link</Card.Link>
+  </Card.Body>
+</Card>
+
+
 
 {
-  (projects !== undefined && projects.length>0) ? 
-  projects.map((project, i)=>{ 
-    return <Card key={i} style={{ width: '18rem' }}>
-      <Card.Img variant="top" />
-      <Card.Body>
-        <Card.Title>{project.projectName}</Card.Title>
-        <Card.Text>
-          {project.description}
-        </Card.Text>
-        <LinkContainer to={"/admin/project/" + project.id} >
-        <Button variant="primary">Настройки</Button>
-        </LinkContainer>
-      </Card.Body>
-  </Card>
-    }) : ""
+  (projectsByRows != null) ?
+  projectsByRows.map((item, i) =>{
+      return createRow(item, i);
+  })
+  
+  : ""
 }
 
 </Container>
@@ -72,3 +77,24 @@ return(
 
 
 }
+
+
+function createRow(rowArray, i) {
+
+  
+
+  return (
+  <Row key={i} >
+      {
+      rowArray.map((item) => {
+          
+          //console.log({item});
+
+          return <Col key={item.id} style={{paddingTop:"10px"}} xs={12} sm={6} md={6} lg={3}>
+              <ProjectCardView1  id={item.id} name={item.projectName} description={item.description} cost={item.cost} />
+          </Col>
+      })
+      }
+  </Row>)
+}
+

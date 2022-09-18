@@ -96,25 +96,6 @@ export async function createOrderFromCartOnServerSide(obj){
  
 
 
-//с авторизацией
-export async function getProjects() {
-
-    const url= baseUrl + '/Projects/GetAccountProjects';
-
-    const resp = await fetch(url, {
-        method:'GET',
-        headers: 
-        getAuthHeader(),
-
-    });
-
-    const obj = await resp.json();
-    //const p = await obj.product;
-    //console.log()
-    return obj;
-}
-
-
 
 
 export async function Auth(login, password) {
@@ -270,61 +251,6 @@ export async function CreateAuthPostRequest(url, requestBody, addHeaders){
     return res2;
 }
 
-
-export async function getProject(projectId){
-
-    
-    const url= baseUrl + '/Projects/GetProject/' + projectId;
-
-    const resp = await fetch(url, {
-        method:'GET',
-        headers: getAuthHeader(),
-    });
-
-    const obj = await resp.json();
-    return obj;
-}
-
-
-
-export async function saveProject(projectId, projectName, projectDescription){
-
-    
-    const url= baseUrl + '/Projects/SaveProjectMainData';
-
-    const h1 = {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        
-    };
-
-    //h1.push(...getAuthHeader());
-    //Object.assign(h1, getAuthHeader());
-
-    //console.log(getAuthHeader());
-    //console.log(h1);
-
-    const h = Object.assign(h1, getAuthHeader());
-
-    const req = {
-        id: parseInt(projectId),
-        projectName: projectName,
-        description: projectDescription
-    }
-    
-    console.log(req);
-
-    const resp = await fetch(url, {
-        method:'POST',
-        headers: h,
-        body: JSON.stringify(req)
-    });
-
-    const obj = await resp.json();
-    return obj;
-
-    //return {};
-}
 
 
 //Получение списка характеристик

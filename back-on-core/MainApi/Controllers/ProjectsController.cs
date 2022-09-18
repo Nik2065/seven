@@ -1,5 +1,6 @@
 ﻿using Common;
 using Common.DTO;
+using Common.DTO.Projects;
 using Common.Enums;
 using DataAccess;
 using DataAccess.Entities;
@@ -19,9 +20,11 @@ namespace MainApi.Controllers
         public ProjectsController()
         {
             _db = new PsDataContext();
+            _logger = NLog.LogManager.GetCurrentClassLogger();
         }
 
         PsDataContext _db;
+        NLog.Logger _logger;
 
 
         /// <summary>
@@ -43,6 +46,7 @@ namespace MainApi.Controllers
             }
             catch(Exception ex)
             {
+                _logger.Error(ex);
                 result.Success = false;
                 result.Message = ex.Message;
             }
@@ -70,6 +74,7 @@ namespace MainApi.Controllers
             }
             catch (Exception ex)
             {
+                _logger.Error(ex);
                 result.Success = false;
                 result.Message = ex.Message;
             }
@@ -111,6 +116,7 @@ namespace MainApi.Controllers
             }
             catch(Exception ex)
             {
+                _logger.Error(ex);
                 result.Success=false;
                 result.Message=ex.Message;
 
@@ -145,47 +151,87 @@ namespace MainApi.Controllers
         public async Task<ActionResult> CreateProject(CreateProjectRequest request)
         {
             var result = new BaseResponse { Success = true, Message = "Проект создан" };
-
-            try
-            {
-                var aid = Helper.GetAccountId(User.Claims);
-
-                var t = _db.Database.BeginTransaction();
-
-
-                //добавляем проект
-                var p = new ProjectDb { 
-                    AccountId = aid, 
-                    Created = DateTime.Now, 
-                    ProjectName = request.ProjectName, 
-                    Description = request.ProjectDescription 
-                };
-
-                await _db.Projects.AddAsync(p);
-                await _db.SaveChangesAsync();
-
-
-
-
-                //добавляем настройки
-                var header = new PartForHeaderDb { ProjectId = p.Id, HeaderTypeId = (int)HeaderTypeEnum.LeftLogo};
-                _db.PartForHeader.Add(header);
-
-
-
-
-
-                await _db.SaveChangesAsync();
-                await t.CommitAsync();
-            }
-            catch(Exception ex)
+            
+            using (var t = await _db.Database.BeginTransactionAsync())
             {
 
-            }
+                try
+                {
+                    var aid = Helper.GetAccountId(User.Claims);
 
+                    //TODO: валидация 
+
+                    if (request.ProjectName == null || request.ProjectName.Trim().Length < 5)
+                        throw new Exception("Слишком короткое имя проекта");
+
+
+                    //добавляем проект
+                    var p = new ProjectDb
+                    {
+                        AccountId = aid,
+                        Created = DateTime.Now,
+                        ProjectName = request.ProjectName,
+                        Description = request.ProjectDescription
+                    };
+
+                    await _db.Projects.AddAsync(p);
+                    await _db.SaveChangesAsync();
+
+
+
+                    //добавляем настройки
+                    var header = new PartForHeaderDb { ProjectId = p.Id, HeaderTypeId = (int)HeaderTypeEnum.LeftLogo };
+                    _db.PartForHeader.Add(header);
+
+
+
+
+                    await _db.SaveChangesAsync();
+                    //await t.CommitAsync();
+                }
+                catch (Exception ex)
+                {
+                    await t.RollbackAsync();
+                    _logger.Error(ex);
+                    result.Success = false;
+                    result.Message = ex.Message;
+                }
+            }
 
             return Ok(result);
         }
+
+        /// <summary>
+        /// Получить идентификатор аккаунта по id проекта
+        /// </summary>
+        /// <param name="projectid"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("[action]/{projectid}")]
+        public async Task<ActionResult> GetAccountIdByProjectId(int projectid)
+        {
+            var result = new GetAccountIdByProjectIdResponse { Success = true, Message = "" };
+
+            try
+            {
+                var p = _db.Projects.FirstOrDefault(item => item.Id == projectid);
+
+                if (p == null)
+                    throw new Exception("Проект с таким id:" + projectid + " не найден");
+
+                result.AccountId = p.AccountId.ToString();
+            }
+            catch(Exception ex)
+            {
+                _logger.Error(ex);
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+
+            return Ok(result);
+        }
+
+
 
 
     }

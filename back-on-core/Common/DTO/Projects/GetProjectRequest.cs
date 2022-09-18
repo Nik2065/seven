@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Common.DTO
+namespace Common.DTO.Projects
 {
     public class GetProjectRequest
     {

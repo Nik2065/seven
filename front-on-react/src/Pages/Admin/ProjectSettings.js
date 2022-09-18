@@ -6,7 +6,7 @@ import AdminLayout from "../../AdminLayout";
 
 
 
-import  { getProject, saveProject } from '../../functions/serverFunctions'
+import  { getProject, saveProject, createProject } from '../../functions/serverFunctionsForProjects'
 
 
 
@@ -16,10 +16,12 @@ export default function ProjectSettings () {
     //идентификатор проекта
     let { pid } = useParams();
     const [key, setKey] = useState('mainSettings');
-    
+    const  [createMode, setCreateMode] = useState(false);
 
-   
-  
+    /*if(pid == null || pid === undefined)
+    {
+        setCreateMode(true);
+    }*/
     //console.log({pid});
 
 
@@ -38,7 +40,9 @@ export default function ProjectSettings () {
             //Номер проекта:{pid}
             }
             
-            {ProjectSettingsForm(pid)}
+            {
+              ProjectSettingsForm(pid)
+            }
           </Tab>
           <Tab eventKey="title" title="Заголовок страницы">
             Варианты заголовка страницы:
@@ -109,42 +113,69 @@ function ProjectSettingsForm(pid){
 
  //получаем данные о проекте
  useEffect(()=> {
-      
-  const getProjectResp =  getProject(pid);
+  
+  if(pid != null && pid !== undefined){
+      const getProjectResp =  getProject(pid);
 
-  //console.log({getProjectsResp});
+      //console.log({getProjectsResp});
 
-  getProjectResp.then(resp => {
-    //console.log({resp});
+      getProjectResp.then(resp => {
+        //console.log({resp});
 
-    if(resp.success){
-      //setProject(resp.project);
-      setProjectName(resp.project.projectName);
-      setProjectDesc(resp.project.description);
+        if(resp.success){
+          //setProject(resp.project);
+          setProjectName(resp.project.projectName);
+          setProjectDesc(resp.project.description);
+        }
+      });
     }
-  });
+
 
   },[])
 
 
   const SaveProject = () => {
-    const resp = saveProject(pid, projectName, projectDescription);
-    //console.log({resp});
-    
 
-    resp.then(result => {
-      console.log({result});
-      setAlertShow(true);
-      
+    if(pid === undefined || pid == null)
+    {
+        //создаем
+        const resp = createProject(projectName, projectDescription);
 
-      if(result.success){
-        setAlertData({text:result.message, variant:"success"})
+        resp.then(result => {
+          console.log({result});
+          setAlertShow(true);
+          
+
+          if(result.success){
+            setAlertData({text:result.message, variant:"success"})
+          }
+          else {
+            setAlertData({text:result.message, variant:"danger"})
+          }
+          
+        })
+
+    }
+    else {
+        //сохраняем
+        const resp = saveProject(pid, projectName, projectDescription);
+        //console.log({resp});
+        
+
+        resp.then(result => {
+          console.log({result});
+          setAlertShow(true);
+          
+
+          if(result.success){
+            setAlertData({text:result.message, variant:"success"})
+          }
+          else {
+            setAlertData({text:result.message, variant:"danger"})
+          }
+          
+        })
       }
-      else {
-        setAlertData({text:result.message, variant:"danger"})
-      }
-      
-    })
   }
 
 
@@ -155,7 +186,7 @@ function ProjectSettingsForm(pid){
         <Form.Label>Имя проекта</Form.Label>
         <Form.Control type="text" value={projectName} onChange={(e) => setProjectName(e.target.value)} />
         <Form.Text className="text-muted">
-          
+          Имя должно быть не короче пяти символов
         </Form.Text>
       </Form.Group>
 

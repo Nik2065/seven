@@ -31,6 +31,7 @@ import { getLocalSessionId } from './functions/commonFunctions'
 import { getCartBySessionId } from './functions/serverFunctions'
 import mainStore from "./MainStore";
 
+import {ProjectMain} from './Pages/ProjectMain';
 
 function App() {
   
@@ -120,15 +121,24 @@ function App() {
         <Route exact path='/adminlogin' element={<AdminLoginPage/>} />
         
         <Route exact path='/admin/project/:pid' element={<ProjectSettings/>} />
+        <Route exact path='/admin/addproject' element={<ProjectSettings/>} />
+
         <Route exact path='/admin/products' element={<AdminProductsListPage/>} />
         <Route exact path='/admin/product/:productid' element={<AdminProductPage/>} />
-        <Route exact path='/admin/addproduct/' element={<AdminProductPage/>} />
+        <Route exact path='/admin/addproduct' element={<AdminProductPage/>} />
 
-        <Route exact path='/admin/categories/' element={<AdminCategoriesListPage/>} />
+        <Route exact path='/admin/categories' element={<AdminCategoriesListPage/>} />
         <Route exact path='/admin/characteristics/' element={<AdminCharListPage/>} />
 
         <Route exact path='/category/:catid' element={<CategoryPage />} />
 
+        {
+          //имя проекта пока формируем как project+id
+        }
+
+        <Route exact path=':projectid/category/:catid' element={<CategoryPage />} />
+
+        <Route exact path=':projectid' element={<ProjectMain />} />
         {
           //Пути для категорий
         }

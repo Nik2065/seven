@@ -5,10 +5,10 @@ import { Container, Table, Button, Form} from "react-bootstrap";
 
 import AdminLayout from "../../AdminLayout";
 import {getAdminCategories} from "../../functions/serverFunctionsForCategories"
-import  { getCharacteristics, saveProject } from "../../functions/serverFunctions"
+import  { getCharacteristics } from "../../functions/serverFunctions"
 
 import { createProduct, saveProduct } from "../../functions/serverFunctionsForProducts"
-
+import {saveProject} from "../../functions/serverFunctionsForProjects"
 
 export default function AdminProductPage(){
 

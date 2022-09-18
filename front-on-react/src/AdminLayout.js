@@ -93,7 +93,7 @@ export default function AdminLayout ({children}) {
         {children}
         </Container>
 
-        <Navbar fixed='bottom' style={{ backgroundColor:"#ccc", maxHeight:"12%", height:"100px"}}>
+        <Navbar sticky='bottom' style={{ backgroundColor:"#ccc", maxHeight:"12%", height:"100px", marginTop: "10px"}}>
             <Container>
                 <Row>
                     <div  style={{width:"45%", fontSize:"0.8em"}}>

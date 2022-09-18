@@ -7,10 +7,10 @@ import { Card, Container, Row, Col }  from 'react-bootstrap';
 import Layout from '../Layout'
 import { ProductCardView1 } from './PageComponents/ProductCardView1';
 
-
+import  { getArrayOfSubArray } from '../functions/commonFunctions'
 import  { getCategory} from '../functions/serverFunctionsForCategories';
-import  { getAllProducts  } from '../functions/serverFunctionsForProducts'; 
-
+import  { getAllProducts, getProductsForCategory  } from '../functions/serverFunctionsForProducts'; 
+import  { getAccountId } from '../functions/serverFunctionsForProjects'
 
 
 //Количество элементов в строке
@@ -21,15 +21,47 @@ const ElementsInRow = 4;
 export function CategoryPage() {
 
     const params = useParams();
+
+    const  [accountId, setAccountId] = useState("");
     const  [categoryData, setCategoryData] = useState(null);
     const  [products, setProducts] = useState(null);
     const  [productsByRows, setProductsByRows] = useState(null);
 
     //console.log({params});
 
-    
-    useEffect(() => {
 
+    //получаем по имени проекта идентификатор аккаунта
+    useEffect(() => {
+        if(params.projectid != null && params.projectid !== undefined)
+        {
+            var id = params.projectid.replace('project', '');
+
+            const getResp = getAccountId(id);
+            getResp.then(resp => {
+                
+                //console.log({resp});
+                if(resp.success)
+                {
+                    setAccountId(resp.accountId);
+                    //console.log(resp.accountId);
+
+                    getProductsForCategory(resp.accountId);
+                }
+            });
+            
+
+
+        }
+        else {
+            //редиректим на главную?
+            window.location.replace("/");
+        }
+
+    },[])
+
+
+
+    useEffect(() => {
 
         if(params.catid != null && params.catid !== undefined)
         {
@@ -46,30 +78,30 @@ export function CategoryPage() {
                     });
                 }
               });
-            
         }
-
     }
     ,[]);
 
-        //получаем каталог товаров
-        useEffect(() => {
-        
-            const resp3 = getAllProducts("d7066528-4027-4ef0-bc2a-cd8fa9a3f199")
-            //console.log({resp3});
-
-            resp3.then( result => {
-                
-                setProducts(result.paginationResult.resultList);
-                
-                const pbr = getArrayOfSubArray(result.paginationResult.resultList);
-                setProductsByRows(pbr);
-                //console.log({pbr})
-            });
-        },[])
+    //получаем каталог товаров
+    //useEffect(() => {
+    //},[])
 
 
-    
+    function getProductsForCategory(accountId){
+
+        const resp3 = getAllProducts(accountId)
+        //console.log({resp3});
+
+        resp3.then( result => {
+            
+            setProducts(result.paginationResult.resultList);
+            
+            const pbr = getArrayOfSubArray(result.paginationResult.resultList, ElementsInRow);
+            setProductsByRows(pbr);
+            //console.log({pbr})
+        });
+
+    }
 
 
 
@@ -136,24 +168,6 @@ export function CategoryPage() {
 }
 
 
-function getArrayOfSubArray(array){
-    
-    let size = ElementsInRow; //размер подмассива
-    let arrayOfSubArray = [];
-    let subarray = []; //массив в который будет выведен результат.
-
-    for (let i = 0; i <Math.ceil(array.length/size); i++){
-        subarray[i] = array.slice((i*size), (i*size) + size);
-        arrayOfSubArray.push(subarray[i]);
-    }
-    
-
-    /*arrayOfSubArray.forEach(element => {
-        console.log(element);
-    });*/
-
-    return arrayOfSubArray;
-}
 
 
 

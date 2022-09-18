@@ -24,10 +24,10 @@ namespace DataAccess
 
                     options.ServerVersion("8.0.29");
 
-                    options.EnableRetryOnFailure(
+                    /*options.EnableRetryOnFailure(
                         maxRetryCount: 1,
                         maxRetryDelay: System.TimeSpan.FromSeconds(10),
-                        errorNumbersToAdd: null);
+                        errorNumbersToAdd: null);*/
                 }
                 );
                 

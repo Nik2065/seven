@@ -1,8 +1,8 @@
 
-import { Card, Button, Container, CardGroup}  from 'react-bootstrap';
+import { Card }  from 'react-bootstrap';
 
 
-import { BsCartFill } from "react-icons/bs";
+
 
 
 //import mainStore from '../../MainStore';
@@ -34,7 +34,7 @@ export function ProductCardView1(product) {
             <Card.Text>
             {product.description}
             </Card.Text>
-            <Button style={{display: "block", marginLeft: "auto", marginRight: "auto"}} variant="outline-success"><BsCartFill/></Button>
+            
 
             <CartButtonsView currentProduct={product} />
 

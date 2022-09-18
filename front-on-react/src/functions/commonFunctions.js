@@ -55,4 +55,17 @@ export function countItems(items){
 }
 */
 
+export function getArrayOfSubArray(array, elementsInRow){
+    
+   let size = elementsInRow; //размер подмассива
+   let arrayOfSubArray = [];
+   let subarray = []; //массив в который будет выведен результат.
+
+   for (let i = 0; i <Math.ceil(array.length/size); i++){
+       subarray[i] = array.slice((i*size), (i*size) + size);
+       arrayOfSubArray.push(subarray[i]);
+   }
+   
+   return arrayOfSubArray;
+}
 
