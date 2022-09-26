@@ -13,6 +13,7 @@ import { ProductsOnMainPage } from './PageComponents/ProductsOnMainPage';
 import {NavbarFooter2} from "./PageComponents/NavbarFooter2"
 import {NavbarMainFooter} from "./PageComponents/NavbarMainFooter"
 
+import { GetProjectPageComponents } from "../functions/serverFunctionsForProjects"
 
 export function ProjectMain () {
     
@@ -27,6 +28,23 @@ export function ProjectMain () {
     window.location.replace('/')
   }
 
+  //читаем настройки проекта
+  useEffect(() => {
+    ReadProjectPageComponents(pId)
+  }
+  ,[]);
+
+
+//
+// Страница отображения проекта
+//
+
+function ReadProjectPageComponents(pId){
+    
+  GetProjectPageComponents(pId);
+
+
+}
 
     /*useEffect(() => {
       if(projectid == null || projectid === undefined)

@@ -1,0 +1,13 @@
+
+Header -  группа компонентов ComponentGroup
+HeaderComponentViewId - представление компонента (вид, стиль)
+
+
+типы - длинный список указывающий на отдельные свойства
+
+HeaderComponent - 
+бывают разного типа 
+
+FooterComponent - 
+
+

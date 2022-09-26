@@ -112,3 +112,13 @@ export async function getAccountId(projectid){
     const obj = await resp.json();
     return obj;
 }
+
+
+export async function GetProjectPageComponents(projectid){
+
+    const url= baseUrl + '/Projects/GetProjectPageComponents/' + projectid;
+    const resp = await fetch(url);
+    const obj = await resp.json();
+    return obj;
+
+}

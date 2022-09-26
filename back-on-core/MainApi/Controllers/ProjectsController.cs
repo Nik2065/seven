@@ -1,4 +1,5 @@
-﻿using Common;
+﻿using BusinessLogic;
+using Common;
 using Common.DTO;
 using Common.DTO.Projects;
 using Common.Enums;
@@ -21,11 +22,12 @@ namespace MainApi.Controllers
         {
             _db = new PsDataContext();
             _logger = NLog.LogManager.GetCurrentClassLogger();
+            _mappingLogic = new MappingLogic();
         }
 
         PsDataContext _db;
         NLog.Logger _logger;
-
+        MappingLogic _mappingLogic;
 
         /// <summary>
         /// Получить список проектов
@@ -227,6 +229,80 @@ namespace MainApi.Controllers
                 result.Success = false;
                 result.Message = ex.Message;
             }
+
+            return Ok(result);
+        }
+
+
+        [HttpGet]
+        [Route("[action]/{projectid}")]
+        public async Task<ActionResult> GetProjectPageComponents(int projectid)
+        {
+
+            var result = new GetProjectPageComponentsResponse {Success = true, Message = "" };
+
+            try
+            {
+                //TODO: читаем настройки
+
+                //получаем список компонентов на странице, которые включены
+
+                var pageComponentsFromDb = _db.ProjectPageComponents.Where(item => item.ProjectId == projectid && item.Visible == true).OrderBy(x => x.ComponentOrder);
+
+                foreach(var dbComponent in pageComponentsFromDb)
+                {
+                    var component = new ComponentBase();
+
+                    component.ComponentId = dbComponent.ComponentId;
+                    component.ComponentOrder = dbComponent.ComponentOrder;
+                    component.ComponentGroupId = dbComponent.ComponentGroupId;
+                    component.Visible = dbComponent.Visible;
+
+
+                    //добавляем настройки компонентов
+                    if (dbComponent.ComponentGroupId == (short)PageComponentGroupEnum.Header)
+                    {
+                        var hc = _mappingLogic.MapComponentBaseToT<HeaderComponent>(component);
+
+                        var details = _db.ComponentSettingsForHeader.FirstOrDefault(x => x.ComponentId == dbComponent.ComponentId);
+                        if(details != null)
+                        {
+                            hc.PathToLogo = details.PathToLogo;
+                        }
+
+                        result.HeaderComponent = hc;
+                    }
+                    if (dbComponent.ComponentGroupId == (short)PageComponentGroupEnum.Footer)
+                    {
+                        var footer = _mappingLogic.MapComponentBaseToT<FooterComponent>(component);
+
+                        //TODO: заполнять доп поля
+
+                        result.FooterComponent = footer;
+                    }
+                    if (dbComponent.ComponentGroupId == (short)PageComponentGroupEnum.Carousel)
+                    {
+
+                    }
+                    else
+                    {
+                        throw new Exception("Не найдена обработка для группы компонентов:" + dbComponent.ComponentGroupId);
+                    }
+
+
+
+
+
+                }
+
+            }
+            catch(Exception ex)
+            {
+                _logger.Error(ex);
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+
 
             return Ok(result);
         }
