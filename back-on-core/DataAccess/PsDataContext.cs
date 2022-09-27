@@ -53,9 +53,9 @@ namespace DataAccess
 
         public DbSet<ProjectPageComponent> ProjectPageComponents { get; set; }
 
-        public DbSet<ComponentSettingsForHeader> ComponentSettingsForHeader { get; set; }
+        public DbSet<ComponentSettingsForHeaderDb> ComponentSettingsForHeader { get; set; }
 
-        public DbSet<PageComponent_CarouselDb> PageComponent_Carousel { get; set; }
+        public DbSet<ComponentSettingsForCarouselDb> ComponentSettingsForCarousel { get; set; }
 
         public DbSet<CarouselImageDb> CarouselImages { get; set; }
 

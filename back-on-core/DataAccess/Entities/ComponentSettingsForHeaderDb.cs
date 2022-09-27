@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace DataAccess.Entities
 {
     [Table("componentsettings_header")]
-    public class ComponentSettingsForHeader
+    public class ComponentSettingsForHeaderDb
     {
         public int Id { get; set; }
 

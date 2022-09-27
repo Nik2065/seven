@@ -25,7 +25,7 @@ import {baseUrl,  getAuthHeader } from './auth.js'
 //Получение списка категорий
 export async function getPublicCategories(projectId) {
 
-    console.log(projectId);
+    //console.log(projectId);
 
     const url= baseUrl + '/Categories/GetProjectCategories/' + projectId;
 

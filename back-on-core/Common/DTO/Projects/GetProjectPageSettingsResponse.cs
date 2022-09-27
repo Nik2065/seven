@@ -70,7 +70,7 @@ namespace Common.DTO.Projects
         public List<LinkData> Links { get; set; }
     }
 
-    public class CarouselComponent 
+    public class CarouselComponent : ComponentBase
     {
         public List<CarouselImage> Images { get; set; }
     }
@@ -79,6 +79,8 @@ namespace Common.DTO.Projects
     {
         public string Path { get; set; }
         public int OrderNom { get; set; }
+        public string Title { get; set; }
+        public string SubTitle { get; set; }
     }
 
     public class ProductsOnMainPageComponent : ComponentBase

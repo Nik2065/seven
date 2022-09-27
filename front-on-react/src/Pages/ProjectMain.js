@@ -18,9 +18,14 @@ import { GetProjectPageComponents } from "../functions/serverFunctionsForProject
 export function ProjectMain () {
     
   const [projectId, setProjectId] = useState(null);
+  const [headerSettings, setHeaderSettings] = useState(null);
+  const [footerSettings, setFooterSettings] = useState(null);
+  const [pageComponentsList, setPageComponentsList]= useState([]);
 
   let { projectid } = useParams();
   const pId = projectid.replace('project', '');
+
+
 
   if(projectid == null || projectid === undefined)
   {
@@ -30,7 +35,23 @@ export function ProjectMain () {
 
   //читаем настройки проекта
   useEffect(() => {
-    ReadProjectPageComponents(pId)
+    //ReadProjectPageComponents(pId)
+
+    const getResp = GetProjectPageComponents(pId);
+    console.log({getResp});
+    getResp.then(result1 => {
+        console.log({result1});
+        if(result1.success) {
+          setHeaderSettings(result1.headerComponent);
+          setFooterSettings(result1.footerComponent);
+
+          setPageComponentsList(result1.bodyPageComponents);
+        }
+        else {
+          //TODO: выводим ошибку
+        }
+      });
+
   }
   ,[]);
 
@@ -39,12 +60,19 @@ export function ProjectMain () {
 // Страница отображения проекта
 //
 
-function ReadProjectPageComponents(pId){
-    
-  GetProjectPageComponents(pId);
+/*function ReadProjectPageComponents(pId){
+  //читае настройки, записываем нужное в стэйт  
+  const getResp = GetProjectPageComponents(pId);
 
+  console.log({getResp});
 
-}
+  getResp.then(result1 => {
+      
+      console.log(result1);
+
+    });
+
+  }*/
 
     /*useEffect(() => {
       if(projectid == null || projectid === undefined)
@@ -68,13 +96,44 @@ function ReadProjectPageComponents(pId){
     return (
       <>
       <Container>
+       
 
-      <CollapsibleNavbar />
+      {
+        (headerSettings != null && headerSettings.visible) ?
+        <CollapsibleNavbar />
+        : ""
+      }
       
-        
       
-      <GorizontalMenu pId={pId}/>
-      <ControlledCarousel pId={pId} />
+      {
+        //цикл по компонентам страницы
+
+        pageComponentsList.map((item, i) => {
+          if(item.componentGroupId === 2) {
+              //карусель
+              return <>
+                <ControlledCarousel componentId={item.componentId} />
+              </>
+          }
+          else if(item.componentGroupId === 3) {
+              //меню
+              return <>
+                <GorizontalMenu pId={pId}/>
+              </>
+          }
+          else {
+            return <></>
+          }
+        })
+
+
+      }
+      
+      
+
+      
+
+
       <Cards />
       
       
@@ -83,9 +142,15 @@ function ReadProjectPageComponents(pId){
       <ProductsOnMainPage />
         
 
-      
-      <NavbarMainFooter/>
-      <NavbarFooter2/>
+      {
+        (footerSettings != null && footerSettings.visible) ?
+        <>
+        <NavbarMainFooter/>
+        <NavbarFooter2/>
+        </>
+        : ""
+      }
+
 
       </>
     );

@@ -9,5 +9,6 @@ namespace Common.Enums
         Header = 0,
         Footer = 1,
         Carousel = 2,
+        GorizontalMenu = 3,
     }
 }

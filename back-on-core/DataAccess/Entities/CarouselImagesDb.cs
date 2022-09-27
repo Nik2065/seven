@@ -11,6 +11,9 @@ namespace DataAccess.Entities
         public DateTime Created { get; set; }
 
         public int OrderNom { get; set; }
-        public string СarouselId { get; set; }
+        public int ComponentId { get; set; }
+
+        public string Title { get; set; }
+        public string SubTitle { get; set; }
     }
 }

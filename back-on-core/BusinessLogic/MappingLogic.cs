@@ -7,7 +7,7 @@ namespace BusinessLogic
 {
     public class MappingLogic
     {
-        public HeaderComponent MapComponentBaseToHeader(ComponentBase componentBase)
+        /*public HeaderComponent MapComponentBaseToHeader(ComponentBase componentBase)
         {
             var result = new HeaderComponent();
 
@@ -17,7 +17,7 @@ namespace BusinessLogic
             result.Visible = componentBase.Visible;
 
             return result;
-        }
+        }*/
 
         public T MapComponentBaseToT<T>(ComponentBase componentBase) where T : ComponentBase, new()
         {

@@ -3,10 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccess.Entities
 {
-    [Table("pagecomponent_carousel")]
-    public class PageComponent_CarouselDb
+    [Table("componentsettings_carousel")]
+    public class ComponentSettingsForCarouselDb
     {
         public int Id { get; set; }
+
+        public int ComponentId { get; set; }
 
         public DateTime Created { get; set; }
 

@@ -122,3 +122,13 @@ export async function GetProjectPageComponents(projectid){
     return obj;
 
 }
+
+export async function GetCarouselSettings(componentid){
+
+    const url= baseUrl + '/Projects/GetCarouselComponentSettings/' + componentid;
+    const resp = await fetch(url);
+    const obj = await resp.json();
+    return obj;
+
+}
+
