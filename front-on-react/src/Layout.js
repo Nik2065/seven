@@ -56,6 +56,7 @@ export default function Layout ({children}) {
 
     }, []);
 
+    
     return ( 
         <>
         <Navbar bg="dark" variant="dark">
@@ -83,7 +84,7 @@ export default function Layout ({children}) {
         {children}
         </Container>
 
-        <Navbar bg="dark" variant="dark" style={{maxHeight:"7%", height:"40px"}}>
+        <Navbar  bg="dark" variant="dark" style={{maxHeight:"7%", height:"40px"}}>
             <Container>
                 <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">

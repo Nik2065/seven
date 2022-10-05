@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Container, Form, Button, Tabs, Tab, InputGroup, Alert,Col,Row } from "react-bootstrap";
+import { Container, Form, Button, Tabs, Tab, Card, Alert,Col,Row, Img, Table, InputGroup } from "react-bootstrap";
 import AdminLayout from "../../AdminLayout";
 
 
 
 import  { getProject, saveProject, createProject } from '../../functions/serverFunctionsForProjects'
 
+import { BsFillFileArrowUpFill, BsFillFileArrowDownFill } from "react-icons/bs";
 
-
+import { GetProjectPageComponents } from "../../functions/serverFunctionsForProjects"
+import { GetCarouselSettings } from '../../functions/serverFunctionsForProjects';
 
 export default function ProjectSettings () {
 
@@ -44,41 +46,29 @@ export default function ProjectSettings () {
               ProjectSettingsForm(pid)
             }
           </Tab>
-          <Tab eventKey="title" title="Заголовок страницы">
-            Варианты заголовка страницы:
-            
+          <Tab eventKey="header" title="Шапка сайта">
+            {
+              HeaderForm(pid)
+            }
           </Tab>
 
+          <Tab eventKey="carousel" title="Настройка баннера на главной странице">
+            {
+              CarouselForm(pid)
+            }
+          </Tab>
+
+          <Tab eventKey="mainPageProducts" title="Товары на главной странице">
+            {
+              MainPageProducts(pid)
+            }
+          </Tab>
+
+
           <Tab eventKey="productsPageSettings" title="Настройки каталога товаров">
-          
-
-
-            <Form>
-            <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
-              <Form.Label column sm="8">
-              Отображать каталог продуктов
-              </Form.Label>
-              <Col sm="4">
-              <Form.Check type="checkbox" id="checkbox" label="" />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-              <Form.Label column sm="8">
-                Порядок отображения секции на сайте
-              </Form.Label>
-              <Col sm="4">
-                  <Form.Select>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  </Form.Select>
-              </Col>
-            </Form.Group>
-          </Form>
-
-
-
+          {
+              ProductsPageSettings(pid)
+          }
           </Tab>
           
           <Tab eventKey="article" title="Описание">
@@ -207,3 +197,424 @@ function ProjectSettingsForm(pid){
 
   )
 }
+
+
+
+function HeaderForm(pid) {
+  
+  
+  
+  return(
+    <>
+      <Row>
+            <Col sm="6" xs="12">
+
+            <Card>
+            <Card.Body>
+              <Card.Title>Варианты "шапки" сайта:</Card.Title>
+
+                    <Form.Group as={Row} className="mb-3" controlId="controlId1">
+                    <Form.Label column sm="8">
+                    Отображать шапку сайта 
+                    </Form.Label>
+                    <Col sm="4">
+                    <InputGroup.Checkbox  />
+                    </Col>
+                    </Form.Group>
+
+
+                    <Form.Group as={Row} className="mb-3" controlId="controlId1">
+                    <Form.Label column sm="8">
+                    Вид 
+                    </Form.Label>
+                    <Col sm="4">
+                    <Form.Select>
+                    <option>Логотип слева</option>
+                    <option>Логотип в центре</option>
+                    </Form.Select>
+                    </Col>
+                    </Form.Group>
+
+            </Card.Body>
+            </Card>
+
+
+            </Col>
+
+            <Col sm="6" xs="12">
+            <Card>
+            <Card.Body>
+              <Card.Title>Логотип</Card.Title>
+                <Form.Group controlId="formFileSm" className="mb-3"  as={Row}>
+                <Form.Label column sm="7">Выбранный логотип</Form.Label>
+                <Col sm="5">
+                <Card.Img src="" width="100" height="100"/>
+                </Col>
+                </Form.Group>
+
+                <Form.Group controlId="formFileSm" className="mb-3"  as={Row}>
+                <Form.Label column sm="7">Выбрать новый</Form.Label>
+                <Col sm="5">
+                <Form.Control type="file"  />
+                </Col>
+                </Form.Group>
+
+            </Card.Body>
+            </Card>
+
+            </Col>
+            </Row>
+
+            <hr/>
+            <Row>
+              <Col sm="12">
+                <Button  onClick={() => alert("Еще не реализовано")} variant="primary" type="button">Сохранить</Button>
+              </Col>
+            </Row>
+        </>
+
+  )
+}
+
+
+  
+function CarouselForm(projectId) {
+
+  useEffect(() => {
+
+      const componentsResp = GetProjectPageComponents(projectId);
+      
+      componentsResp.then(result => {
+        const arr = result.bodyPageComponents.filter(item => item.componentGroupId === 2); //2 группа карусели// todo: вынести в настройки
+
+        //console.log({arr});
+        const carouselComponentId = arr[0].componentId;
+
+
+      const getResp = GetCarouselSettings(carouselComponentId);   
+
+      getResp.then(resp =>{
+        console.log({resp})
+      }
+      );
+
+
+
+
+      });
+
+      
+
+
+      
+      //const carouselComponentId = components.filter()
+
+
+      //читаем баннер
+      //const getResp = GetCarouselSettings(componentId);
+
+      /*getResp.then(resp =>{
+        console.log({resp})
+      }
+      );*/
+
+  }, [])
+
+
+
+  return(<>
+      <Row>
+        <Col xxl="12" sm="12" xs="12">
+
+        <Card>
+            <Card.Body>
+              <Card.Title>Настройки баннера</Card.Title>
+
+              <Row>
+                    <Col sm="1" >
+                      #1
+                      <BsFillFileArrowDownFill onClick={() => { alert('down')}} style={{fontSize:"1.5rem", cursor: "pointer"}}/>
+                      <BsFillFileArrowUpFill onClick={() => { alert('up')}} style={{fontSize:"1.5rem", cursor: "pointer"}}/>
+                    </Col>
+                    <Col sm="2"><Form.Control type="text" placeholder='Заголовок'  /></Col>
+                    <Col sm="3"><Form.Control type="text" placeholder='Дополнительный текст'  /></Col>
+                    <Col sm="2"><Form.Control type="text" placeholder='Ссылка, если необходимо'  /></Col>
+                    <Col sm="4">
+                    <div style={{textAlign:"center", paddingBottom:"10px"}}><img height="100" width="200"/></div>
+                    <div><Form.Control type="file" placeholder='Дополнительный текст'  /></div>
+                    </Col>
+              </Row>
+
+
+
+
+
+            <hr/>
+            <Button variant='primary'  >Сохранить</Button>
+            </Card.Body>
+        </Card>
+
+        </Col>
+        <Col >
+        { /*
+        <Card>
+            <Card.Body>
+              <Card.Title></Card.Title>
+
+
+            </Card.Body>
+        </Card>
+        */
+        }
+        </Col>
+      </Row>
+      </>)
+
+  
+}
+
+
+
+const styles = {
+
+  thead : {
+    display: "block",
+  },
+
+  tbody : {
+    overflowY: "scroll",
+    overflowX: "hidden",
+    height: "15vh",
+    display: "block",
+
+  },
+
+  tdth: {
+    minWidth: "120px",
+    height: "25px",
+    border: "solid 1px #ccc",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    //maxWidth: "300px",
+},
+
+table: {
+  borderCollapse: "collapse",
+  overflowX: "hidden"
+}
+
+};
+
+
+
+function MainPageProducts(projectId){
+
+
+
+  return(<>
+
+      <Card>
+        <Card.Body>
+          <Card.Title>Отображение блока</Card.Title>
+          <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
+              <Form.Label column sm="8">
+              Отображать блок
+              </Form.Label>
+              <Col sm="4">
+              <Form.Check type="checkbox" id="checkbox" label="" />
+              </Col>
+            </Form.Group>
+
+            <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+              <Form.Label column sm="8">
+                Порядок отображения блока
+              </Form.Label>
+              <Col sm="4">
+                  <Form.Select>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  </Form.Select>
+              </Col>
+            </Form.Group>
+
+            <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+              <Form.Label column sm="8">
+                Количество товаров в строке (чем меньше товаров, тем крупнее карточки)
+              </Form.Label>
+              <Col sm="4">
+                  <Form.Select>
+                  <option>4</option>
+                  <option>6</option>
+                  <option>8</option>
+                  </Form.Select>
+              </Col>
+            </Form.Group>
+        </Card.Body>
+      </Card>
+
+
+  <Row style={{paddingTop:"10px"}}>
+    <Col xxl="12" sm="12" xs="12">
+
+
+
+    <Card>
+        <Card.Body>
+          <Card.Title>Отображаемые продукты на главной странице</Card.Title>
+
+          
+          <Row  style={{paddingTop:"10px"}}>
+            <Col ><Button>Загрузить список товаров</Button></Col>
+            <Col ><Form.Control type="text" placeholder='Поиск по наименованию'   /></Col>
+            <Col ><Button>Отфильтровать список</Button></Col>
+
+          </Row>
+          <Row  style={{paddingTop:"10px"}}>
+            <Col xxl="6" sm="8" xs="12" >
+
+              <div style={{width:"100%"}}>
+              <div style={styles.table}>
+              <table style={{width:"100%", backgroundColor:"#e0e0e0"}}>
+                <thead style={styles.thead}>
+                  <tr>
+                    <th style={styles.tdth}>#</th>
+                    <th style={styles.tdth}><input type="checkbox"/></th>
+                    <th style={styles.tdth}>Наименование</th>
+                  </tr>
+                </thead>
+                <tbody style={styles.tbody}>
+                  <tr>
+                    <td style={styles.tdth}>6565</td>
+                    <td style={styles.tdth}><input type="checkbox"/></td>
+                    <td style={styles.tdth}>Очень полезный товар 1</td>
+                  </tr>
+                  <tr>
+                    <td style={styles.tdth}>6565</td>
+                    <td style={styles.tdth}><input type="checkbox"/></td>
+                    <td style={styles.tdth}>Очень полезный товар 1</td>
+                  </tr>
+                  <tr>
+                    <td style={styles.tdth}>6565</td>
+                    <td style={styles.tdth}><input type="checkbox"/></td>
+                    <td style={styles.tdth}>Очень полезный товар 1</td>
+                  </tr>
+                  <tr>
+                    <td style={styles.tdth}>6565</td>
+                    <td style={styles.tdth}><input type="checkbox"/></td>
+                    <td style={styles.tdth}>Очень полезный товар 1</td>
+                  </tr>
+                  <tr>
+                    <td style={styles.tdth}>6565</td>
+                    <td style={styles.tdth}><input type="checkbox"/></td>
+                    <td style={styles.tdth}>Очень полезный товар 1</td>
+                  </tr>
+                  <tr>
+                    <td style={styles.tdth}>6565</td>
+                    <td style={styles.tdth}><input type="checkbox"/></td>
+                    <td style={styles.tdth}>Очень полезный товар 1</td>
+                  </tr>
+                  <tr>
+                    <td style={styles.tdth}>6565</td>
+                    <td style={styles.tdth}><input type="checkbox"/></td>
+                    <td style={styles.tdth}>Очень полезный товар 1</td>
+                  </tr>
+
+                </tbody>
+              </table>
+              </div>
+              </div>
+            </Col>
+          </Row>
+
+          <Row style={{paddingTop:"10px"}}>
+            <Col sm="12" style={{textAlign:"right"}}>
+              <Button>Добавить выбранные товары на главную</Button>
+            </Col>
+          </Row>
+
+
+          <Card.Title>Изменить порядок отображения на главной странице</Card.Title>
+          <Row style={{paddingTop:"10px"}}>
+                <Col sm="1" >
+                  #1
+                  <BsFillFileArrowDownFill onClick={() => { alert('down')}} style={{fontSize:"1.5rem", cursor: "pointer"}}/>
+                  <BsFillFileArrowUpFill onClick={() => { alert('up')}} style={{fontSize:"1.5rem", cursor: "pointer"}}/>
+                </Col>
+                <Col sm="2"><Form.Control type="text" placeholder='Заголовок' readOnly  /></Col>
+                <Col sm="3"><Form.Control type="text" placeholder='Описание' readOnly  /></Col>
+                <Col sm="4">
+                <div style={{textAlign:"center", paddingBottom:"10px"}}><img height="100" width="200"/></div>
+                
+                </Col>
+                <Col sm="2">
+                <Button variant="secondary">Удалить</Button>
+                </Col>
+          </Row>
+
+
+
+
+
+        
+        
+        </Card.Body>
+    </Card>
+
+    </Col>
+    <Col >
+    { /*
+    <Card>
+        <Card.Body>
+          <Card.Title></Card.Title>
+
+
+        </Card.Body>
+    </Card>
+    */
+    }
+    </Col>
+  </Row></>)
+}
+
+
+//
+//настройки отображения каталога товаров на сайте
+//
+function ProductsPageSettings(projectId){
+
+
+  return (
+    <>
+    <p className='h2'>Настройки каталога товаров</p>
+    <Card>
+    <Card.Body>
+      <Card.Title>Отображение каталога</Card.Title>
+      <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
+          <Form.Label column sm="8">
+          
+          </Form.Label>
+          <Col sm="4">
+          <Form.Check type="checkbox" id="checkbox" label="" />
+          </Col>
+        </Form.Group>
+
+        <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+          <Form.Label column sm="8">
+            
+          </Form.Label>
+          <Col sm="4">
+              <Form.Select>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              </Form.Select>
+          </Col>
+        </Form.Group>
+    </Card.Body>
+  </Card>
+  </>
+  )
+}
+
+
