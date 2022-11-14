@@ -15,6 +15,8 @@ import { getCartBySessionId } from './functions/serverFunctions'
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+//import {MyToast} from './Pages/PageComponents/MyToast'
+
 
 
 export default function AdminLayout ({children}) {
@@ -89,6 +91,8 @@ export default function AdminLayout ({children}) {
         </Container>
         </Navbar>
         
+        
+
         <Container style={{minHeight:"550px"}}>
         {children}
         </Container>

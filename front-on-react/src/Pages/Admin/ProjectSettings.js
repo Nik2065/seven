@@ -5,6 +5,7 @@ import { Container, Form, Button, Tabs, Tab, Card, Alert,Col,Row, Img, Table, In
 import AdminLayout from "../../AdminLayout";
 
 
+import {ToastContainer, Toast} from "react-bootstrap";
 
 import  { getProject, saveProject, createProject, uploadLogoOnServer } from '../../functions/serverFunctionsForProjects'
 
@@ -32,8 +33,13 @@ export default function ProjectSettings () {
 
     return (
     <AdminLayout>
+      
+
       <br/>
     <Container>
+    
+
+
     <Tabs
           id="controlled-tab-example"
           activeKey={key}
@@ -41,6 +47,70 @@ export default function ProjectSettings () {
           className="mb-3"
         >
           <Tab eventKey="mainSettings" title="Основные настройки">
+            <ToastContainer position="top-end" className="p-3">
+            
+            <Toast>
+            <Toast.Header>
+            <img
+              src="holder.js/20x20?text=%20"
+              className="rounded me-2"
+              alt=""
+            />
+            <strong className="me-auto">Bootstrap</strong>
+            <small className="text-muted">just now</small>
+            </Toast.Header>
+            <Toast.Body>See? Just like this.</Toast.Body>
+            </Toast>
+            <Toast>
+            <Toast.Header>
+            <img
+              src="holder.js/20x20?text=%20"
+              className="rounded me-2"
+              alt=""
+            />
+            <strong className="me-auto">Bootstrap</strong>
+            <small className="text-muted">just now</small>
+            </Toast.Header>
+            <Toast.Body>See? Just like this.</Toast.Body>
+            </Toast>
+            <Toast>
+            <Toast.Header>
+            <img
+              src="holder.js/20x20?text=%20"
+              className="rounded me-2"
+              alt=""
+            />
+            <strong className="me-auto">Bootstrap</strong>
+            <small className="text-muted">just now</small>
+            </Toast.Header>
+            <Toast.Body>See? Just like this.</Toast.Body>
+            </Toast>
+            <Toast>
+            <Toast.Header>
+            <img
+              src="holder.js/20x20?text=%20"
+              className="rounded me-2"
+              alt=""
+            />
+            <strong className="me-auto">Bootstrap</strong>
+            <small className="text-muted">just now</small>
+            </Toast.Header>
+            <Toast.Body>See? Just like this.</Toast.Body>
+            </Toast>
+            <Toast>
+            <Toast.Header>
+            <img
+              src="holder.js/20x20?text=%20"
+              className="rounded me-2"
+              alt=""
+            />
+            <strong className="me-auto">Bootstrap</strong>
+            <small className="text-muted">just now</small>
+            </Toast.Header>
+            <Toast.Body>See? Just like this.</Toast.Body>
+            </Toast>
+            </ToastContainer>
+
             {
             //Номер проекта:{pid}
             }
@@ -48,6 +118,8 @@ export default function ProjectSettings () {
             {
               ProjectSettingsForm(pid)
             }
+
+            
           </Tab>
           <Tab eventKey="header" title="Шапка сайта">
             {
@@ -259,6 +331,14 @@ function HeaderForm(pid) {
 
   }
 
+  function saveSettingShowHeader(e){
+
+    console.log(e.target.checked);
+
+    
+
+
+  }
 
   /*async function getBase64(f1) {
       var reader = new FileReader();
@@ -300,6 +380,9 @@ function HeaderForm(pid) {
 
   return(
     <>
+    
+    
+
       <Row>
             <Col sm="6" xs="12">
 
@@ -312,7 +395,7 @@ function HeaderForm(pid) {
                       Отображать шапку сайта 
                     </Form.Label>
                     <Col sm="4">
-                      <Form.Check  type="checkbox" id="checkbox"  />
+                      <Form.Check onChange={(e) => saveSettingShowHeader(e)}  type="checkbox" id="checkbox"  />
                     </Col>
                     </Form.Group>
 
