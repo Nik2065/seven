@@ -10,3 +10,4 @@ back-on-core/MainApi/bin/
 back-on-core/MainApi/obj/
 back-on-core/Common/bin/
 back-on-core/MainApi/Properties/PublishProfiles/registry.hub.docker.com_nik500.pubxml.user
+back-on-core/FileStoreApi/obj/

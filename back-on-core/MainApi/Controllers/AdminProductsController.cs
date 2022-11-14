@@ -108,6 +108,10 @@ namespace MainApi.Controllers
 
             try
             {
+                //TODO: проверка соответствия с аккаунтом
+
+
+
                 var p = _db.Products.FirstOrDefault(item => item.Id == request.Id);
 
                 if (p == null)

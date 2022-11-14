@@ -6,12 +6,15 @@ import AdminLayout from "../../AdminLayout";
 
 
 
-import  { getProject, saveProject, createProject } from '../../functions/serverFunctionsForProjects'
+import  { getProject, saveProject, createProject, uploadLogoOnServer } from '../../functions/serverFunctionsForProjects'
 
 import { BsFillFileArrowUpFill, BsFillFileArrowDownFill } from "react-icons/bs";
 
 import { GetProjectPageComponents } from "../../functions/serverFunctionsForProjects"
 import { GetCarouselSettings } from '../../functions/serverFunctionsForProjects';
+
+
+
 
 export default function ProjectSettings () {
 
@@ -52,7 +55,7 @@ export default function ProjectSettings () {
             }
           </Tab>
 
-          <Tab eventKey="carousel" title="Настройка баннера на главной странице">
+          <Tab eventKey="carousel" title="Настройка основного баннера">
             {
               CarouselForm(pid)
             }
@@ -71,12 +74,19 @@ export default function ProjectSettings () {
           }
           </Tab>
           
-          <Tab eventKey="article" title="Описание">
-          Some text 3
+          <Tab eventKey="contact" title="Контактные данные">
+          {
+            ContactsForm(pid)
+          }
           </Tab>
-          <Tab eventKey="contact" title="Данные организации">
-          Some text 4
+
+          <Tab eventKey="footer" title="Подвал сайта">
+          {
+            FooterForm(pid)
+          }
+
           </Tab>
+
         </Tabs>
 
     </Container>
@@ -202,8 +212,92 @@ function ProjectSettingsForm(pid){
 
 function HeaderForm(pid) {
   
+
+  const [fileData, setFileData] = useState();
+  const [fileName, setFileName] = useState();
+  const [fileType, setFileType] = useState();
+
+  const [file, setFile] = useState([]);
+
+
+  async function handleFile(event) {
+      //TODO: валидация формата, размера и разрешения файла
+    
+      const f = event.target.files[0];
+
+      setFileName(f.name);
+      setFileType(f.type);
+      setFile(f);
+
+
+      //console.log(f);
+      //const b64 = await getBase64(f);
+      //console.log({b64});
+      //console.log(f.name);
+
+
+      var reader = new FileReader();
+      reader.readAsDataURL(f);
+
+      reader.onload = function () {
+        //console.log(reader.result);
+        setFileData(reader.result);
+      }
+
+      reader.onerror  = function () {
+          console.log(reader.error);
+      }
+
+      
+  };
+
   
-  
+  const uploadLogo = () => {
+    //const file = '';//добавить файл
+
+    uploadLogoOnServer(fileData, fileName, fileType, pid);
+
+  }
+
+
+  /*async function getBase64(f1) {
+      var reader = new FileReader();
+      reader.readAsDataURL(f1);
+      
+      
+      reader.onload = function () {
+        
+        console.log(reader.result);
+
+        setFileData(reader.result);
+
+        //constimg = new Image();
+        //img.src = reader.result;
+        //document.body.appendChild(img);
+
+      };
+
+
+      //const res = await reader.onload;
+      //console.log({res});
+
+      res.then(result => {
+        
+
+        setFileData(result);
+      })
+
+      //const err = await reader.onerror;
+
+      
+      //err.then((text)=> {
+      //  console.error(text);
+      //});
+
+  }*/
+
+
+
   return(
     <>
       <Row>
@@ -215,10 +309,10 @@ function HeaderForm(pid) {
 
                     <Form.Group as={Row} className="mb-3" controlId="controlId1">
                     <Form.Label column sm="8">
-                    Отображать шапку сайта 
+                      Отображать шапку сайта 
                     </Form.Label>
                     <Col sm="4">
-                    <InputGroup.Checkbox  />
+                      <Form.Check  type="checkbox" id="checkbox"  />
                     </Col>
                     </Form.Group>
 
@@ -235,6 +329,15 @@ function HeaderForm(pid) {
                     </Col>
                     </Form.Group>
 
+                    <Form.Group as={Row} className="mb-3" controlId="controlId1">
+                    <Form.Label column sm="8">
+                      Включить функцию "избранные товары" на сайте
+                    </Form.Label>
+                    <Col sm="4">
+                      <Form.Check  type="checkbox" id="checkbox"  />
+                    </Col>
+                    </Form.Group>
+
             </Card.Body>
             </Card>
 
@@ -248,16 +351,20 @@ function HeaderForm(pid) {
                 <Form.Group controlId="formFileSm" className="mb-3"  as={Row}>
                 <Form.Label column sm="7">Выбранный логотип</Form.Label>
                 <Col sm="5">
-                <Card.Img src="" width="100" height="100"/>
+                <Card.Img src={file} width="100" height="100"/>
                 </Col>
                 </Form.Group>
 
                 <Form.Group controlId="formFileSm" className="mb-3"  as={Row}>
                 <Form.Label column sm="7">Выбрать новый</Form.Label>
                 <Col sm="5">
-                <Form.Control type="file"  />
+                  <Form.Control type="file" onChange={handleFile}  />
+
+                  
                 </Col>
                 </Form.Group>
+
+                <Button onClick={()=>uploadLogo()}>Загрузить на сервер</Button>
 
             </Card.Body>
             </Card>
@@ -329,7 +436,7 @@ function CarouselForm(projectId) {
         <Card>
             <Card.Body>
               <Card.Title>Настройки баннера</Card.Title>
-
+              <p>Настройки большого баннера на главной странице</p>
               <Row>
                     <Col sm="1" >
                       #1
@@ -415,7 +522,7 @@ function MainPageProducts(projectId){
 
       <Card>
         <Card.Body>
-          <Card.Title>Отображение блока</Card.Title>
+          <Card.Title>Настройки блока</Card.Title>
           <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
               <Form.Label column sm="8">
               Отображать блок
@@ -552,29 +659,19 @@ function MainPageProducts(projectId){
                 </Col>
           </Row>
 
-
-
-
-
-        
+       
         
         </Card.Body>
     </Card>
 
+    
     </Col>
-    <Col >
-    { /*
-    <Card>
-        <Card.Body>
-          <Card.Title></Card.Title>
 
-
-        </Card.Body>
-    </Card>
-    */
-    }
-    </Col>
-  </Row></>)
+  </Row>
+  <br/>
+  <br/>
+  <br/>
+  </>)
 }
 
 
@@ -587,30 +684,33 @@ function ProductsPageSettings(projectId){
   return (
     <>
     <p className='h2'>Настройки каталога товаров</p>
-    <Card>
+    <Card style={{marginTop:"10px"}}>
     <Card.Body>
-      <Card.Title>Отображение каталога</Card.Title>
-      <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
+      <Card.Title></Card.Title>
+      <Form.Group as={Row} className="mb-3" controlId="c1">
           <Form.Label column sm="8">
-          
+            Отображать страницы товаров и категорий
           </Form.Label>
           <Col sm="4">
-          <Form.Check type="checkbox" id="checkbox" label="" />
+            <Form.Check type="checkbox" id="checkbox" label="" />
           </Col>
-        </Form.Group>
+      </Form.Group>
 
-        <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-          <Form.Label column sm="8">
-            
-          </Form.Label>
-          <Col sm="4">
-              <Form.Select>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              </Form.Select>
-          </Col>
-        </Form.Group>
+
+    </Card.Body>
+  </Card>
+
+  <Card style={{marginTop:"10px"}}>
+    <Card.Body>
+      <Card.Title>Настройки отображения страницы категории</Card.Title>
+
+    </Card.Body>
+  </Card>
+
+  <Card style={{marginTop:"10px"}}>
+    <Card.Body>
+      <Card.Title>Настройки отображения страницы товара</Card.Title>
+
     </Card.Body>
   </Card>
   </>
@@ -618,3 +718,84 @@ function ProductsPageSettings(projectId){
 }
 
 
+
+
+function ContactsForm() {
+
+  return(<>
+        <p className='h2'>Контактные данные</p>
+        <Card style={{marginTop:"10px"}}>
+        <Card.Body>
+          <Card.Title></Card.Title>
+          <Form.Group as={Row} className="mb-3" controlId="c1">
+              <Form.Label column sm="8">
+                Основной номер телефона
+              </Form.Label>
+              <Col sm="4">
+                <Form.Control type="text" placeholder="+7(499) 123-44-55"  label="" />
+              </Col>
+          </Form.Group>
+
+
+          <Form.Group as={Row} className="mb-3" controlId="c1">
+              <Form.Label column sm="8">
+                Основной email
+              </Form.Label>
+              <Col sm="4">
+                <Form.Control type="text" placeholder="mail@mail.ru"  label="" />
+              </Col>
+          </Form.Group>
+
+
+          {
+          
+
+          /*   TODO: отображать график + редактор графика
+
+          <Form.Group as={Row} className="mb-3" controlId="c1">
+          <Form.Label column sm="8">
+            Отображать график работы
+          </Form.Label>
+          <Col sm="4">
+            <Form.Check type="checkbox" id="checkbox" label="" />
+          </Col>
+          </Form.Group>
+          */
+
+
+          }
+          </Card.Body>
+        </Card>
+
+
+
+  </>)
+
+
+}
+
+
+
+function FooterForm(pid) {
+
+
+
+  return(<>
+        <p className='h2'>Контактные данные</p>
+        <Card style={{marginTop:"10px"}}>
+        <Card.Body>
+          <Card.Title></Card.Title>
+            <Form.Group as={Row} className="mb-3" controlId="c1">
+            <Form.Label column sm="8">
+              Отображать "подвал" сайта
+            </Form.Label>
+            <Col sm="4">
+              <Form.Check type="checkbox" id="checkbox" label="" />
+            </Col>
+            </Form.Group>
+          </Card.Body>
+        </Card>
+  
+  </>)
+
+}

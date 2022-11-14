@@ -132,3 +132,56 @@ export async function GetCarouselSettings(componentid){
 
 }
 
+
+//
+//загрузка лого на сервер
+//
+export async function uploadLogoOnServer(fileb64, filename, type, projectId){
+
+    const url= baseUrl + '/FileStore/SaveFile';
+
+    const req = {
+        fileName: filename,
+        extension: filename.split(".").pop(),
+        fileDataBase64: fileb64,
+        //fileDataBase64: "",
+        destinationCode: "LOGO", //TODO: заменить константой
+        projectId: parseInt(projectId),
+        filetype: type
+    }
+
+    /*console.log(req.fileName);
+    console.log(req.extension);
+    console.log(req.fileDataBase64);
+    console.log(req.destinationCode);
+    console.log(req.projectId);*/
+
+
+    //console.log();
+
+    const h1 = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+    };
+    const h = Object.assign(h1, getAuthHeader());
+
+    console.log(getAuthHeader());
+    
+    const resp = await fetch(url, {
+        method: 'POST',
+        headers: h,
+        body: JSON.stringify(req)
+    })
+
+    const obj = await resp.json();
+    return obj;
+}
+
+
+/*
+function _arrayBufferToBase64String( buffer ) {
+    let data = 'stackabuse.com';
+    let buff = new Buffer(data);
+    let base64data = buff.toString('base64');
+    return base64data;
+}*/
