@@ -17,6 +17,7 @@ class MainStore {
             setCartItems: action,
             addToCart: action,
             deleteFromCart: action
+            
         })
 
         //this.productsInCart = productsInCart

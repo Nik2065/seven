@@ -5,7 +5,9 @@ import { Container, Form, Button, Tabs, Tab, Card, Alert,Col,Row, Img, Table, In
 import AdminLayout from "../../AdminLayout";
 
 
-import {ToastContainer, Toast} from "react-bootstrap";
+//import {ToastContainer, Toast} from "react-bootstrap";
+import MyAdminToastView from '../Admin/MyAdminToastView';
+
 
 import  { getProject, saveProject, createProject, uploadLogoOnServer } from '../../functions/serverFunctionsForProjects'
 
@@ -14,8 +16,8 @@ import { BsFillFileArrowUpFill, BsFillFileArrowDownFill } from "react-icons/bs";
 import { GetProjectPageComponents } from "../../functions/serverFunctionsForProjects"
 import { GetCarouselSettings } from '../../functions/serverFunctionsForProjects';
 
-
-
+import notificationStore from '../../NotificationStore';
+import { generateGuid } from '../../functions/commonFunctions';
 
 export default function ProjectSettings () {
 
@@ -32,12 +34,17 @@ export default function ProjectSettings () {
 
 
     return (
-    <AdminLayout>
-      
 
-      <br/>
+    <>
+
+    <AdminLayout>
+    <br/>
     <Container>
+    <div>
+      <MyAdminToastView notoficationsState = {notificationStore} />
+      </div>
     
+
 
 
     <Tabs
@@ -47,6 +54,8 @@ export default function ProjectSettings () {
           className="mb-3"
         >
           <Tab eventKey="mainSettings" title="Основные настройки">
+            {
+              /*
             <ToastContainer position="top-end" className="p-3">
             
             <Toast>
@@ -110,6 +119,10 @@ export default function ProjectSettings () {
             <Toast.Body>See? Just like this.</Toast.Body>
             </Toast>
             </ToastContainer>
+            */
+            }
+
+
 
             {
             //Номер проекта:{pid}
@@ -165,6 +178,7 @@ export default function ProjectSettings () {
 
 
     </AdminLayout>
+    </>
   );
 
 
@@ -379,7 +393,7 @@ function HeaderForm(pid) {
 
 
   return(
-    <>
+    <Container>
     
     
 
@@ -459,9 +473,21 @@ function HeaderForm(pid) {
             <Row>
               <Col sm="12">
                 <Button  onClick={() => alert("Еще не реализовано")} variant="primary" type="button">Сохранить</Button>
+                <Button  onClick={() => {
+                      
+                      const m = {
+                        title: "my title",
+                        body: "some text",
+                        id: generateGuid()
+                      };
+
+                      notificationStore.createNotification(m);
+
+                    }
+                  } variant="primary" type="button">Сохранить</Button>
               </Col>
             </Row>
-        </>
+        </Container>
 
   )
 }

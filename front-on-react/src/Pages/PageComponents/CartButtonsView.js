@@ -22,8 +22,6 @@ export default TimerView
 const CartButtonsView = observer((props) => {
     //const { mainState } = props
     const {currentProduct} = props;
-
-    
     const productCount = mainStore.getProductCount(currentProduct.id);
 
 

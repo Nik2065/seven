@@ -1,9 +1,13 @@
 import React, {useContext, useEffect} from 'react';
 import {Link } from "react-router-dom";
 import {LinkContainer} from 'react-router-bootstrap'
-import {Col, Container, Nav, Row,
-    Navbar} 
+import {Container, Nav, Row,
+    Navbar,
+    Button} 
     from 'react-bootstrap';
+
+import { generateGuid } from './functions/commonFunctions';
+
 
 import { BsDoorOpen } from "react-icons/bs";
 
@@ -15,7 +19,10 @@ import { getCartBySessionId } from './functions/serverFunctions'
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-//import {MyToast} from './Pages/PageComponents/MyToast'
+import  MyAdminToastView from './Pages/Admin/MyAdminToastView'
+import notificationStore from './NotificationStore';
+
+
 
 
 
@@ -63,6 +70,10 @@ export default function AdminLayout ({children}) {
 
     return ( 
         <>
+
+        
+
+
         <Navbar bg="dark" variant="dark">
         <Container>
         <Link className="navbar-brand" to="/">ProjectSeven ReactShop</Link>
@@ -92,8 +103,14 @@ export default function AdminLayout ({children}) {
         </Navbar>
         
         
+        
+
 
         <Container style={{minHeight:"550px"}}>
+
+        
+
+
         {children}
         </Container>
 
@@ -106,7 +123,27 @@ export default function AdminLayout ({children}) {
                     </div>
                     <div style={{width:"45%", textAlign:"right", fontSize:"0.8rem"}}>
                         &copy; 2022 Разработано "ООО СамДиджиталСолюшенс"
+
+                        <Button onClick={() => { 
+                            const msg = {
+                                title: "123", 
+                                body: "gjhkgfdghkjdfhghfdkgjhd kjfdhgkjfdh kfhgkdfjhg",
+                                id: generateGuid()
+                            };
+
+                            notificationStore.createNotification(msg)}}>add</Button>
+                        &nbsp;
+                        <Button onClick={() => {
+
+                            const a100 = notificationStore.getNotifications();
+                            console.log({a100});
+
+                        }}>show</Button>
+
+
+
                     </div>
+                    
                 </Row>
  
             </Container>
