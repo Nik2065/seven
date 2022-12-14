@@ -17,7 +17,12 @@ import { GetProjectPageComponents } from "../../functions/serverFunctionsForProj
 import { GetCarouselSettings } from '../../functions/serverFunctionsForProjects';
 
 import notificationStore from '../../NotificationStore';
-import { generateGuid } from '../../functions/commonFunctions';
+
+
+//import {CustomSpinner} from '../PageComponents/CustomSpinner'
+
+import { CustomAlert } from '../PageComponents/CustomAlert';
+
 
 export default function ProjectSettings () {
 
@@ -54,76 +59,6 @@ export default function ProjectSettings () {
           className="mb-3"
         >
           <Tab eventKey="mainSettings" title="Основные настройки">
-            {
-              /*
-            <ToastContainer position="top-end" className="p-3">
-            
-            <Toast>
-            <Toast.Header>
-            <img
-              src="holder.js/20x20?text=%20"
-              className="rounded me-2"
-              alt=""
-            />
-            <strong className="me-auto">Bootstrap</strong>
-            <small className="text-muted">just now</small>
-            </Toast.Header>
-            <Toast.Body>See? Just like this.</Toast.Body>
-            </Toast>
-            <Toast>
-            <Toast.Header>
-            <img
-              src="holder.js/20x20?text=%20"
-              className="rounded me-2"
-              alt=""
-            />
-            <strong className="me-auto">Bootstrap</strong>
-            <small className="text-muted">just now</small>
-            </Toast.Header>
-            <Toast.Body>See? Just like this.</Toast.Body>
-            </Toast>
-            <Toast>
-            <Toast.Header>
-            <img
-              src="holder.js/20x20?text=%20"
-              className="rounded me-2"
-              alt=""
-            />
-            <strong className="me-auto">Bootstrap</strong>
-            <small className="text-muted">just now</small>
-            </Toast.Header>
-            <Toast.Body>See? Just like this.</Toast.Body>
-            </Toast>
-            <Toast>
-            <Toast.Header>
-            <img
-              src="holder.js/20x20?text=%20"
-              className="rounded me-2"
-              alt=""
-            />
-            <strong className="me-auto">Bootstrap</strong>
-            <small className="text-muted">just now</small>
-            </Toast.Header>
-            <Toast.Body>See? Just like this.</Toast.Body>
-            </Toast>
-            <Toast>
-            <Toast.Header>
-            <img
-              src="holder.js/20x20?text=%20"
-              className="rounded me-2"
-              alt=""
-            />
-            <strong className="me-auto">Bootstrap</strong>
-            <small className="text-muted">just now</small>
-            </Toast.Header>
-            <Toast.Body>See? Just like this.</Toast.Body>
-            </Toast>
-            </ToastContainer>
-            */
-            }
-
-
-
             {
             //Номер проекта:{pid}
             }
@@ -171,11 +106,8 @@ export default function ProjectSettings () {
           }
 
           </Tab>
-
         </Tabs>
-
     </Container>
-
 
     </AdminLayout>
     </>
@@ -390,7 +322,30 @@ function HeaderForm(pid) {
 
   }*/
 
+  const [alert, setAlert] = useState();
 
+
+  function SaveSettings1(){
+
+
+    //начинаем сохранять данные на сервере - показываем спинер
+    
+    //сохраняем данные на сервере
+    
+    //удаляем спинер
+    //показываем результат
+      
+    setAlert(
+      {
+        variant: "success",
+        text: "some text to print",
+        show: true
+      }
+    )
+    
+
+
+  }
 
   return(
     <Container>
@@ -471,20 +426,26 @@ function HeaderForm(pid) {
 
             <hr/>
             <Row>
-              <Col sm="12">
-                <Button  onClick={() => alert("Еще не реализовано")} variant="primary" type="button">Сохранить</Button>
-                <Button  onClick={() => {
-                      
-                      const m = {
-                        title: "my title",
-                        body: "some text",
-                        id: generateGuid()
-                      };
+              <Col sm="2">
+                <Button  onClick={() => SaveSettings1()  } variant="primary" type="button">Сохранить</Button>
 
-                      notificationStore.createNotification(m);
+              </Col>
 
-                    }
-                  } variant="primary" type="button">Сохранить</Button>
+              <Col sm="10">
+              {
+                (alert !=null) ?
+                <Alert key={1} variant={alert.variant} dismissible onClose={() => setAlert(null)} show={alert.show} >{alert.text}</Alert>
+                : ""
+              }
+
+              {
+                (alert != null) ?
+                <CustomAlert key={1} variant={alert.variant} onClose={() => setAlert(null)} show={alert.show}  />
+                : ""
+              }
+              
+              
+
               </Col>
             </Row>
         </Container>

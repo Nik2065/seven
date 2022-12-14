@@ -21,7 +21,7 @@ class NotificationStore {
     notifications = [];
 
 
-    count = 0;
+    /*count = 0;
 
     plus(){
         this.count++;
@@ -29,7 +29,7 @@ class NotificationStore {
 
     minus(){
         this.count--;
-    }
+    }*/
 
 
 
@@ -37,25 +37,28 @@ class NotificationStore {
     //{
     //  title: "some title",
     //  body: "some body",
-    //  id: someguid
+    //  id: someguid,
+    //  created:  //время создания уведомления
+    //  type: 1 - success, 2 - warn, 3 - error
     //}
 
 
     //опубликовать уведомление
     createNotification(notificationData){
 
-        const a = notificationData;
-        console.log({a});
+        notificationData.created = Date.now();
+
+        //const a = notificationData;
+        console.log({notificationData});
 
 
-        const b = this.notifications;
-        console.log({b});
+        //const b = this.notifications;
+        //console.log({b});
 
         const newArr = []
         
         this.notifications.forEach(element => {
             newArr.push(element);
-
         });
         
         newArr.push(notificationData);

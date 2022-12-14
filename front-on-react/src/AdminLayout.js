@@ -128,10 +128,17 @@ export default function AdminLayout ({children}) {
                             const msg = {
                                 title: "123", 
                                 body: "gjhkgfdghkjdfhghfdkgjhd kjfdhgkjfdh kfhgkdfjhg",
-                                id: generateGuid()
+                                id: generateGuid(),
+                                type: 1
                             };
 
-                            notificationStore.createNotification(msg)}}>add</Button>
+                            notificationStore.createNotification(msg)
+                            //msg.type = 2;
+                            //notificationStore.createNotification(msg)
+                            //msg.type = 3;
+                            //notificationStore.createNotification(msg)
+
+                        }}>add</Button>
                         &nbsp;
                         <Button onClick={() => {
 

@@ -191,7 +191,9 @@ namespace MainApi.Controllers
 
 
                     await _db.SaveChangesAsync();
-                    //await t.CommitAsync();
+
+
+                    await t.CommitAsync();
                 }
                 catch (Exception ex)
                 {

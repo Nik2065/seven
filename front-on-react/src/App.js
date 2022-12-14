@@ -32,6 +32,7 @@ import { getCartBySessionId } from './functions/serverFunctions'
 import mainStore from "./MainStore";
 
 import {ProjectMain} from './Pages/ProjectMain';
+import PromoPage from "./Pages/PromoPage";
 
 function App() {
   
@@ -104,7 +105,20 @@ function App() {
   return (
     <CartContext.Provider value={[context, setContext]}>
     <Routes>
-        <Route exact path="/" element={<MainPage/>} />
+
+        {/* 1. публичные и маркетинговые страницы */}
+        
+        
+        
+        <Route exact path="/" element={<PromoPage/>} />
+        <Route exact path='/contacts' element={<ContactsPage/>} />
+
+
+        {/* 2. пример отображения страниц магазина */}
+        <Route exact path="/main" element={<MainPage/>} />
+        <Route exact path='/ex' element={<Example/>} />
+
+
         <Route exact path="/shopping-cart" element={<CartPage/>} />
         <Route exact path="/order" element={<CartToOrderPage/>} />
         {
@@ -112,14 +126,17 @@ function App() {
         }
         <Route path='/catalog/:productid' element={<ProductPage/>} />
         
-        <Route exact path='/ex' element={<Example/>} />
+        
 
 
-        <Route exact path='/contacts' element={<ContactsPage/>} />
+        
 
         <Route exact path='/admin' element={<AdminPage/>} />
         <Route exact path='/adminlogin' element={<AdminLoginPage/>} />
         
+
+
+
         <Route exact path='/admin/project/:pid' element={<ProjectSettings/>} />
         <Route exact path='/admin/addproject' element={<ProjectSettings/>} />
 
