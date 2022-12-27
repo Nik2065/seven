@@ -200,7 +200,7 @@ namespace MainApi.Controllers
                     var headerSettings = new ComponentSettingsForHeaderDb();
                     headerSettings.ComponentId = header.Id;
                     headerSettings.PathToLogo = DefaultProjectSettings.PathToDefaultLogo;//путь к дефолтному лого
-                    
+
                     _db.ComponentSettingsForHeader.Add(headerSettings);
                     await _db.SaveChangesAsync();
 
@@ -231,7 +231,6 @@ namespace MainApi.Controllers
 
                     //тело страницы
                     //карусель
-
                     var carousel = new ProjectPageComponent();
                     carousel.ProjectId = p.Id;
                     carousel.Visible = true;
@@ -241,20 +240,47 @@ namespace MainApi.Controllers
                     await _db.SaveChangesAsync();
 
                     //настройки карусели
-                    var carouselImage1 = new CarouselImageDb();
-                    carouselImage1.Path = DefaultProjectSettings.PathToCaroucelImage1;
-                    carouselImage1.ComponentId
+                    {
+                        var carouselImage1 = new CarouselImageDb();
+                        carouselImage1.Path = DefaultProjectSettings.PathToCaroucelImage1;
+                        carouselImage1.ComponentId = carousel.Id;
+                        carouselImage1.Created = DateTime.Now;
+                        carouselImage1.OrderNom = 0;
+                        carouselImage1.Title = "Title-1";
+                        carouselImage1.SubTitle = "some words";
 
+                        _db.CarouselImages.Add(carouselImage1);
+                    }
 
+                    {
+                        var carouselImage2 = new CarouselImageDb();
+                        carouselImage2.Path = DefaultProjectSettings.PathToCaroucelImage2;
+                        carouselImage2.ComponentId = carousel.Id;
+                        carouselImage2.Created = DateTime.Now;
+                        carouselImage2.OrderNom = 0;
+                        carouselImage2.Title = "Title-2";
+                        carouselImage2.SubTitle = "some words";
 
-                    //настройки футера
-
-
-
+                        _db.CarouselImages.Add(carouselImage2);
+                    }
 
                     await _db.SaveChangesAsync();
 
+                    //футер
+                    {
+                        var footer = new ProjectPageComponent();
+                        footer.ProjectId = p.Id;
+                        footer.Visible = true;
+                        footer.ComponentOrder = 3;
+                        footer.ComponentGroupId = (short)PageComponentGroupEnum.Footer;
+                        _db.ProjectPageComponents.Add(footer);
+                    }
 
+                    //await _db.SaveChangesAsync();
+
+                    //TODO: настройки футера
+                    
+                    await _db.SaveChangesAsync();
                     await t.CommitAsync();
                 }
                 catch (Exception ex)
