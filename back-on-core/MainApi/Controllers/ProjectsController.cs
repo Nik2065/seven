@@ -184,8 +184,70 @@ namespace MainApi.Controllers
 
 
                     //добавляем настройки
-                    var header = new PartForHeaderDb { ProjectId = p.Id, HeaderTypeId = (int)HeaderTypeEnum.LeftLogo };
-                    _db.PartForHeader.Add(header);
+
+                    //настройки хеадера по-умолчанию
+                    //добавляем компонент хеадера + настройку хеадера
+                    var header = new ProjectPageComponent();
+                    header.ProjectId = p.Id;
+                    header.Visible = true;
+                    header.ComponentOrder = 0;
+                    header.ComponentGroupId = (short)PageComponentGroupEnum.Header;
+
+                    _db.ProjectPageComponents.Add(header);
+                    await _db.SaveChangesAsync();
+
+
+                    var headerSettings = new ComponentSettingsForHeaderDb();
+                    headerSettings.ComponentId = header.Id;
+                    headerSettings.PathToLogo = DefaultProjectSettings.PathToDefaultLogo;//путь к дефолтному лого
+                    
+                    _db.ComponentSettingsForHeader.Add(headerSettings);
+                    await _db.SaveChangesAsync();
+
+
+                    //горизонтальное меню
+                    var menu = new ProjectPageComponent();
+                    menu.ProjectId = p.Id;
+                    menu.Visible = true;
+                    menu.ComponentOrder = 1;
+                    menu.ComponentGroupId = (short)PageComponentGroupEnum.GorizontalMenu;
+                    _db.ProjectPageComponents.Add(menu);
+                    await _db.SaveChangesAsync();
+
+                    //настройки меню
+                    var menuItem1 = new ComponentSettingsForMenuDb();
+                    //дефолтные настройки меню
+                    //кроме обязательных ссылок добавляем ссылку на help
+                    menuItem1.MenuItemText = "Как пользоваться сайтом";
+                    menuItem1.MenuItemUrl = "/help";
+                    menuItem1.MenuParentItemId = 0;
+                    menuItem1.MenuItemOrder = 0;
+                    menuItem1.ComponentId = menu.Id;
+                    menuItem1.Created = DateTime.Now;
+                    _db.ComponentSettingsForMenuDb.Add(menuItem1);
+                    await _db.SaveChangesAsync();
+
+
+
+                    //тело страницы
+                    //карусель
+
+                    var carousel = new ProjectPageComponent();
+                    carousel.ProjectId = p.Id;
+                    carousel.Visible = true;
+                    carousel.ComponentOrder = 2;
+                    carousel.ComponentGroupId = (short)PageComponentGroupEnum.Carousel;
+                    _db.ProjectPageComponents.Add(carousel);
+                    await _db.SaveChangesAsync();
+
+                    //настройки карусели
+                    var carouselImage1 = new CarouselImageDb();
+                    carouselImage1.Path = DefaultProjectSettings.PathToCaroucelImage1;
+                    carouselImage1.ComponentId
+
+
+
+                    //настройки футера
 
 
 

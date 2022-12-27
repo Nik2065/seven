@@ -33,6 +33,8 @@ import mainStore from "./MainStore";
 
 import {ProjectMain} from './Pages/ProjectMain';
 import PromoPage from "./Pages/PromoPage";
+import HelpPage from "./Pages/HelpPage";
+
 
 function App() {
   
@@ -111,6 +113,7 @@ function App() {
         
         
         <Route exact path="/" element={<PromoPage/>} />
+        <Route exact path="/help" element={<HelpPage/>} />
         <Route exact path='/contacts' element={<ContactsPage/>} />
 
 

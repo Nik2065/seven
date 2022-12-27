@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccess.Entities
 {
-    [Table("partforheader")]
+    /*[Table("partforheader")]
     public class PartForHeaderDb
     {
         [Key]
@@ -15,6 +15,6 @@ namespace DataAccess.Entities
 
         [Required]
         public int ProjectId { get; set; }
-    }
+    }*/
 
 }

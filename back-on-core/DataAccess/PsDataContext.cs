@@ -42,7 +42,7 @@ namespace DataAccess
         public DbSet<ProjectDb> Projects { get; set; }
         public DbSet<AccountDb> Accounts { get; set; }
 
-        public DbSet<PartForHeaderDb> PartForHeader { get; set; }
+        //public DbSet<PartForHeaderDb> PartForHeader { get; set; }
 
         public DbSet<TextCharacteristicDb> TextCharacteristics { get; set; }
 
@@ -51,6 +51,8 @@ namespace DataAccess
         public DbSet<TextCharacteristicValueDb> TextCharacteristicValues { get; set; }
 
 
+
+        //настройки компонентов:
         public DbSet<ProjectPageComponent> ProjectPageComponents { get; set; }
 
         public DbSet<ComponentSettingsForHeaderDb> ComponentSettingsForHeader { get; set; }
@@ -59,7 +61,7 @@ namespace DataAccess
 
         public DbSet<CarouselImageDb> CarouselImages { get; set; }
 
-
+        public DbSet<ComponentSettingsForMenuDb> ComponentSettingsForMenuDb { get; set; }
 
 
 
