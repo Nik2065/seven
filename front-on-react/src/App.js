@@ -15,6 +15,8 @@ import ContactsPage from "./Pages/ContactsPage";
 import AdminPage from "./Pages/Admin/AdminPage";
 import AdminProductsListPage from './Pages/Admin/AdminProductsListPage'
 import AdminLoginPage from "./Pages/Admin/AdminLoginPage";
+import AdminSignupPage from "./Pages/Admin/AdminSignupPage";
+
 import AdminProductPage from "./Pages/Admin/AdminProductPage"
 
 import AdminCharListPage from "./Pages/Admin/AdminCharListPage"
@@ -136,7 +138,11 @@ function App() {
 
         <Route exact path='/admin' element={<AdminPage/>} />
         <Route exact path='/adminlogin' element={<AdminLoginPage/>} />
-        
+        {
+          //создание аккаунта //signup
+        }
+
+        <Route exact path='/signup' element={<AdminSignupPage/>} />
 
 
 
