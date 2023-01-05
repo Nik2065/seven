@@ -12,7 +12,8 @@ export default function AdminSignupPage () {
     Message:""});
 
   const [login, setLogin] = useState("");
-  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [firmName, setFirmName] = useState("");
 
 
 const validateEmail = (email) => {
@@ -21,7 +22,9 @@ const validateEmail = (email) => {
     );
 };
 
-const auth = () => {
+
+
+const createAccount = () => {
 
     //валидируем
     //логин - это email
@@ -34,15 +37,22 @@ const auth = () => {
     }
 
     //длина пароля не меньше 6 символов
-    if(password.length < 6){
+    if(phone.length < 10){
       setAuthErr({
         Success:false,
-        Message:"Пароль не может быть короче 6ти символов"
+        Message:"Номертелефона не может быть короче 10-ти символов"
       });
       return;
     }
 
-    var authResult = Auth(login, password);
+
+    //TODO:вызвать метод создания аккаунта
+
+
+
+    //var authResult = Auth(login, password);
+
+
     //console.log({authResult});
       //если успешно авторизовались
       //сохраняем результат в localstorage
@@ -52,7 +62,7 @@ const auth = () => {
 
 
 
-    authResult.then((res) => {
+    /*authResult.then((res) => {
 
       console.log({res});
 
@@ -82,14 +92,16 @@ const auth = () => {
       }
 
 
-    });
+    });*/
     
 }
 
-const something = (event)=>{
+const onPressEnter = (event)=>{
   if (event.keyCode === 13) {
     //console.log('enter')
-    auth();
+    //auth();
+    //TODO: вызывать метод создания аккаунта
+
 }
 }
 
@@ -114,37 +126,51 @@ return(
   <Card.Title style={{textAlign:"center"}}>Новый аккаунт</Card.Title>
 
   <Card.Body>
-<Form onKeyDown={(e) => something(e) }>
-    <InputGroup className="mb-3">
-      <InputGroup.Text>First and last name</InputGroup.Text>
-      <Form.Control aria-label="First name" />
-      <Form.Control aria-label="Last name" />
-    </InputGroup>
-
-
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control value={login} onChange={(e)=> setLogin(e.target.value)} type="email" placeholder="Enter email" />
-        <Form.Text className="text-muted">
+<Form onKeyDown={(e) => onPressEnter(e) }>
+<Form.Group className="mb-3" controlId="formBasicEmail">
+    <Form.Label>Email</Form.Label>
+    <Form.Control value={login} onChange={(e)=> setLogin(e.target.value)} type="email" placeholder="Введите email" />
+    <Form.Text className="text-muted">
           
-        </Form.Text>
-      </Form.Group>
+    </Form.Text>
+</Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control value={password} onChange={(e)=> setPassword(e.target.value)} type="password" placeholder="Password" />
-         <Form.Text className="text-muted">
+<Form.Group className="mb-3" controlId="formBasicPassword">
+      <Form.Label>Телефон</Form.Label>
+      <Form.Control value={phone} onChange={(e)=> setPhone(e.target.value)} type="text" placeholder="Номер телефона" />
+      <Form.Text className="text-muted">
           
-         </Form.Text>
-      </Form.Group>
-      <div style={{textAlign:"right"}}>
-      <Button onClick={() => auth()}  variant="primary" type="button">
-        Создать
-      </Button>
-      </div>
+      </Form.Text>
+</Form.Group>
+
+<Form.Group className="mb-3" controlId="firmName">
+      <Form.Label>Наименование проекта или организации</Form.Label>
+      <Form.Control value={firmName} onChange={(e)=> setFirmName(e.target.value)} type="text" placeholder="Проект или организация" />
+      <Form.Text className="text-muted">
+          
+      </Form.Text>
+</Form.Group>
+
+<InputGroup className="mb-3">
+    <InputGroup.Text>ФИО</InputGroup.Text>
+    <Form.Control aria-label="Фамилия" placeholder='Фамилия' />
+    <Form.Control aria-label="Имя" placeholder='Имя' />
+    <Form.Control aria-label="Отчество" placeholder='Отчество' />
+</InputGroup>
+
+
+
+
+    <Row>
+      <Col sm={6} style={{textAlign:"left"}}>
+        <Button onClick={() => {window.location.replace('signin')}}  variant="link" type="button">Войти (если аккаунт уже есть)</Button>
+      </Col>
+      <Col sm={6} style={{textAlign:"right"}}>
+        <Button onClick={() => createAccount()}  variant="outline-primary" type="button">Создать</Button>
+      </Col>
+    </Row>
     </Form>
     </Card.Body>
-
     </Card>
 
     </Col>

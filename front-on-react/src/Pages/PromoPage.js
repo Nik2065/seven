@@ -45,7 +45,7 @@ export default function PromoPage() {
             <Button variant="outline-warning" >Создать аккаунт</Button>
             </LinkContainer>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <LinkContainer to="/adminlogin">
+            <LinkContainer to="/signin">
             <Button variant="outline-success">Войти</Button>
             </LinkContainer>
           </Form>

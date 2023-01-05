@@ -135,9 +135,14 @@ function App() {
 
 
         
-
+        {
+          //главная страница после авторизации
+        }
         <Route exact path='/admin' element={<AdminPage/>} />
-        <Route exact path='/adminlogin' element={<AdminLoginPage/>} />
+        {
+          //вход //signin
+        }
+        <Route exact path='/signin' element={<AdminLoginPage/>} />
         {
           //создание аккаунта //signup
         }

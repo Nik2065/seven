@@ -1,6 +1,5 @@
 import {useState} from 'react';
-import { Navigate } from "react-router-dom";
-import { Container, Form, Button, Row, Col, Alert, Navbar } from "react-bootstrap";
+import { Container, Form, Button, Row, Col, Alert, Navbar, Card } from "react-bootstrap";
 
 
 
@@ -87,7 +86,7 @@ const auth = () => {
     
 }
 
-const something = (event)=>{
+const onPressEnter = (event)=>{
   if (event.keyCode === 13) {
     //console.log('enter')
     auth();
@@ -110,9 +109,12 @@ return(
 </p>
 </Alert>
 
-<div style={{backgroundColor:"#ccc", padding:"10px"}}>
-<div className="h4" style={{textAlign:"center"}}>Администрирование</div>
-<Form onKeyDown={(e) => something(e) }>
+
+<Card style={{backgroundColor:"", padding:"10px"}} >
+  <Card.Title style={{textAlign:"center"}}>Администрирование</Card.Title>
+  <Card.Body>
+
+  <Form onKeyDown={(e) => onPressEnter(e) }>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
         <Form.Control value={login} onChange={(e)=> setLogin(e.target.value)} type="email" placeholder="Enter email" />
@@ -134,8 +136,9 @@ return(
       </Button>
       </div>
     </Form>
+  </Card.Body>
 
-    </div>
+</Card>
     </Col>
     </Row>
 

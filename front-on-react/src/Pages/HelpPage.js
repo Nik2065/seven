@@ -45,7 +45,7 @@ export default function HelpPage() {
           </Nav>
 
           <Form className="d-flex">
-            <LinkContainer to="/adminlogin">
+            <LinkContainer to="/signin">
             <Button variant="outline-success">Войти</Button>
             </LinkContainer>
           </Form>
