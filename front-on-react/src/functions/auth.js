@@ -2,7 +2,7 @@
 export const baseUrl = 'http://localhost:5000';
 export const frontBaseUrl = 'http://localhost:3000';
 
-export const loginPage = frontBaseUrl + '/adminlogin'
+export const loginPage = frontBaseUrl + '/signin'
 
 export function getAuthHeader(){
     const d = localStorage.getItem('authData');
@@ -36,3 +36,5 @@ export function redirectToLoginPage(){
     //let history = useHistory();
     //history.push("/home");
 }
+
+

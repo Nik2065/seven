@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import { Container, Form, Button, Row, Col, Alert, Navbar, Card } from "react-bootstrap";
+import { LinkContainer } from 'react-router-bootstrap';
 
 
 
@@ -130,11 +131,19 @@ return(
           
          </Form.Text>
       </Form.Group>
-      <div style={{textAlign:"right"}}>
-      <Button onClick={() => auth()}  variant="primary" type="button">
-        Войти
-      </Button>
-      </div>
+
+      <Row>
+        <Col sm={6} style={{textAlign:"left"}}>
+          <LinkContainer to="/signup">
+            <Button type='button' variant="link" >Создать аккаунт</Button>
+          </LinkContainer>
+        </Col>
+        <Col sm={6} style={{textAlign:"right"}}>
+          <Button onClick={() => auth()}  variant="primary" type="button">Войти</Button>
+        </Col>
+      </Row>
+
+
     </Form>
   </Card.Body>
 

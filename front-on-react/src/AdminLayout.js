@@ -64,7 +64,7 @@ export default function AdminLayout ({children}) {
     const logout=()=>{
         localStorage.removeItem('authData');
         //TODO: сделать нормально
-        window.location.replace('/adminlogin')
+        window.location.replace('/signin')
     }
 
 

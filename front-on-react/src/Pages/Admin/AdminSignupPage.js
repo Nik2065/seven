@@ -1,9 +1,7 @@
 import {useState} from 'react';
 import { Container, Form, Button, Row, Col, Alert, Navbar, InputGroup, Card } from "react-bootstrap";
+import { LinkContainer } from 'react-router-bootstrap';
 
-
-
-import {Auth } from '../../functions/serverFunctions';
 
 export default function AdminSignupPage () {
 
@@ -40,13 +38,14 @@ const createAccount = () => {
     if(phone.length < 10){
       setAuthErr({
         Success:false,
-        Message:"Номертелефона не может быть короче 10-ти символов"
+        Message:"Номер телефона не может быть короче 10-ти символов"
       });
       return;
     }
 
 
     //TODO:вызвать метод создания аккаунта
+
 
 
 
@@ -128,7 +127,7 @@ return(
   <Card.Body>
 <Form onKeyDown={(e) => onPressEnter(e) }>
 <Form.Group className="mb-3" controlId="formBasicEmail">
-    <Form.Label>Email</Form.Label>
+    <Form.Label>Email<sup style={{color:"red"}}>*</sup></Form.Label>
     <Form.Control value={login} onChange={(e)=> setLogin(e.target.value)} type="email" placeholder="Введите email" />
     <Form.Text className="text-muted">
           
@@ -136,7 +135,7 @@ return(
 </Form.Group>
 
 <Form.Group className="mb-3" controlId="formBasicPassword">
-      <Form.Label>Телефон</Form.Label>
+      <Form.Label>Телефон<sup style={{color:"red"}}>*</sup></Form.Label>
       <Form.Control value={phone} onChange={(e)=> setPhone(e.target.value)} type="text" placeholder="Номер телефона" />
       <Form.Text className="text-muted">
           
@@ -144,7 +143,7 @@ return(
 </Form.Group>
 
 <Form.Group className="mb-3" controlId="firmName">
-      <Form.Label>Наименование проекта или организации</Form.Label>
+      <Form.Label>Наименование проекта или организации<sup style={{color:"red"}}>*</sup></Form.Label>
       <Form.Control value={firmName} onChange={(e)=> setFirmName(e.target.value)} type="text" placeholder="Проект или организация" />
       <Form.Text className="text-muted">
           
@@ -163,7 +162,9 @@ return(
 
     <Row>
       <Col sm={6} style={{textAlign:"left"}}>
-        <Button onClick={() => {window.location.replace('signin')}}  variant="link" type="button">Войти (если аккаунт уже есть)</Button>
+      <LinkContainer to="/signin">
+        <Button variant="link" type="button">Войти (если аккаунт уже есть)</Button>
+      </LinkContainer>
       </Col>
       <Col sm={6} style={{textAlign:"right"}}>
         <Button onClick={() => createAccount()}  variant="outline-primary" type="button">Создать</Button>
