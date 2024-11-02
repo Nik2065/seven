@@ -68,6 +68,10 @@ namespace MainApi.Controllers
             return Ok(response);
         }
 
+
+
+
+
         private ClaimsIdentity GetIdentity(string email, string password)
         {
             //Person person = people.FirstOrDefault(x => x.Login == username && x.Password == password);
